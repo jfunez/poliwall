@@ -1,4 +1,4 @@
-poliwall
+PoliWall
 ========
 
 Introduction
