@@ -8,5 +8,6 @@ urlpatterns = patterns(
     '',
     url(r'^$', 'poliwall.views.home', name='home'),
     # url(r'^poliwall/', include('poliwall.foo.urls')),
+    url(r'^redactor/', include('redactor.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

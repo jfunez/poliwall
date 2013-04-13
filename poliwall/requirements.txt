@@ -1,4 +1,7 @@
 Django
+PIL
 South
 psycopg2
 sorl-thumbnail
+django-wysiwyg-redactor
+bootstrap-admin

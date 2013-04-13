@@ -105,6 +105,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'redactor',
+    'bootstrap_admin',
     'django.contrib.admin',
     'poliwall',
     'south',
@@ -138,6 +140,9 @@ LOGGING = {
         },
     }
 }
+
+REDACTOR_OPTIONS = {'lang': 'en'}
+REDACTOR_UPLOAD = 'media/uploads/'
 
 try:
     from local_settings import *
