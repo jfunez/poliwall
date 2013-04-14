@@ -110,6 +110,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'poliwall',
     'south',
+    'tastypie',
 )
 
 # A sample logging configuration. The only tangible logging
