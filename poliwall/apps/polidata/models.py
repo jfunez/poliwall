@@ -1,52 +1,65 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 
 class Party(models.Model):
     """ Modelo para guardar los partidos políticos """
 
-    name = models.CharField(u'Nombre', max_length=100)
+    name = models.CharField(_('Nombre'), max_length=100)
 
     class Meta:
         verbose_name = u'Partido'
         verbose_name_plural = u'Partidos'
+
+    def __unicode__(self):
+        return self.name
 
 
 class SubParty(models.Model):
     """ Modelo para guardar los lemas de un partido político """
 
     party = models.ForeignKey(Party)
-    name = models.CharField(u'Nombre', max_length=100)
+    name = models.CharField(_('Nombre'), max_length=100)
 
     class Meta:
         verbose_name = u'Lema'
         verbose_name_plural = u'Lemas'
 
+    def __unicode__(self):
+        return "%s (%s)" % (self.name, self.party)
+
 
 class Legislative(models.Model):
     """ Modelo para guardar las legislaturas de gobierno """
 
-    code = models.IntegerField(u'Código')
-    start_date = models.DateField(u'Fecha inicial')
-    end_date = models.DateField(u'Fecha final')
+    code = models.IntegerField(_('Código'))
+    start_date = models.DateField(_('Fecha inicial'))
+    end_date = models.DateField(_('Fecha final'))
 
     class Meta:
         verbose_name = u'Legislatura'
         verbose_name_plural = u'Legislaturas'
 
+    def __unicode__(self):
+        return "%s (%s - %s)" % (self.code, self.start_date, self.end_date)
+
 
 class Politician(models.Model):
     """ Modelo para guardar los datos personales de los políticos """
 
-    first_name = models.CharField(u'Nombre', max_length=100)
-    last_name = models.CharField(u'Apellidos', max_length=100)
-    email = models.EmailField(u'Email', blank=True, null=True)
-    photo = models.ImageField(u'Foto', upload_to='/polidata/politician/photos/', blank=True, null=True)
-    profile_url = models.TextField(u'Profile URL', blank=True, null=True)
+    first_name = models.CharField(_('Nombre'), max_length=100)
+    last_name = models.CharField(_('Apellidos'), max_length=100)
+    email = models.EmailField(_('Email'), blank=True, null=True)
+    photo = models.ImageField(_('Foto'), upload_to='/polidata/politician/photos/', blank=True, null=True)
+    profile_url = models.TextField(_('Profile URL'), blank=True, null=True)
 
     class Meta:
         verbose_name = u'Político'
         verbose_name_plural = u'Políticos'
+
+    def __unicode__(self):
+        return "%s %s" % (self.first_name, self.last_name)
 
     def _get_lp_for(self, date):
         qs = LegislativePolitician.objects.all()
@@ -76,3 +89,6 @@ class LegislativePolitician(models.Model):
     class Meta:
         verbose_name = u'Representacion Política'
         verbose_name_plural = u'Representaciones Políticas'
+
+    def __unicode__(self):
+        return "%s (%s)" % (self.legislative, self.politician)
