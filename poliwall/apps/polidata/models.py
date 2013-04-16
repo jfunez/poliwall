@@ -13,7 +13,7 @@ class Party(models.Model):
         verbose_name_plural = u'Partidos'
 
     def __unicode__(self):
-        return self.name
+        return u'%s' % self.name
 
 
 class SubParty(models.Model):
@@ -27,7 +27,7 @@ class SubParty(models.Model):
         verbose_name_plural = u'Lemas'
 
     def __unicode__(self):
-        return "%s (%s)" % (self.name, self.party)
+        return u'%s (%s)' % (self.name, self.party)
 
 
 class Legislative(models.Model):
@@ -42,7 +42,7 @@ class Legislative(models.Model):
         verbose_name_plural = u'Legislaturas'
 
     def __unicode__(self):
-        return "%s (%s - %s)" % (self.code, self.start_date, self.end_date)
+        return u'%s (%s - %s)' % (self.code, self.start_date, self.end_date)
 
 
 class Politician(models.Model):
@@ -59,7 +59,7 @@ class Politician(models.Model):
         verbose_name_plural = u'Políticos'
 
     def __unicode__(self):
-        return "%s %s" % (self.first_name, self.last_name)
+        return u'%s %s' % (self.first_name, self.last_name)
 
     def _get_lp_for(self, date):
         qs = LegislativePolitician.objects.all()
@@ -81,8 +81,8 @@ class LegislativePolitician(models.Model):
     """ Modelo para guardar las representaciones de cada político en distintas legislaturas """
 
     date = models.DateField(u'Fecha')
-    legislative = models.ForeignKey(Legislative, verbose_name=u'Legislatura')
-    politician = models.ForeignKey(Politician, verbose_name=u'Político')
+    legislative = models.ForeignKey(Legislative, verbose_name=u'Legislatura', related_name='politicians')
+    politician = models.ForeignKey(Politician, verbose_name=u'Político', related_name='legislatives')
     party = models.ForeignKey(Party, verbose_name=u'Partdio', blank=True, null=True)
     subparty = models.ForeignKey(SubParty, verbose_name=u'Lema', blank=True, null=True)
 
@@ -91,4 +91,4 @@ class LegislativePolitician(models.Model):
         verbose_name_plural = u'Representaciones Políticas'
 
     def __unicode__(self):
-        return "%s (%s)" % (self.legislative, self.politician)
+        return u'%s (%s)' % (self.legislative, self.politician)

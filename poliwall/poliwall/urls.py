@@ -3,12 +3,17 @@ from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
+
+from poliwall_api import v1_api
+
+
 urlpatterns = patterns(
     '',
     url(r'^$', 'poliwall.views.home', name='home'),
     # url(r'^poliwall/', include('poliwall.foo.urls')),
     url(r'^redactor/', include('redactor.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/', include(v1_api.urls)),
 )
 
 
