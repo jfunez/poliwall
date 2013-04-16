@@ -4,3 +4,5 @@
 /poliwall/static/*
 *.pot
 local_settings.py
+.DS_Store
+poliwall/scrapping/*.json
