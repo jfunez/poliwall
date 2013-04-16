@@ -1,0 +1,7 @@
+parado en poliwall/scrapping
+> scrapy crawl senators -t json -o senators.json
+
+> scrapy crawl deputies -t json -o deputies.json
+
+
+# genera sendos json

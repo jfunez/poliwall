@@ -1,7 +1,14 @@
 {% extends "base.html" %}
-
+{% block extra_head %}
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />	
+{% endblock extra_head %}
+{% block extra_js %}
+	<script type="text/javascript">
+		$('#advice').addClass('animated pulse');
+	</script>
+{% endblock extra_js %}
 {% block main_content %}
-	<div style="width:250px; margin: 150px auto; border:1px solid #333; text-align: center;background-color: #ddd;">
+	<div id="advice" style="width:250px; margin: 150px auto; border:1px solid #333; text-align: center;background-color: #ddd;">
 		<h1 style="color: #555;">PoliWall</h1>
 		<h4 style="color: #333; ">coming soon...</h4>
 	</div>
