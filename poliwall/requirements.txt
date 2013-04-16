@@ -1,5 +1,9 @@
 Django
+PIL
 South
 psycopg2
 sorl-thumbnail
 scrapy
+django-wysiwyg-redactor
+bootstrap-admin
+django-tastypie
