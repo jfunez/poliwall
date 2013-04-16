@@ -1,5 +1,6 @@
-*.log
-*.pot
-*.pyc
-local_settings.py
 .venv
+*.pyc
+*.log
+/poliwall/static/*
+*.pot
+local_settings.py

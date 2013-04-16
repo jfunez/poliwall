@@ -1,17 +1,62 @@
-<html>
+<!DOCTYPE html>
+<!--[if IE 8]> <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
 	<title>Poliwall - coming soon...</title>
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/normalize.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/foundation.css" />
+	<script src="{{ STATIC_URL|default:'/static/' }}js/vendor/custom.modernizr.js"></script>
 	<style>
-	body { background-color: #66C4AB}
-	.container { width:250px; margin: 150px auto; border:1px solid #333; text-align: center}
-	.title { color: #555; }
-	.subtitle { color: #333; }
+		body { background-color: #66C4AB}
+		.container { width:250px; margin: 150px auto; border:1px solid #333; text-align: center}
+		.title { color: #555; }
+		.subtitle { color: #333; }
 	</style>
 </head>
 <body>
-<header>
-	{% block main_content %}{% endblock main_content %}
-</header>
+	<!-- Header -->
+		{% include "includes/header.html" %}
+	<!-- End of Header -->
 
+	
+	<div class="row">
+		<div class="large-12 columns">
+			{% block main_content %}{% endblock main_content %}
+		</div>
+	</div>
+
+	<!-- Footer -->
+		{% include "includes/footer.html" %}
+	<!-- End of Footer -->
+
+	<script>
+	document.write('<script src=' +('__proto__' in {} ? '{{ STATIC_URL |default:"/static/"}}js/vendor/zepto' : '{{ STATIC_URL |default:"/static/"}}js/vendor/jquery') + '.js><\/script>')
+	</script>
+  
+ 	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation.min.js"></script>
+  <!--
+  
+	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation/foundation.js"></script> 
+	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation/foundation.alerts.js"></script>
+	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation/foundation.clearing.js"></script>
+	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation/foundation.cookie.js"></script>
+	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation/foundation.dropdown.js"></script>
+	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation/foundation.forms.js"></script>
+	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation/foundation.joyride.js"></script>
+	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation/foundation.magellan.js"></script>
+	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation/foundation.orbit.js"></script>
+	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation/foundation.placeholder.js"></script>
+	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation/foundation.reveal.js"></script>
+	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation/foundation.section.js"></script>
+	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation/foundation.tooltips.js"></script>
+  -->
+	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation/foundation.topbar.js"></script>
+  
+  
+  <script>
+    $(document).foundation();
+  </script>
 </body>
 </html>
