@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Party(models.Model):
+
     """ Modelo para guardar los partidos políticos """
 
     name = models.CharField(_('Nombre'), max_length=100)
@@ -17,6 +18,7 @@ class Party(models.Model):
 
 
 class SubParty(models.Model):
+
     """ Modelo para guardar los lemas de un partido político """
 
     party = models.ForeignKey(Party)
@@ -31,6 +33,7 @@ class SubParty(models.Model):
 
 
 class Legislative(models.Model):
+
     """ Modelo para guardar las legislaturas de gobierno """
 
     code = models.IntegerField(_('Código'))
@@ -46,6 +49,7 @@ class Legislative(models.Model):
 
 
 class Politician(models.Model):
+
     """ Modelo para guardar los datos personales de los políticos """
 
     first_name = models.CharField(_('Nombre'), max_length=100)
@@ -77,7 +81,14 @@ class Politician(models.Model):
         return getattr(lp, 'subparty', None)
 
 
+ROLE_CHOICES = (
+    ('S', _('Senador')),
+    ('D', _('Diputado')),
+)
+
+
 class LegislativePolitician(models.Model):
+
     """ Modelo para guardar las representaciones de cada político en distintas legislaturas """
 
     date = models.DateField(u'Fecha')
@@ -85,6 +96,7 @@ class LegislativePolitician(models.Model):
     politician = models.ForeignKey(Politician, verbose_name=u'Político', related_name='legislatives')
     party = models.ForeignKey(Party, verbose_name=u'Partdio', blank=True, null=True)
     subparty = models.ForeignKey(SubParty, verbose_name=u'Lema', blank=True, null=True)
+    role = models.CharField(_(u'Rol'), choices=ROLE_CHOICES, max_length=20)
 
     class Meta:
         verbose_name = u'Representacion Política'
