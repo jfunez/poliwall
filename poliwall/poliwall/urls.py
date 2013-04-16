@@ -1,8 +1,11 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
-# Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
+
+
+from poliwall_api import v1_api
+
 
 urlpatterns = patterns(
     '',
@@ -10,6 +13,7 @@ urlpatterns = patterns(
     # url(r'^poliwall/', include('poliwall.foo.urls')),
     url(r'^redactor/', include('redactor.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/', include(v1_api.urls)),
 )
 
 
