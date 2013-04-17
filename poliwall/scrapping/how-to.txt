@@ -1,4 +1,8 @@
 parado en poliwall/scrapping
+
+> export PYTHONPATH=<RUTA ABSOLUTA A CARPETA poliwall> (la que contiene la subcarpeta apps)
+> export DJANGO_SETTINGS_MODULE=poliwall.settings
+
 > scrapy crawl senators -t json -o senators.json
 
 > scrapy crawl deputies -t json -o deputies.json

@@ -1,6 +1,6 @@
 from scrapy.spider import BaseSpider
 from scrapy.selector import HtmlXPathSelector
-from poliwall.items import Senator, Deputy
+from uy.items import Senator, Deputy
 
 
 LEGISLATIVE = '47'
@@ -20,7 +20,15 @@ class SenatorSpider(BaseSpider):
 
         vicepresident = senators[0]
         item = Senator()
-        item['photo_url'] = vicepresident.select('img/@src').extract()
+        name, description, party = vicepresident.extract().split('<br>')[1:4]
+        last_name, first_name = name.split('<a href="#')[0].strip().split(',')
+        item['first_name'] = first_name
+        item['last_name'] = last_name
+        item['party'] = party.strip()
+        item['email'] = vicepresident.select('a/@href').extract()[1].split(':')[1].strip()
+        item['photo_url'] = 'http://www.parlamento.gub.uy' + vicepresident.select('img/@src').extract()[0].strip()
+        politician_id = item['photo_url'].split('Fot')[1].split('.')[0]
+        item['profile_url'] = 'http://www.parlamento.gub.uy/palacio3/legisladores/legislador.asp?ID=%s%s' % (LEGISLATIVE, politician_id)
         items.append(item)
 
         for senator in senators[1:]:
