@@ -33,7 +33,7 @@ class DjangoStoragePipeline(object):
 
             politician.save()
 
-        party, created = Party.objects.get_or_create(name=item['party'])
+        party, created = Party.objects.get_or_create(name=item['party'].title())
 
         try:
             leg_pol = LegislativePolitician.objects.get(legislative=legislative, politician=politician,
