@@ -55,7 +55,7 @@ class Politician(models.Model):
     first_name = models.CharField(_('Nombre'), max_length=100)
     last_name = models.CharField(_('Apellidos'), max_length=100)
     email = models.EmailField(_('Email'), blank=True, null=True)
-    photo = models.ImageField(_('Foto'), upload_to='/polidata/politician/photos/', blank=True, null=True)
+    photo = models.ImageField(_('Foto'), upload_to='polidata/politician/photos/', blank=True, null=True)
     profile_url = models.TextField(_('Profile URL'), blank=True, null=True)
 
     class Meta:

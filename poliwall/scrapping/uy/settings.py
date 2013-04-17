@@ -1,13 +1,13 @@
 import sys
 
-BOT_NAME = 'poliwall'
+BOT_NAME = 'uy'
 
-SPIDER_MODULES = ['poliwall.spiders']
-NEWSPIDER_MODULE = 'poliwall.spiders'
+SPIDER_MODULES = ['uy.spiders']
+NEWSPIDER_MODULE = 'uy.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'tutorial (+http://www.yourdomain.com)'
 
 ITEM_PIPELINES = [
-    #'poliwall.pipelines.DjangoStoragePipeline',
+    'uy.pipelines.DjangoStoragePipeline',
 ]
