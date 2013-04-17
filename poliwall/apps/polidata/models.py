@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 
 class Party(models.Model):
@@ -79,6 +80,10 @@ class Politician(models.Model):
     def get_subparty_for(self, date):
         lp = self._get_lp_for(date)
         return getattr(lp, 'subparty', None)
+
+    def photo_thumb(self):
+        return '<img src="%s%s"/>' % (settings.MEDIA_URL, self.photo)
+    photo_thumb.allow_tags = True
 
 
 ROLE_CHOICES = (
