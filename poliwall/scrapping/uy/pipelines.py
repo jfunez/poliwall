@@ -1,4 +1,5 @@
 from datetime import datetime
+from string import capitalize
 import urllib2
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
@@ -14,10 +15,13 @@ class DjangoStoragePipeline(object):
     def process_item(self, item, spider):
         legislative = Legislative.objects.latest('end_date')
 
+        first_name = ' '.join(map(capitalize, item['first_name'].split()))
+        last_name = ' '.join(map(capitalize, item['last_name'].split()))
+
         try:
-            politician = Politician.objects.get(first_name=item['first_name'], last_name=item['last_name'])
+            politician = Politician.objects.get(first_name=first_name, last_name=last_name)
         except Politician.DoesNotExist:
-            politician = Politician(first_name=item['first_name'], last_name=item['last_name'], email=item.get('email', ''),
+            politician = Politician(first_name=first_name, last_name=last_name, email=item.get('email', ''),
                                     profile_url=item['profile_url'])
 
             if item['photo_url']:
@@ -38,11 +42,10 @@ class DjangoStoragePipeline(object):
         except LegislativePolitician.DoesNotExist:
             leg_pol = LegislativePolitician(date=datetime.now(), legislative=legislative, politician=politician,
                                             party=party)
-            leg_pol.save()
 
-        if spider == 'senators':
+        if spider.name == 'senators':
             leg_pol.role = 'S'
-        elif spider == 'deputies':
+        elif spider.name == 'deputies':
             leg_pol.role = 'D'
 
         leg_pol.save()
