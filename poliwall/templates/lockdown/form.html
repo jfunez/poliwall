@@ -7,15 +7,17 @@
 		$('#advice').addClass('animated pulse');
 	</script>
 {% endblock extra_js %}
+{% block top_nav %}{% endblock top_nav %}
+{% block header %}{% endblock header %}
 {% block main_content %}
 	<div id="advice" style="width:250px; margin: 150px auto; border:1px solid #333; text-align: center;background-color: #ddd;">
 		<h1 style="color: #555;">PoliWall</h1>
-		<h4 style="color: #333; ">viewing preview as {{ user }}</h4>
-		{% if not user.is_authenticated %}
-			<br>
-			<span><a class="button" href="/admin/">acceso a desarrollo</a></span>
-			<br>
-			<br>
-		{% endif %}
+		<h4 style="color: #333; ">coming soon...</h4>
+		<br>
+		<form action="." method="post">
+			{{ form }}
+			<button>Enter</button>
+		</form>
 	</div>
 {% endblock main_content %}
+{% block footer %}{% endblock footer %}

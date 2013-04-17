@@ -7,3 +7,4 @@ scrapy
 django-wysiwyg-redactor
 bootstrap-admin
 django-tastypie
+django-lockdown==dev
