@@ -16,7 +16,9 @@
 </head>
 <body>
 	<!-- Top bar Nav -->
+	{% block top_nav %}
 		{% include "includes/top_nav.html" %}
+	{% endblock top_nav %}
 	<!-- End of Top bar Nav -->
 
 	<!-- Header -->
@@ -41,7 +43,9 @@
 	<!-- End of Main Content -->
 
 	<!-- Footer -->
+	{% block footer %}
 		{% include "includes/footer.html" %}
+	{% endblock footer %}
 	<!-- End of Footer -->
 
 	<script>
