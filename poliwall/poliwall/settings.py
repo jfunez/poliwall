@@ -103,6 +103,7 @@ INSTALLED_APPS = (
     'south',
     'tastypie',
     'polidata',
+    'django_extensions',
 )
 
 LOGGING = {

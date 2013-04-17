@@ -9,6 +9,7 @@ class PartyAdmin(admin.ModelAdmin):
 
 class SubPartyAdmin(admin.ModelAdmin):
     list_display = ('party', 'name')
+    list_filter = ('party',)
 
 
 class LegislativeAdmin(admin.ModelAdmin):
@@ -20,7 +21,8 @@ class PoliticianAdmin(admin.ModelAdmin):
 
 
 class LegislativePoliticianAdmin(admin.ModelAdmin):
-    list_display = ('date', 'legislative', 'politician', 'party', 'subparty')
+    list_display = ('date', 'legislative', 'politician', 'role', 'party', 'subparty')
+    list_filter = ('legislative', 'party', 'subparty', 'role')
 
 
 admin.site.register(Party, PartyAdmin)
