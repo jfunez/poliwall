@@ -111,6 +111,7 @@ INSTALLED_APPS = (
     'south',
     'tastypie',
     'polidata',
+    'django_extensions',
 )
 
 # A sample logging configuration. The only tangible logging
