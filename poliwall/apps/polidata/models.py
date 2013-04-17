@@ -94,7 +94,7 @@ class LegislativePolitician(models.Model):
     date = models.DateField(u'Fecha')
     legislative = models.ForeignKey(Legislative, verbose_name=u'Legislatura', related_name='politicians')
     politician = models.ForeignKey(Politician, verbose_name=u'Político', related_name='legislatives')
-    party = models.ForeignKey(Party, verbose_name=u'Partdio', blank=True, null=True)
+    party = models.ForeignKey(Party, verbose_name=u'Partido', blank=True, null=True)
     subparty = models.ForeignKey(SubParty, verbose_name=u'Lema', blank=True, null=True)
     role = models.CharField(_(u'Rol'), choices=ROLE_CHOICES, max_length=20)
 
