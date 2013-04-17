@@ -1,5 +1,4 @@
 from datetime import datetime
-from string import capitalize
 import urllib2
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
@@ -15,8 +14,8 @@ class DjangoStoragePipeline(object):
     def process_item(self, item, spider):
         legislative = Legislative.objects.latest('end_date')
 
-        first_name = ' '.join(map(capitalize, item['first_name'].split()))
-        last_name = ' '.join(map(capitalize, item['last_name'].split()))
+        first_name = item['first_name'].title()
+        last_name = item['last_name'].title()
 
         try:
             politician = Politician.objects.get(first_name=first_name, last_name=last_name)
