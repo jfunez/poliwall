@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
+
 from polidata.models import Party, SubParty, Legislative, Politician, LegislativePolitician
 
 
@@ -9,6 +10,7 @@ class PartyAdmin(admin.ModelAdmin):
 
 class SubPartyAdmin(admin.ModelAdmin):
     list_display = ('party', 'name')
+    list_filter = ('party',)
 
 
 class LegislativeAdmin(admin.ModelAdmin):
@@ -16,11 +18,18 @@ class LegislativeAdmin(admin.ModelAdmin):
 
 
 class PoliticianAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'email', 'photo_thumb', 'profile_url')
+    list_display = ('first_name', 'last_name', 'sex', 'email', 'photo_thumb', 'original_profile_url')
+    list_filter = ('sex',)
+    list_editable = ('sex',)
+
+    def original_profile_url(self, instance):
+        return u'<a href="%s" target="_blank">Profile original</a>' % (instance.profile_url)
+    original_profile_url.allow_tags = True
 
 
 class LegislativePoliticianAdmin(admin.ModelAdmin):
     list_display = ('date', 'legislative', 'politician', 'party', 'subparty')
+    list_filter = ('legislative', 'party', 'subparty')
 
 
 admin.site.register(Party, PartyAdmin)
