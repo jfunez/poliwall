@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block extra_head %}
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />	
+{% endblock extra_head %}
+
+{% block header_content %}
+	<h1>{% trans "Politicos" %}</h1>
+{% endblock header_content %}
+
+{% block main_content %}
+	<br><br>
+	<div class="row">
+		<div class="large-12 columns end">
+			<ul class="side-nav">
+				{% for politician in politicians %}
+					<li>
+						<div class="row">
+							<div class="large-2 columns">
+								<a href="{{ politician.profile_url }}">
+									<img src="{{ MEDIA_URL }}{{ politician.photo }}">
+								</a>
+							</div>
+							<div class="large-2 columns">{{ politician }}</div>
+							<div class="large-4 columns">{{ politician.email }}</div>
+						</div>
+
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+{% endblock main_content %}
