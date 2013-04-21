@@ -7,3 +7,4 @@ local_settings.py
 .DS_Store
 poliwall/scrapping/*.json
 poliwall/media/polidata/*
+poliwall/media/cache/*
