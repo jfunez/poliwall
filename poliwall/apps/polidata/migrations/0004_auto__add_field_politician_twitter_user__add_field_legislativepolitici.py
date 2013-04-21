@@ -8,21 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        try:
-            # Adding field 'LegislativePolitician.state'
-            db.add_column(u'polidata_legislativepolitician', 'state',
-                      self.gf('django.db.models.fields.CharField')(max_length=100, null=True, blank=True),
+        # Adding field 'Politician.twitter_user'
+        db.add_column(u'polidata_politician', 'twitter_user',
+                      self.gf('django.db.models.fields.CharField')(default='', max_length=100, blank=True),
                       keep_default=False)
-        except Exception, e:
-            print "WARNING: %s" % e
-
 
     def backwards(self, orm):
-        try:
-            # Deleting field 'LegislativePolitician.state'
-            db.delete_column(u'polidata_legislativepolitician', 'state')
-        except Exception, e:
-            print "WARNING: %s" % e
+        # Deleting field 'Politician.twitter_user'
+        db.delete_column(u'polidata_politician', 'twitter_user')
+
 
     models = {
         u'polidata.legislative': {
@@ -55,7 +49,9 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'photo': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'profile_url': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'})
+            'profile_url': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'sex': ('django.db.models.fields.CharField', [], {'default': "'M'", 'max_length': '1'}),
+            'twitter_user': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'})
         },
         u'polidata.subparty': {
             'Meta': {'object_name': 'SubParty'},

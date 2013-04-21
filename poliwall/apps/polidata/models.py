@@ -65,6 +65,7 @@ class Politician(models.Model):
     photo = models.ImageField(_(u'Foto'), upload_to='polidata/politician/photos/', blank=True, null=True)
     sex = models.CharField(_(u'Genero'), max_length=1, choices=SEX_CHOICES, default='M')
     profile_url = models.TextField(_(u'Profile URL'), blank=True, null=True)
+    twitter_user = models.CharField(_(u'Cuenta de Twitter'), max_length=100, blank=True)
 
     class Meta:
         verbose_name = _(u'Político')
