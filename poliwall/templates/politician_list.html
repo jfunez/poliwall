@@ -2,6 +2,7 @@
 {% load i18n %}
 {% block extra_head %}
 	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />	
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/timeline.css" />	
 {% endblock extra_head %}
 
 {% block header_content %}
@@ -10,106 +11,36 @@
 
 {% block main_content %}
 
-	<style type="text/css">
-
-	@font-face {
-	    font-family: 'fontawesome-selected';
-	    src: url("font/fontawesome-selected.eot");
-	    src:
-	    url("font/fontawesome-selected.eot?#iefix") format('embedded-opentype'),
-	    url("font/fontawesome-selected.woff") format('woff'),
-	    url("font/fontawesome-selected.ttf") format('truetype'),
-	    url("font/fontawesome-selected.svg#fontawesome-selected") format('svg');
-	    font-weight: normal;
-	    font-style: normal;
-	}
-	.timeline {
-	    position: relative;
-	    padding: 30px 0 50px 0;
-	    font-family: 'Gorditas', Arial, sans-serif;
-	}
-	.timeline:before {
-	    content: '';
-	    position: absolute;
-	    width: 5px;
-	    height: 100%;
-	    top: 0;
-	    left: 165px;
-	    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAJUlEQVQIW2NkQAP/gYARWQwkAOLDBeECjEAAkkEWAKtEFwAJAgAZEBP+oM1IkwAAAABJRU5ErkJggg==);
-	}
-	.event {
-	    position: relative;
-	    margin-bottom: 80px;
-	    padding-right: 40px;
-	}
-
-	.thumb {
-	    position: absolute;
-	    width: 100px;
-	    height: 100px;
-	    box-shadow:
-	        0 0 0 8px rgba(65,131,142,1),
-	        0 1px 1px rgba(255,255,255,0.5);
-	    background-repeat: no-repeat;
-	    /*border-radius: 50%;
-	    transform: scale(0.8) translateX(24px);*/
-	}
-	.thumb:before {
-	    content: '';
-	    position: absolute;
-	    height: 8px;
-	    z-index: -1;
-	    background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAICAYAAADA+m62AAAAPElEQVQYV2NkQAP/gYARCNDFUQRgirAphitEl0TngxXisg5ZnBGXIpgbYfIYjkb3BNxGbBLYxIgyEaQRAA8KKAWYsZtjAAAAAElFTkSuQmCC);
-	    width: 51px;
-	    top: 42px;
-	    left: 100%;
-	    margin-left: 8px;
-	}
-	.thumb span {
-	    color: #41838e;
-	    width: 100%;
-	    text-align: center;
-	    font-weight: 700;
-	    font-size: 15px;
-	    text-transform: uppercase;
-	    position: absolute;
-	    bottom: -30px;
-	}
-	</style>
-
-
 	<br><br>
 	<div class="row">
-		<div class="large-12 columns end">
+		<div class="large-12 columns end timeline-wrapper">
 			<ul class="timeline">
 				{% for politician in politicians %}
 
 				    <li class="event">
 				        <input type="radio" name="tl-group" checked/>
 				        <label></label>
-				        <div class="thumb user-4"><span>{{ politician }}</span></div>
+				        <div class="thumb user" style="background-image: url('{{ MEDIA_URL }}{{ politician.photo }}')">
+				        	<span>{{ politician }}</span>
+				        </div>
 				        <div class="content-perspective">
 				            <div class="content">
 				                <div class="content-inner">
-				                    <h3>{{ politician }}</h3>
-				                    <p>{{ politician.email }}</p>
+				                    <h3><a href="#perfil_politico"></a>{{ politician }}</h3>
+				                    <div>
+				                    	<ul>
+				                    		<li><i class="icon-envelope"></i> Email: <a href="mailto:{{ politician.email }}">{{ politician.email }}</a></li>
+				                    		<li><i class="icon-twitter"></i> Twitter: <a href="#perfil_twitter">@{{ politician.email }}</a></li>
+				                    		<li><i class="icon-sitemap"></i> Partido: {{ politician.get_current_party|default:"---" }}</li>
+				                    		<li><i class="icon-group"></i> Lema: {{ politician.get_current_subparty|default:"---" }}</li>
+				                    		<li><i class="icon-desktop"></i> Perfil: <a href="{{ politician.profile_url }}">parlamento.gub.uy</a></li>
+				                    	</ul>
+				                    	<h4><a href="#perfil_politico">{% trans "Ver más" %}</a> </h4>
+				                    </div>
 				                </div>
 				            </div>
 				        </div>
 				    </li>
-
-					<!-- li>
-						<div class="row">
-							<div class="large-2 columns">
-								<a href="{{ politician.profile_url }}">
-									<img src="{{ MEDIA_URL }}{{ politician.photo }}">
-								</a>
-							</div>
-							<div class="large-2 columns">{{ politician }}</div>
-							<div class="large-4 columns">{{ politician.email }}</div>
-						</div>
-
-					</li -->
 				{% endfor %}
 			</ul>
 		</div>
