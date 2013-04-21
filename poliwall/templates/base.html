@@ -26,8 +26,10 @@
 		<header id="header">
 	    	<div class="row">
 	      		<div class="twelve columns">
-	        		<h1>Bienvenido!</h1>
-	        		<h4>Estamos trabajando en un gran proyecto!</h4>
+	      			{% block header_content %}
+		        		<h1>Bienvenido!</h1>
+		        		<h4>Estamos trabajando en un gran proyecto!</h4>
+	      			{% endblock header_content %}
 	      		</div>
 	    	</div>
 	  	</header>

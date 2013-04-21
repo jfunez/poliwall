@@ -13,29 +13,13 @@
           <ul class="right">
             <li class="divider"></li>
             <li class="has-dropdown">
-              <a href="#">Main Item 1</a>
+              <a href="#">{% trans "Gobierno" %}</a>
               <ul class="dropdown">
-                <li><label>Section Name</label></li>
-                <li class="has-dropdown">
-                  <a href="#" class="">Has Dropdown, Level 1</a>
-                  <ul class="dropdown">
-                    <li><a href="#">Dropdown Options</a></li>
-                    <li><a href="#">Dropdown Options</a></li>
-                    <li><a href="#">Level 2</a></li>
-                    <li><a href="#">Subdropdown Option</a></li>
-                    <li><a href="#">Subdropdown Option</a></li>
-                    <li><a href="#">Subdropdown Option</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Dropdown Option</a></li>
-                <li><a href="#">Dropdown Option</a></li>
+                <li><a href="{% url 'gob_nacional' %}">{% trans "Gob. Nacional" %}</a></li>
                 <li class="divider"></li>
-                <li><label>Section Name</label></li>
-                <li><a href="#">Dropdown Option</a></li>
-                <li><a href="#">Dropdown Option</a></li>
-                <li><a href="#">Dropdown Option</a></li>
+                <li><a href="{% url 'gob_nacional' %}">{% trans "Gob. Departamental" %}</a></li>
                 <li class="divider"></li>
-                <li><a href="#">See all &rarr;</a></li>
+                <li><a href="{% url 'home' %}">{% trans "Ver todo" %} &rarr;</a></li>
               </ul>
             </li>
             <li class="divider"></li>

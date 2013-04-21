@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block extra_head %}
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />	
+{% endblock extra_head %}
+
+{% block header_content %}
+	<h1>{% trans "Gobierno Nacional" %}</h1>
+{% endblock header_content %}
+
+{% block main_content %}
+	<br><br>
+	<div class="row">
+		<div class="large-4 columns">
+			<a href="{% url 'poder_legislativo' %}">
+	  			<img src="{{ STATIC_URL }}img/Poder_Legislativo.jpg" alt='{% trans "Gobierno Nacional" %}' />
+	  			<h4>{% trans "Poder Legislativo" %}</h4>
+			</a>
+		</div>
+	    
+	    <div class="large-4 columns">
+	      	<a href="{% url 'poder_legislativo' %}">
+	  			<img src="{{ STATIC_URL }}img/Poder_Ejecutivo.jpg" alt='{% trans "Poder Ejecutivo" %}' />
+	  			<h4>{% trans "Poder Ejecutivo" %}</h4>
+			</a>
+	    </div>
+	    
+	    <div class="large-4 columns">
+	      <a href="{% url 'poder_legislativo' %}">
+	  			<img src="{{ STATIC_URL }}img/Poder_Judicial.jpg" alt='{% trans "Poder Judicial" %}' />
+	  			<h4>{% trans "Poder Judicial" %}</h4>
+			</a>
+	    </div>
+	</div>
+{% endblock main_content %}
