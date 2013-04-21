@@ -103,11 +103,12 @@ class LegislativePolitician(models.Model):
 
     """ Modelo para guardar las representaciones de cada político en distintas legislaturas """
 
-    date = models.DateField(_(u'Fecha'))
-    legislative = models.ForeignKey(Legislative, verbose_name=_(u'Legislatura'), related_name='politicians')
-    politician = models.ForeignKey(Politician, verbose_name=_(u'Político'), related_name='legislatives')
-    party = models.ForeignKey(Party, verbose_name=_(u'Partido'), blank=True, null=True)
-    subparty = models.ForeignKey(SubParty, verbose_name=_(u'Lema'), blank=True, null=True)
+    date = models.DateField(u'Fecha')
+    legislative = models.ForeignKey(Legislative, verbose_name=u'Legislatura', related_name='politicians')
+    politician = models.ForeignKey(Politician, verbose_name=u'Político', related_name='legislatives')
+    party = models.ForeignKey(Party, verbose_name=u'Partido', blank=True, null=True)
+    subparty = models.ForeignKey(SubParty, verbose_name=u'Lema', blank=True, null=True)
+    state = models.CharField(_('Departamento'), max_length=100, blank=True, null=True)
     role = models.CharField(_(u'Rol'), choices=ROLE_CHOICES, max_length=20)
 
     class Meta:

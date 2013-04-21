@@ -46,6 +46,7 @@ class DjangoStoragePipeline(object):
             leg_pol.role = 'S'
         elif spider.name == 'deputies':
             leg_pol.role = 'D'
+            leg_pol.state = item['state'].title()
 
         leg_pol.save()
         return item

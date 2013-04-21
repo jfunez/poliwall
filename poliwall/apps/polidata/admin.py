@@ -28,7 +28,7 @@ class PoliticianAdmin(admin.ModelAdmin):
 
 
 class LegislativePoliticianAdmin(admin.ModelAdmin):
-    list_display = ('date', 'legislative', 'politician', 'party', 'subparty')
+    list_display = ('date', 'legislative', 'politician', 'party', 'subparty', 'state', 'role')
     list_filter = ('legislative', 'party', 'subparty')
 
 
