@@ -12,6 +12,7 @@ class Session(models.Model):
     legislative = models.ForeignKey(Legislative, verbose_name=_(u'Legislatura'), related_name='legislatives')
     house = models.ForeignKey(House, verbose_name=_(u'Cámara'), related_name='houses')
     date = models.DateField(_(u'Fecha'))
+    number = models.IntegerField(_(u'Número'))
     short_name = models.CharField(_(u'Nombre corto'), max_length=100)
     ordinal = models.IntegerField(_(u'Ordinal'))
     president = models.ForeignKey(Politician, verbose_name=_(u'Preside'), related_name='presidents')
