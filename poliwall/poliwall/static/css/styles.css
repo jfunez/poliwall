@@ -5,6 +5,9 @@ body{
     font-style: normal;
     font-weight: normal;
 }
+.top-bar-section .dropdown li a {
+	padding-top: 15px;
+}
 #header {
 	background-color: #2BA6CB;
 	color: #ffffff;

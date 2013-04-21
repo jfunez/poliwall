@@ -1,21 +1,16 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block extra_head %}
 	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />	
 {% endblock extra_head %}
-{% block extra_js %}
-	<script type="text/javascript">
-		$('#advice').addClass('animated pulse');
-	</script>
-{% endblock extra_js %}
 {% block main_content %}
-	<div id="advice" style="width:250px; margin: 150px auto; border:1px solid #333; text-align: center;background-color: #ddd;">
-		<h1 style="color: #555;">PoliWall</h1>
-		<h4 style="color: #333; ">viewing preview as {{ user }}</h4>
-		{% if not user.is_authenticated %}
-			<br>
-			<span><a class="button" href="/admin/">acceso a desarrollo</a></span>
-			<br>
-			<br>
-		{% endif %}
+	<br><br>
+	<div class="row">
+		<div class="large-4 columns">
+			<a href="{% url 'gob_nacional' %}">
+	  			<img src="{{ STATIC_URL }}img/flag_uruguay.png" alt='{% trans "Gobierno Nacional" %}' />
+	  			<h4>{% trans "Gobierno Nacional" %}</h4>
+			</a>
+		</div>
 	</div>
 {% endblock main_content %}
