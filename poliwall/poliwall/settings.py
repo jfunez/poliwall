@@ -104,6 +104,7 @@ INSTALLED_APPS = (
     'tastypie',
     'polidata',
     'django_extensions',
+    'djcelery'
 )
 
 LOGGING = {
@@ -156,3 +157,9 @@ if USE_LOCKDOWN:
     )
     LOCKDOWN_PASSWORDS = ('oximoron',)
     LOCKDOWN_FORM = 'lockdown.forms.AuthForm'
+
+if 'djcelery' in INSTALLED_APPS:
+    INSTALLED_APPS += ('celerytest', 'kombu.transport.django',)
+    # importo las settings
+    from djcelery_settings import *
+    # sin try:except porque quiero que avise de error
