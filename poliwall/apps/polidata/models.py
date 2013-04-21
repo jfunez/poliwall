@@ -63,7 +63,7 @@ class Politician(models.Model):
     last_name = models.CharField(_(u'Apellidos'), max_length=100)
     email = models.EmailField(_(u'Email'), blank=True, null=True)
     photo = models.ImageField(_(u'Foto'), upload_to='polidata/politician/photos/', blank=True, null=True)
-    sex = models.CharField(_(u'Genero'), max_length=1, choices=SEX_CHOICES, default='M')
+    sex = models.CharField(_(u'Genero'), max_length=1, choices=SEX_CHOICES, default='M', db_index=True)
     profile_url = models.TextField(_(u'Profile URL'), blank=True, null=True)
     twitter_user = models.CharField(_(u'Cuenta de Twitter'), max_length=100, blank=True)
 
@@ -117,7 +117,7 @@ class House(models.Model):
         verbose_name_plural = _(u'Cámaras')
 
     def __unicode__(self):
-        return u'Cámara de %s' % self.name
+        return u'%s' % self.name
 
 
 class LegislativePolitician(models.Model):
