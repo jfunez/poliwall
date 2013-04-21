@@ -8,3 +8,4 @@ local_settings.py
 poliwall/scrapping/*.json
 poliwall/media/polidata/*
 poliwall/init.sh
+poliwall/media/cache/*

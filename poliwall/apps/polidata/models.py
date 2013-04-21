@@ -74,20 +74,31 @@ class Politician(models.Model):
     def __unicode__(self):
         return u'%s %s' % (self.first_name, self.last_name)
 
-    def _get_lp_for(self, date):
-        qs = LegislativePolitician.objects.all()
-        qs = qs.filter(date=date)
+    def _get_lp_for(self, date=None):
+        qs = LegislativePolitician.objects.filter(politician__pk=self.pk)
+        if date:
+            qs = qs.filter(date=date)
+        else:
+            qs = qs.order_by('-date')
         if not qs.exists():
             return None
         return qs[0]
 
-    def get_party_for(self, date):
+    def get_party_for(self, date=None):
         lp = self._get_lp_for(date)
         return getattr(lp, 'party', None)
 
-    def get_subparty_for(self, date):
+    def get_subparty_for(self, date=None):
         lp = self._get_lp_for(date)
         return getattr(lp, 'subparty', None)
+
+    @property
+    def get_current_party(self):
+        return self.get_party_for(date=None)
+
+    @property
+    def get_current_subparty(self):
+        return self.get_subparty_for(date=None)
 
     def photo_thumb(self):
         return '<img src="%s%s"/>' % (settings.MEDIA_URL, self.photo)
