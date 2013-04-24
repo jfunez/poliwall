@@ -3,10 +3,10 @@ PIL
 South
 psycopg2
 sorl-thumbnail
-Scrapy
 django-wysiwyg-redactor
 bootstrap-admin
 django-tastypie
 django-lockdown==dev
 django-extensions
 django-celery
+Scrapy
