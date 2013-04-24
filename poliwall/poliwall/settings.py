@@ -149,11 +149,9 @@ if USE_LOCKDOWN:
     MIDDLEWARE_CLASSES += ('lockdown.middleware.LockdownMiddleware',)
     INSTALLED_APPS += ('lockdown',)
     LOCKDOWN_URL_EXCEPTIONS = (
-        r'^/admin/.*',
-        r'^%s.*' % MEDIA_ROOT,
-        r'^%s.*' % STATIC_ROOT,
-        r'\.css$',
-        r'\.js$',
+        r'^/admin/',
+        r'^%s' % MEDIA_ROOT,
+        r'^%s' % STATIC_ROOT,
     )
     LOCKDOWN_PASSWORDS = ('oximoron',)
     LOCKDOWN_FORM = 'lockdown.forms.AuthForm'
