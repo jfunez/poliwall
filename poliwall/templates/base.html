@@ -7,11 +7,18 @@
 	<title>{% block title %}Poliwall - coming soon...{% endblock title %}</title>
 	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/normalize.css" />
 	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/foundation.css" />
-	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/styles.css" />
-	{% block extra_css %}{% endblock extra_css %}
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/font-awesome.min.css" />
+	<!--[if IE 7]>
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/font-awesome-ie7.min.css" />
+	<![endif]-->
+
 	<script src="{{ STATIC_URL|default:'/static/' }}js/vendor/custom.modernizr.js"></script>
 	<!-- google fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/styles.css" />
+	
+	{% block extra_css %}{% endblock extra_css %}
 	{% block extra_head %}{% endblock extra_head %}
 </head>
 <body>
@@ -27,8 +34,8 @@
 	    	<div class="row">
 	      		<div class="twelve columns">
 	      			{% block header_content %}
-		        		<h1>Bienvenido!</h1>
-		        		<h4>Estamos trabajando en un gran proyecto!</h4>
+		        		<h1>Bienvenido a <strong>PoliWall!</strong></h1>
+		        		<h4><em>Una nueva transparencia</em></h4>
 	      			{% endblock header_content %}
 	      		</div>
 	    	</div>
@@ -49,11 +56,8 @@
 		{% include "includes/footer.html" %}
 	{% endblock footer %}
 	<!-- End of Footer -->
-
-	<script>
-	document.write('<script src=' +('__proto__' in {} ? '{{ STATIC_URL |default:"/static/"}}js/vendor/zepto' : '{{ STATIC_URL |default:"/static/"}}js/vendor/jquery') + '.js><\/script>')
-	</script>
   
+ 	<script src="{{ STATIC_URL|default:'/static/' }}js/vendor/jquery.js"></script>
  	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation.min.js"></script>
   <!--
   
@@ -72,11 +76,14 @@
 	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation/foundation.tooltips.js"></script>
   -->
 	<script src="{{ STATIC_URL|default:'/static/' }}js/foundation/foundation.topbar.js"></script>
+
   
-  
-  <script>
-    $(document).foundation();
-  </script>
-  {% block extra_js %}{% endblock extra_js %}
+	<script>
+		$(document).foundation();
+	</script>
+
+	<!-- vendor custom scripts -->
+
+ 	{% block extra_js %}{% endblock extra_js %}
 </body>
 </html>
