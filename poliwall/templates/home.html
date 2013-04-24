@@ -6,11 +6,11 @@
 {% block main_content %}
 	<br><br>
 	<div class="row">
-		<div class="large-4 columns">
+		<div class="large-6 columns">
 			<div class="dashboard_item">
 				<a href="{% url 'gob_nacional' %}">
 
-					{% thumbnail "img/dashboard/flag_uruguay.png" "400x400" crop="center" as im %}
+					{% thumbnail "img/dashboard/flag_uruguay.png" "600x400" crop="center" as im %}
 					    <img class="dashboard_item_icon" src="{{ im.url }}" name="content-target" alt='{% trans "Gobierno Nacional" %}'>
 					{% endthumbnail %}
 					<h4>{% trans "Gobierno Nacional" %}</h4>
