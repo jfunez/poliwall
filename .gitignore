@@ -9,3 +9,5 @@ poliwall/scrapping/*.json
 poliwall/media/polidata/*
 poliwall/init.sh
 ignore
+poliwall/media/cache/*
+

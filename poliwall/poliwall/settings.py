@@ -104,7 +104,8 @@ INSTALLED_APPS = (
     'tastypie',
     'polidata',
     'django_extensions',
-    'djcelery'
+    'djcelery',
+    'sorl.thumbnail',
 )
 
 LOGGING = {
