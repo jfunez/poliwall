@@ -1,16 +1,21 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n thumbnail %}
 {% block extra_head %}
 	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />	
 {% endblock extra_head %}
 {% block main_content %}
 	<br><br>
 	<div class="row">
-		<div class="large-4 columns">
-			<a href="{% url 'gob_nacional' %}">
-	  			<img src="{{ STATIC_URL }}img/flag_uruguay.png" alt='{% trans "Gobierno Nacional" %}' />
-	  			<h4>{% trans "Gobierno Nacional" %}</h4>
-			</a>
+		<div class="large-6 columns">
+			<div class="dashboard_item">
+				<a href="{% url 'gob_nacional' %}">
+
+					{% thumbnail "img/dashboard/flag_uruguay.png" "600x400" crop="center" as im %}
+					    <img class="dashboard_item_icon" src="{{ im.url }}" name="content-target" alt='{% trans "Gobierno Nacional" %}'>
+					{% endthumbnail %}
+					<h4>{% trans "Gobierno Nacional" %}</h4>
+				</a>
+			</div>
 		</div>
 	</div>
 {% endblock main_content %}
