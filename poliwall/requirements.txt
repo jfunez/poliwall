@@ -10,3 +10,4 @@ django-lockdown==dev
 django-extensions
 django-celery
 Scrapy
+-e git+http://github.com/euske/pdfminer.git#egg=pdfminer

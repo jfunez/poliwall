@@ -1,5 +1,3 @@
-import sys
-
 BOT_NAME = 'uy'
 
 SPIDER_MODULES = ['uy.spiders']
