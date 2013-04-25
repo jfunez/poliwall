@@ -9,8 +9,13 @@ class Session(models.Model):
 
     """ Modelo para guardar las sesiones """
 
+<<<<<<< HEAD
     legislative = models.ForeignKey(Legislative, verbose_name=_(u'Legislatura'), related_name='legislatives_sessions')
     house = models.ForeignKey(House, verbose_name=_(u'Cámara'), related_name='houses_sessions')
+=======
+    legislative = models.ForeignKey(Legislative, verbose_name=_(u'Legislatura'), related_name='sessions_legislatives')
+    house = models.ForeignKey(House, verbose_name=_(u'Cámara'), related_name='session_houses')
+>>>>>>> feature/asistencias
     date = models.DateField(_(u'Fecha'))
     number = models.IntegerField(_(u'Número'))
     short_name = models.CharField(_(u'Nombre corto'), max_length=100)

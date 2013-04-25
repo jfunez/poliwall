@@ -7,6 +7,10 @@
 	<title>{% block title %}Poliwall - coming soon...{% endblock title %}</title>
 	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/normalize.css" />
 	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/foundation.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/font-awesome.min.css" />
+	<!--[if IE 7]>
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/font-awesome-ie7.min.css" />
+	<![endif]-->
 	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/styles.css" />
 	{% block extra_css %}{% endblock extra_css %}
 	<script src="{{ STATIC_URL|default:'/static/' }}js/vendor/custom.modernizr.js"></script>

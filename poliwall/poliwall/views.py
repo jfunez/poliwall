@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.template import Context, RequestContext
 from django.shortcuts import render_to_response
+
 from lockdown.decorators import lockdown
+
 from polidata.models import Politician
 
 
@@ -10,6 +12,12 @@ def home(request):
     context = Context({
     })
     return render_to_response('home.html', context, context_instance=RequestContext(request))
+
+
+def api_home(request):
+    context = Context({
+    })
+    return render_to_response('tastypie7home.html', context, context_instance=RequestContext(request))
 
 
 @lockdown(superusers_only=True)

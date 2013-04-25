@@ -105,7 +105,8 @@ INSTALLED_APPS = (
     'polidata',
     'polisessions',
     'django_extensions',
-    'djcelery'
+    'djcelery',
+    'sorl.thumbnail',
 )
 
 LOGGING = {
