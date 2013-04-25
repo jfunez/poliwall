@@ -94,23 +94,32 @@ class Politician(models.Model):
     photo_thumb.allow_tags = True
 
 
-ROLE_CHOICES = (
-    ('S', _(u'Senador')),
-    ('D', _(u'Diputado')),
-)
+class House(models.Model):
+
+    """ Modelo para guardar las distintas cámaras de representación """
+
+    name = models.CharField(_(u'Nombre'), max_length=100)
+    rol_name = models.CharField(_(u'Nombre del rol'), max_length=100)
+
+    class Meta:
+        verbose_name = _(u'Cámara')
+        verbose_name_plural = _(u'Cámaras')
+
+    def __unicode__(self):
+        return u'Cámara de %s' % self.name
 
 
 class LegislativePolitician(models.Model):
 
     """ Modelo para guardar las representaciones de cada político en distintas legislaturas """
 
-    date = models.DateField(u'Fecha')
-    legislative = models.ForeignKey(Legislative, verbose_name=u'Legislatura', related_name='politicians')
-    politician = models.ForeignKey(Politician, verbose_name=u'Político', related_name='legislatives')
-    party = models.ForeignKey(Party, verbose_name=u'Partido', blank=True, null=True)
-    subparty = models.ForeignKey(SubParty, verbose_name=u'Lema', blank=True, null=True)
-    state = models.CharField(_('Departamento'), max_length=100, blank=True, null=True)
-    role = models.CharField(_(u'Rol'), choices=ROLE_CHOICES, max_length=20)
+    date = models.DateField(_(u'Fecha'))
+    legislative = models.ForeignKey(Legislative, verbose_name=_(u'Legislatura'), related_name='politicians')
+    politician = models.ForeignKey(Politician, verbose_name=_(u'Político'), related_name='legislatives')
+    party = models.ForeignKey(Party, verbose_name=_(u'Partido'), blank=True, null=True)
+    subparty = models.ForeignKey(SubParty, verbose_name=_(u'Lema'), blank=True, null=True)
+    state = models.CharField(_(u'Departamento'), max_length=100, blank=True, null=True)
+    house = models.ForeignKey(House, verbose_name=_(u'Cámara'), related_name='houses', blank=True, null=True)
 
     class Meta:
         verbose_name = _(u'Representacion Política')
