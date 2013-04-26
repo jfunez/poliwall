@@ -9,6 +9,7 @@ class Party(models.Model):
     """ Modelo para guardar los partidos políticos """
 
     name = models.CharField(_(u'Nombre'), max_length=100)
+    code = models.CharField(_(u'Nombre'), max_length=10, blank=True, null=True)
 
     class Meta:
         verbose_name = _(u'Partido')
