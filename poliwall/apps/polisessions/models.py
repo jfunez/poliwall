@@ -9,13 +9,13 @@ class Session(models.Model):
 
     """ Modelo para guardar las sesiones """
 
-    legislative = models.ForeignKey(Legislative, verbose_name=_(u'Legislatura'), related_name='sessions_legislatives')
+    legislative = models.ForeignKey(Legislative, verbose_name=_(u'Legislatura'), related_name='session_legislatives')
     house = models.ForeignKey(House, verbose_name=_(u'Cámara'), related_name='session_houses')
     date = models.DateField(_(u'Fecha'))
     number = models.IntegerField(_(u'Número'))
     short_name = models.CharField(_(u'Nombre corto'), max_length=100)
     ordinal = models.IntegerField(_(u'Ordinal'))
-    president = models.ForeignKey(Politician, verbose_name=_(u'Preside'), related_name='presidents')
+    president = models.ForeignKey(Politician, verbose_name=_(u'Preside'), related_name='session_presidents')
     source_url = models.TextField(_(u'Link de la fuente'))
     assists_text = models.TextField(_(u'Texto Asistencias'))
 
@@ -31,10 +31,10 @@ class Action(models.Model):
 
     """ Modelo para actuaciones las sesiones por político """
 
-    legislative = models.ForeignKey(Legislative, verbose_name=_(u'Legislatura'), related_name='legislatives')
+    legislative = models.ForeignKey(Legislative, verbose_name=_(u'Legislatura'), related_name='action_legislatives')
     session = models.ForeignKey(Session, verbose_name=_(u'Sesión'))
     source_url = models.TextField(_(u'Link de la fuente'))
-    politician = models.ForeignKey(Politician, verbose_name=_(u'Político'), related_name='politicians')
+    politician = models.ForeignKey(Politician, verbose_name=_(u'Político'), related_name='action_politicians')
     text = models.TextField(_(u'Texto'))
 
     class Meta:

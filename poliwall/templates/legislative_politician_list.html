@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block extra_head %}
-	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />	
-	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/timeline.css" />	
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/timeline.css" />
 {% endblock extra_head %}
 
 {% block header_content %}
@@ -41,7 +41,7 @@
 						                    		<li><i class="icon-envelope"></i> Email: <a href="mailto:{{ legislative_politician.politician.email }}">{{ legislative_politician.politician.email }}</a></li>
 						                    		{% if legislative_politician.politician.twitter_user %}
 						                    			<li>
-						                    				<i class="icon-twitter"></i> Twitter: 
+						                    				<i class="icon-twitter"></i> Twitter:
 						                    				<a href="http://twitter.com/{{ legislative_politician.politician.twitter_user }}">@{{ legislative_politician.politician.twitter_user }}</a>
 						                    			</li>
 						                    		{% endif %}
@@ -50,7 +50,7 @@
 						                    		<li><i class="icon-desktop"></i> Perfil: <a href="{{ legislative_politician.politician.profile_url }}">parlamento.gub.uy</a></li>
 						                    	</ul>
 						                    	<br>
-						                    	<h6><a href="{% url 'legislative_politician_detail' legislative_politician.pk %}" class="small button round">{% trans "Ver más" %} <i class="icon-circle-arrow-right"></i></a> </h6>
+						                    	<h6><a href="{% url 'legislative_politician_detail' legislative_politician.politician %}" class="small button round">{% trans "Ver más" %} <i class="icon-circle-arrow-right"></i></a> </h6>
 						                    </div>
 						                </div>
 						            </div>
@@ -60,13 +60,13 @@
 					</ul>
 				</div>
 			</div>
-		  
+
 		</div>
 	</section>
 	<section>
 		<p class="title" data-section-title><a href="#">{% trans "Diputados" %}</a></p>
 		<div class="content" data-section-content>
-		
+
 			<div class="row">
 				<div class="large-12 columns end timeline-wrapper">
 					<ul class="timeline">
@@ -89,7 +89,7 @@
 						                    		<li><i class="icon-envelope"></i> Email: <a href="mailto:{{ legislative_politician.politician.email }}">{{ legislative_politician.politician.email }}</a></li>
 						                    		{% if legislative_politician.politician.twitter_user %}
 						                    			<li>
-						                    				<i class="icon-twitter"></i> Twitter: 
+						                    				<i class="icon-twitter"></i> Twitter:
 						                    				<a href="http://twitter.com/{{ legislative_politician.politician.twitter_user }}">@{{ legislative_politician.politician.twitter_user }}</a>
 						                    			</li>
 						                    		{% endif %}
@@ -98,7 +98,7 @@
 						                    		<li><i class="icon-desktop"></i> Perfil: <a href="{{ legislative_politician.politician.profile_url }}">parlamento.gub.uy</a></li>
 						                    	</ul>
 						                    	<br>
-						                    	<h6><a href="{% url 'legislative_politician_detail' legislative_politician.pk %}" class="small button round">{% trans "Ver más" %} <i class="icon-circle-arrow-right"></i></a> </h6>
+						                    	<h6><a href="{% url 'legislative_politician_detail' legislative_politician.politician %}" class="small button round">{% trans "Ver más" %} <i class="icon-circle-arrow-right"></i></a> </h6>
 						                    </div>
 						                </div>
 						            </div>

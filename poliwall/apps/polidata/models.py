@@ -62,6 +62,7 @@ class Politician(models.Model):
 
     first_name = models.CharField(_(u'Nombre'), max_length=100)
     last_name = models.CharField(_(u'Apellidos'), max_length=100)
+    slug = models.SlugField(_(u'Slug'), blank=True, null=True)
     email = models.EmailField(_(u'Email'), blank=True, null=True)
     photo = models.ImageField(_(u'Foto'), upload_to='polidata/politician/photos/', blank=True, null=True)
     sex = models.CharField(_(u'Genero'), max_length=1, choices=SEX_CHOICES, default='M', db_index=True)
@@ -100,6 +101,10 @@ class Politician(models.Model):
     @property
     def get_current_subparty(self):
         return self.get_subparty_for(date=None)
+
+    def save(self, *args, **kwargs):
+        self.slug = unicode(self)
+        return super(Politician, self).save(*args, **kwargs)
 
     def photo_thumb(self):
         return '<img src="%s%s"/>' % (settings.MEDIA_URL, self.photo)

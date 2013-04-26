@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/timeline.css" />
+{% endblock extra_head %}
+
+{% block header_content %}
+    <h1>{% trans "Poder Legislativo" %} <i class="icon-double-angle-right"></i> {% trans "Políticos" %}</h1>
+{% endblock header_content %}
+
+{% block main_content %}
+    <br><br>
+
+
+
+<div class="section-container tabs" data-section="tabs">
+    <div class="row">
+        <div class="large-12 columns end timeline-wrapper">
+            <ul class="timeline">
+                {% for politician in politician_list %}
+                    <li class="event">
+                        <input type="radio" name="tl-group" checked/>
+                        <label></label>
+                        <div class="thumb user" style="background-image: url('{{ MEDIA_URL }}{{ politician.photo }}')">
+                            <!-- span>{{ politician }}</span -->
+                        </div>
+                        <div class="event-content-perspective">
+                            <div class="event-content">
+                                <div class="event-content-inner">
+                                    <h3>
+                                        <a class="expand_politician_profile" href="#"><i class="icon-angle-right"></i> {{ politician }}</a>
+                                    </h3>
+                                    <div>
+                                        <ul>
+                                            <li><i class="icon-envelope"></i> Email: <a href="mailto:{{ politician.email }}">{{ politician.email }}</a></li>
+                                            {% if politician.twitter_user %}
+                                                <li>
+                                                    <i class="icon-twitter"></i> Twitter:
+                                                    <a href="http://twitter.com/{{ politician.twitter_user }}">@{{ politician.twitter_user }}</a>
+                                                </li>
+                                            {% endif %}
+                                            <li><i class="icon-sitemap"></i> Partido: {{ politician.get_current_party|default:"---" }}</li>
+                                            <li><i class="icon-group"></i> Lema: {{ politician.get_current_subparty|default:"---" }}</li>
+                                            <li><i class="icon-desktop"></i> Perfil: <a href="{{ politician.profile_url }}">parlamento.gub.uy</a></li>
+                                        </ul>
+                                        <br>
+                                        <h6><a href="{% url 'legislative_politician_detail' politician %}" class="small button round">{% trans "Ver más" %} <i class="icon-circle-arrow-right"></i></a> </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}
+
+{% block extra_js %}
+    <script type="text/javascript">
+        $('.expand_politician_profile').on('click', function (event) {
+            event.preventDefault();
+            var title_anchor = $(this);
+            var right_arrow = title_anchor.find('i.icon-angle-right');
+            var down_arrow = title_anchor.find('i.icon-angle-down');
+            var radiobtn = title_anchor.closest('li.event').find('input[name="tl-group"]');
+
+            if (right_arrow.size() > 0) {
+                radiobtn.attr('checked',true).click();
+                right_arrow.removeClass('icon-angle-right').addClass('icon-angle-down');
+                $('.expand_politician_profile').not(title_anchor).find('i').removeClass('icon-angle-down').addClass('icon-angle-right');
+            } else {
+                if (down_arrow) {
+                    radiobtn.removeAttr('checked');
+                    down_arrow.removeClass('icon-angle-down').addClass('icon-angle-right');
+                }
+            }
+
+            //console.log('done! this:', this);
+        });
+    </script>
+{% endblock extra_js %}

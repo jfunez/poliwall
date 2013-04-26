@@ -20,8 +20,8 @@ class DjangoStoragePipeline(object):
 
         legislative = Legislative.objects.latest('end_date')
 
-        first_name = item['first_name'].title()
-        last_name = item['last_name'].title()
+        first_name = item['first_name'].title().strip()
+        last_name = item['last_name'].title().strip()
 
         try:
             politician = Politician.objects.get(first_name=first_name, last_name=last_name)
@@ -49,9 +49,9 @@ class DjangoStoragePipeline(object):
                                             party=party)
 
         if spider.name == 'senators':
-            leg_pol.role = 'S'
+            leg_pol.house = House.objects.get(rol_name='Senador')
         elif spider.name == 'deputies':
-            leg_pol.role = 'D'
+            leg_pol.house = House.objects.get(rol_name='Diputado')
             leg_pol.state = item['state'].title()
 
         leg_pol.save()
@@ -81,8 +81,8 @@ class DiemDjangoStoragePipeline(object):
 
         obj.legislative = Legislative.objects.latest('end_date')
 
-        first_name = item['first_name'].title()
-        last_name = item['last_name'].title()
+        first_name = item['first_name'].title().strip()
+        last_name = item['last_name'].title().strip()
 
         try:
             obj.politician = Politician.objects.get(first_name=first_name, last_name=last_name)
@@ -130,6 +130,3 @@ class DiemDjangoStoragePipeline(object):
         obj.save()
 
         return item
-
-
-
