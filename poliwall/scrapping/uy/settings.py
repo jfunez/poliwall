@@ -8,4 +8,5 @@ NEWSPIDER_MODULE = 'uy.spiders'
 
 ITEM_PIPELINES = [
     'uy.pipelines.DjangoStoragePipeline',
+    'uy.pipelines.DiemDjangoStoragePipeline',
 ]

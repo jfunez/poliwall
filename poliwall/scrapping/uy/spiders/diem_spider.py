@@ -9,7 +9,10 @@ LEGISLATIVE = '47'
 
 class DiemSpider(BaseSpider):
     name = "diem"
-    start_urls = ["http://share.pdfonline.com/540ff470d9bd402088f252a2e86e3321/viaticos.htm", ]
+
+    def __init__(self, *args, **kwargs):
+        super(DiemSpider, self).__init__(*args, **kwargs)
+        self.start_urls = [kwargs.get('start_url')]
 
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
@@ -36,9 +39,11 @@ class DiemSpider(BaseSpider):
                 if 'Totales' in line:
                     break
                 if 'Nota del Sec' in line:
+                    diemdata.append('')
                     diemdata.append(line)
+                    diemdata.append('')
+                else:
                     diemdata.append(line)
-                diemdata.append(line)
                 if len(diemdata) == 22:
                     itemsdata.append(tuple(diemdata))
                     diemdata = []
@@ -64,14 +69,28 @@ class DiemSpider(BaseSpider):
             item['ticket_cost'] = itm[13]
             item['travel_insurance'] = itm[14]
             item['diem'] = itm[15]
-            item['refund'] = itm[16]
+            item['report_refund'] = itm[16]
             item['report_date'] = itm[17]
-            item['report'] = itm[19]
+            item['report_rest'] = itm[19]
             item['total_trip'] = itm[20]
             item['observations'] = itm[21]
             items.append(item)
 
-        print items
+        return items
 
-curl --form "Filedata=@/home/jp/dev/repo/poliwall/ignore/viaticos.pdf" --form press=Upload --keepalive-time 40 http://www.pdfonline.com/convert-pdf-to-html/Default.aspx?op=upload&email= > salida.txt
-http://www.pdfonline.com/convert-pdf-to-html/DocStorage/c941bd6b68b447c786e88257a2b4a6e2/viaticos.htm
+
+# export PDF_NAME='viaticos'
+# export PDF_URL="http://www.parlamento.gub.uy/VerDocEspecial.asp?DocumentoId=114"
+
+# curl -o $PDF_NAME.pdf $PDF_URL
+# PDF_PATH="`pwd`/$PDF_NAME.pdf"
+# curl -o $PDF_NAME.tmp --form "Filedata=@/home/jp/dev/repo/poliwall/ignore/viaticos.pdf"
+
+
+
+# curl -o salida.dat --form "Filedata=@/home/jp/dev/repo/poliwall/ignore/viaticos.pdf" --form press=Upload --keepalive-time 40 http://www.pdfonline.com/convert-pdf-to-html/Default.aspx?op=upload&email=
+# http://www.pdfonline.com/convert-pdf-to-html/DocStorage/c941bd6b68b447c786e88257a2b4a6e2/viaticos.htm
+
+# http://www.pdfonline.com/convert-pdf-to-html/DocStorage/d5725382d8164a928c2de96af1710c67/viaticos.htm
+
+# cat salida.dat | sed -e 's/<body>\(.*\)<\/body>/\1/' | sed -e 's/<html>\(.*\)<\/html>/\1/'
