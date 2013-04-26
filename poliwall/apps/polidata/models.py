@@ -63,8 +63,9 @@ class Politician(models.Model):
     last_name = models.CharField(_(u'Apellidos'), max_length=100)
     email = models.EmailField(_(u'Email'), blank=True, null=True)
     photo = models.ImageField(_(u'Foto'), upload_to='polidata/politician/photos/', blank=True, null=True)
-    sex = models.CharField(_(u'Genero'), max_length=1, choices=SEX_CHOICES, default='M')
+    sex = models.CharField(_(u'Genero'), max_length=1, choices=SEX_CHOICES, default='M', db_index=True)
     profile_url = models.TextField(_(u'Profile URL'), blank=True, null=True)
+    twitter_user = models.CharField(_(u'Cuenta de Twitter'), max_length=100, blank=True)
 
     class Meta:
         verbose_name = _(u'Político')
@@ -104,10 +105,19 @@ class Politician(models.Model):
     photo_thumb.allow_tags = True
 
 
-ROLE_CHOICES = (
-    ('S', _(u'Senador')),
-    ('D', _(u'Diputado')),
-)
+class House(models.Model):
+
+    """ Modelo para guardar las distintas cámaras de representación """
+
+    name = models.CharField(_(u'Nombre'), max_length=100)
+    rol_name = models.CharField(_(u'Nombre del rol'), max_length=100)
+
+    class Meta:
+        verbose_name = _(u'Cámara')
+        verbose_name_plural = _(u'Cámaras')
+
+    def __unicode__(self):
+        return u'%s' % self.name
 
 
 class LegislativePolitician(models.Model):
@@ -119,7 +129,8 @@ class LegislativePolitician(models.Model):
     politician = models.ForeignKey(Politician, verbose_name=_(u'Político'), related_name='legislatives')
     party = models.ForeignKey(Party, verbose_name=_(u'Partido'), blank=True, null=True)
     subparty = models.ForeignKey(SubParty, verbose_name=_(u'Lema'), blank=True, null=True)
-    role = models.CharField(_(u'Rol'), choices=ROLE_CHOICES, max_length=20)
+    state = models.CharField(_(u'Departamento'), max_length=100, blank=True, null=True)
+    house = models.ForeignKey(House, verbose_name=_(u'Cámara'), related_name='houses', blank=True, null=True)
 
     class Meta:
         verbose_name = _(u'Representacion Política')
