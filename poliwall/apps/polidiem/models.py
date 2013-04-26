@@ -44,4 +44,4 @@ class Diem(models.Model):
         verbose_name_plural = _(u'Viáticos')
 
     def __unicode__(self):
-        return u'%s' % self.name
+        return u'%s - %s U$S %s' % (self.politician, self.event, self.total_trip)
