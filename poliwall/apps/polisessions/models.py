@@ -24,7 +24,7 @@ class Session(models.Model):
         verbose_name_plural = _(u'Sesiones')
 
     def __unicode__(self):
-        return u'%s' % self.name
+        return u'Sesion %s Ordinal %s' % (self.date, self.ordinal)
 
 
 class Action(models.Model):
@@ -42,4 +42,4 @@ class Action(models.Model):
         verbose_name_plural = _(u'Actuaciones')
 
     def __unicode__(self):
-        return u'[%s] %s: "%s"' % (self.date.strftime('%d/%m/%Y'), self.politician, self.text)
+        return u'[%s - %s] Sesion %s' % (self.politician, self.pk, self.session)

@@ -84,7 +84,7 @@
 }
 .event label:after {
     font-family: 'fontawesome-selected';
-    content: '';
+    content: '\e702';
     background: #fff;
     border-radius: 50%;
     color: #41838E;
@@ -97,12 +97,12 @@
     position: absolute;
     text-align: center;
 }
-.content-perspective {
+.event-content-perspective {
     margin-left: 230px;
     position: relative;
     perspective: 600px;
 }
-.content-perspective:before {
+.event-content-perspective:before {
     content: '';
     width: 37px;
     left: -51px;
@@ -112,12 +112,12 @@
     z-index: -1;
     background: #fff;
 }
-.content {
+.event-content {
     /*transform: rotateY(10deg);
     transform-origin: 0 0;
     transform-style: preserve-3d;*/
 }
-.content-inner {
+.event-content-inner {
     position: relative;
     padding: 20px;
     color: #333;
@@ -125,19 +125,19 @@
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     background: #fff;
 }
-.content-inner h3 {
+.event-content-inner h3 {
     font-size: 26px;
     padding: 5px 0 5px 0;
     color: #41838e;
 }
-.content-inner div {
+.event-content-inner div {
     /*font-size: 1.8px;*/
     max-height: 0;
     overflow: hidden;
     color: rgba(0,0,0,0);
     text-align: left;
 }
-.content-inner:before {
+.event-content-inner:before {
     font-family: 'fontawesome-selected';
     content: '\25c2';
     font-weight: normal;
@@ -153,16 +153,16 @@
 }
 .thumb,
 .thumb span,
-.content-inner h3 {
+.event-content-inner h3 {
     transition: all 0.6s ease-in-out 0.2s;
 }
-.content-inner {
+.event-content-inner {
     transition: box-shadow 0.8s linear 0.2s;
 }
-.content {
+.event-content {
     /*transition: transform 0.8s cubic-bezier(.59,1.45,.69,.98) 0.2s;*/
 }
-.content-inner div {
+.event-content-inner div {
     transition: max-height 0.5s linear, color 0.3s linear;
 }
 .event input[type="radio"]:checked + label:after {
@@ -170,26 +170,26 @@
     color: #F26328;
     box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.8);
 }
-.event input[type="radio"]:checked ~ .content-perspective:before {
+.event input[type="radio"]:checked ~ .event-content-perspective:before {
     background: #F26328;
 }
-.event input[type="radio"]:checked ~ .content-perspective .content-inner h3 {
+.event input[type="radio"]:checked ~ .event-content-perspective .event-content-inner h3 {
     color: #F26328;
 }
-.event input[type="radio"]:checked ~ .content-perspective .content {
+.event input[type="radio"]:checked ~ .event-content-perspective .event-content {
     /*transform: rotateY(-5deg);*/
 }
-.event input[type="radio"]:checked ~ .content-perspective .content-inner {
+.event input[type="radio"]:checked ~ .event-content-perspective .event-content-inner {
     border-color: #F26328;
     box-shadow: 10px 0px 10px -6px rgba(0, 0, 0, 0.1);
 }
-.event input[type="radio"]:checked ~ .content-perspective .content-inner div {
+.event input[type="radio"]:checked ~ .event-content-perspective .event-content-inner div {
     max-height: 260px; /* Add media queries */
     color: rgb(0,0,0);
     color: rgba(0,0,0,0.6);
     transition-delay: 0s, 0.6s;
 }
-.event input[type="radio"]:checked ~ .content-perspective .content-inner:before {
+.event input[type="radio"]:checked ~ .event-content-perspective .event-content-inner:before {
     color: #F26328;
 }
 .event input[type="radio"]:checked ~ .thumb {
@@ -206,16 +206,16 @@
 }
 
 @media screen and (max-width: 850px) {
-    .content-inner h3 {
+    .event-content-inner h3 {
         font-size: 20px;
     }
  
-    .content-inner p {
+    .event-content-inner p {
         font-size: 14px;
         text-align: justify;
     }
  
-    .event input[type="radio"]:checked ~ .content-perspective .content-inner p {
+    .event input[type="radio"]:checked ~ .event-content-perspective .event-content-inner p {
         max-height: 500px;
     }
 }
