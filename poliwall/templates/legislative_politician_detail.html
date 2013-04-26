@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block extra_head %}
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />	
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/timeline.css" />	
+{% endblock extra_head %}
+
+{% block header_content %}
+	<h1>{{ legislative_politician.politician }}</h1>
+{% endblock header_content %}
+
+{% block main_content %}
+	<br><br>
+	<section>
+	
+		<div class="row">
+			<div class="large-3 columns">
+				<img src="{{ MEDIA_URL }}{{ legislative_politician.politician.photo }}" alt="{{ legislative_politician.politician }}">
+			</div>
+			<div class="large-9 columns">
+
+				<ul>
+					<li><i class="icon-envelope"></i> Email: <a href="mailto:{{ legislative_politician.politician.email }}">{{ legislative_politician.politician.email }}</a></li>
+					{% if legislative_politician.politician.twitter_user %}
+						<li>
+							<i class="icon-twitter"></i> Twitter: 
+							<a href="http://twitter.com/{{ legislative_politician.politician.twitter_user }}">@{{ legislative_politician.politician.twitter_user }}</a>
+						</li>
+					{% endif %}
+					<li><i class="icon-sitemap"></i> Partido: {{ legislative_politician.politician.get_current_party|default:"---" }}</li>
+					<li><i class="icon-group"></i> Lema: {{ legislative_politician.politician.get_current_subparty|default:"---" }}</li>
+					<li><i class="icon-desktop"></i> Perfil: <a href="{{ legislative_politician.politician.profile_url }}">parlamento.gub.uy</a></li>
+					<li><i class=""></i> Departamento: {{ legislative_politician.state|default:"---" }}</li>
+					<li><i class=""></i> Camara: {{ legislative_politician.house|default:"---" }}</li>
+				</ul>
+
+			</div>
+		</div>
+	</section>
+	<section>
+		<h2>{% trans "Actividades" %}:</h2>
+		<ul>
+			{% for activity in legislative_politician_actions %}
+				<li>
+					<p>
+						<table>
+							<tr>
+								<td><b>Legislatura</b>: {{ activity.legislative }}</td>
+								<td><b>Sesion</b>: {{ activity.session }}</td>
+							</tr>
+							<tr>
+								<td colspan="2"><b>Texto</b>: {{ activity.text }}</td>
+							</tr>
+						</table>
+					</p>
+				</li>
+			{% endfor %}
+		</ul>
+	</section>
+	<br><br>
+{% endblock main_content %}
