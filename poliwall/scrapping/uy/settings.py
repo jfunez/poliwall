@@ -1,5 +1,3 @@
-import sys
-
 BOT_NAME = 'uy'
 
 SPIDER_MODULES = ['uy.spiders']
@@ -10,4 +8,5 @@ NEWSPIDER_MODULE = 'uy.spiders'
 
 ITEM_PIPELINES = [
     'uy.pipelines.DjangoStoragePipeline',
+    'uy.pipelines.DiemDjangoStoragePipeline',
 ]

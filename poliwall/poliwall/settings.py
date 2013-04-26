@@ -104,6 +104,7 @@ INSTALLED_APPS = (
     'tastypie',
     'polidata',
     'polisessions',
+    'polidiem',
     'django_extensions',
     'djcelery',
     'sorl.thumbnail',
