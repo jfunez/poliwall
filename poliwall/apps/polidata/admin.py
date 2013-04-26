@@ -33,7 +33,8 @@ class LegislativePoliticianAdmin(admin.ModelAdmin):
 
 
 class HouseAdmin(admin.ModelAdmin):
-    list_display = ('name', )
+    list_display = ('name', 'rol_name')
+    list_filter = ('name', 'rol_name')
 
 
 admin.site.register(Party, PartyAdmin)

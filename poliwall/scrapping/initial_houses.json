@@ -1,0 +1,18 @@
+[
+{
+  "pk": 1, 
+  "model": "polidata.house", 
+  "fields": {
+    "name": "Senadores", 
+    "rol_name": "Senador"
+  }
+},
+{
+  "pk": 2, 
+  "model": "polidata.house", 
+  "fields": {
+    "name": "Diputados", 
+    "rol_name": "Diputado"
+  }
+}
+]
