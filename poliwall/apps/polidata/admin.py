@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from polidata.models import Party, SubParty, Legislative, Politician, LegislativePolitician
+from polidata.models import Party, SubParty, Legislative, Politician, LegislativePolitician, House
 
 
 class PartyAdmin(admin.ModelAdmin):
@@ -32,8 +32,13 @@ class LegislativePoliticianAdmin(admin.ModelAdmin):
     list_filter = ('legislative', 'party', 'subparty')
 
 
+class HouseAdmin(admin.ModelAdmin):
+    list_display = ('name', )
+
+
 admin.site.register(Party, PartyAdmin)
 admin.site.register(SubParty, SubPartyAdmin)
 admin.site.register(Legislative, LegislativeAdmin)
 admin.site.register(Politician, PoliticianAdmin)
 admin.site.register(LegislativePolitician, LegislativePoliticianAdmin)
+admin.site.register(House, HouseAdmin)
