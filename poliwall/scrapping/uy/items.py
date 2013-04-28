@@ -39,6 +39,8 @@ class Politician(Item):
     politician_id = Field()
     legislative_id = Field()
     state = Field()
+    profile_id = Field()
+    biography = Field()
 
 
 class Diem(Item):
