@@ -7,6 +7,7 @@ NEWSPIDER_MODULE = 'uy.spiders'
 #USER_AGENT = 'tutorial (+http://www.yourdomain.com)'
 
 ITEM_PIPELINES = [
-    'uy.pipelines.DjangoStoragePipeline',
+    # 'uy.pipelines.DjangoStoragePipeline',
     'uy.pipelines.DiemDjangoStoragePipeline',
+    'uy.pipelines.PoliticianDjangoStoragePipeline',
 ]

@@ -20,18 +20,18 @@
 			<div class="large-9 columns">
 
 				<ul>
-					<li><i class="icon-envelope"></i> Email: <a href="mailto:{{ politician.email }}">{{ politician.email }}</a></li>
+					<li><i class="icon-envelope"></i> {% trans "Email" %}: <a href="mailto:{{ politician.email }}">{{ politician.email }}</a></li>
 					{% if politician.twitter_user %}
 						<li>
-							<i class="icon-twitter"></i> Twitter:
+							<i class="icon-twitter"></i> {% trans "Twitter" %}:
 							<a href="http://twitter.com/{{ politician.twitter_user }}">@{{ politician.twitter_user }}</a>
 						</li>
 					{% endif %}
-					<li><i class="icon-sitemap"></i> Partido: {{ politician.get_current_party|default:"---" }}</li>
-					<li><i class="icon-group"></i> Lema: {{ politician.get_current_subparty|default:"---" }}</li>
-					<li><i class="icon-desktop"></i> Perfil: <a href="{{ politician.profile_url }}">parlamento.gub.uy</a></li>
-					<li><i class=""></i> Departamento: {{ state|default:"---" }}</li>
-					<li><i class=""></i> Camara: {{ house|default:"---" }}</li>
+					<li><i class="icon-sitemap"></i> {% trans "Partido" %}: {{ politician.get_current_party|default:"---" }}</li>
+					<li><i class="icon-group"></i> {% trans "Lema" %}: {{ politician.get_current_subparty|default:"---" }}</li>
+					<li><i class="icon-desktop"></i> {% trans "Perfil" %}: <a href="{{ politician.profile_url }}">parlamento.gub.uy</a></li>
+					<li><i class=""></i> {% trans "Departamento" %}: {{ state|default:"---" }}</li>
+					<li><i class=""></i> {% trans "Camara" %}: {{ house|default:"---" }}</li>
 				</ul>
 
 			</div>
@@ -45,11 +45,11 @@
 					<p>
 						<table>
 							<tr>
-								<td><b>Legislatura</b>: {{ activity.legislative }}</td>
-								<td><b>Sesion</b>: {{ activity.session }}</td>
+								<td><b>{% trans "Legislatura" %}</b>: {{ activity.legislative }}</td>
+								<td><b>{% trans "Sesion" %}</b>: {{ activity.session }}</td>
 							</tr>
 							<tr>
-								<td colspan="2"><b>Texto</b>: {{ activity.text }}</td>
+								<td colspan="2"><b>{% trans "Texto" %}</b>: {{ activity.text }}</td>
 							</tr>
 						</table>
 					</p>
@@ -57,11 +57,52 @@
 			{% empty %}
 				<li>
 					<p>
-						Sin actividad
+						{% trans "Sin actividad" %}
 					</p>
 				</li>
 			{% endfor %}
 		</ul>
+	</section>
+	<section>
+		<h2>{% trans "Viajes" %}:</h2>
+		{% if politician.diem_politcians.all.0 %}
+			<table>
+				<thead>
+					<tr>
+						<th>{% trans "Evento" %}</th>
+						<th>{% trans "Días" %}</th>
+						<th>{% trans "Viáticos" %}</th>
+						<th>{% trans "Devuelve" %}</th>
+						<th>{% trans "Gastos" %}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for diem in politician.diem_politcians.all %}
+					<tr>
+						<td>{{ diem.event }}</td>
+						<td>{{ diem.days }}</td>
+						<td>U$S {{ diem.diem|default:"0" }}</td>
+						<td>U$S {{ diem.report_refund|default:"0" }}</td>
+						<td>
+							{% if diem.diem > 0 %}
+								{% if diem.report_rest %}
+									U$S {{ diem.report_rest }}
+								{% else %}
+									<strong style="color: red">Sin justificar</strong>
+								{% endif %}
+							{% else %}
+								U$S 0
+							{% endif %}
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<p>
+				{% trans "Sin actividad" %}
+			</p>
+		{% endif %}
 	</section>
 	<br><br>
 {% endblock main_content %}

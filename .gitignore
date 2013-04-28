@@ -6,6 +6,5 @@
 local_settings.py
 .DS_Store
 poliwall/media/polidata/*
-poliwall/init.sh
 ignore
 poliwall/media/cache/*

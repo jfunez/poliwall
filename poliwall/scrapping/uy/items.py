@@ -25,6 +25,20 @@ class Senator(Item):
     photo_url = Field()
     profile_url = Field()
     politician_id = Field()
+    role = Field()
+
+
+class Politician(Item):
+    first_name = Field()
+    last_name = Field()
+    party = Field()
+    email = Field()
+    photo_url = Field()
+    profile_url = Field()
+    role = Field()
+    politician_id = Field()
+    legislative_id = Field()
+    state = Field()
 
 
 class Diem(Item):

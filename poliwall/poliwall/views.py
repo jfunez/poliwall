@@ -3,7 +3,7 @@ from django.template import Context, RequestContext
 from django.shortcuts import render_to_response
 from django.http import Http404
 from lockdown.decorators import lockdown
-from polidata.models import LegislativePolitician, Politician, Legislative
+from polidata.models import LegislativePolitician, Politician, Legislative, House
 
 
 @lockdown(superusers_only=True)
@@ -35,17 +35,20 @@ def poder_legislativo(request):
 
 @lockdown(superusers_only=True)
 def legislative_politician_list(request, legislative=None):
-    legislatives = LegislativePolitician.objects.all()
     if legislative:
-        if not Legislative.objects.filter(code=legislative).exists():
+        lqs = Legislative.objects.filter(code=legislative)
+        if not lqs.exists():
             raise Http404
-        legislatives = legislatives.filter(legislative__code=legislative)
-    senators_list = legislatives.filter(house__name="Senadores")
-    deputies_list = legislatives.filter(house__name="Diputados")
+        legislative = lqs[0]
 
+    houses = []
+    for house in House.objects.filter(is_public=True):
+        qs = house.ligislativepolitician_houses.all()
+        if legislative:
+            qs = qs.filter(legislative=legislative)
+        houses.append([house, list(qs.prefetch_related())])
     context = Context({
-        'senators_list': senators_list,
-        'deputies_list': deputies_list,
+        'houses': houses,
     })
     return render_to_response('legislative_politician_list.html', context, context_instance=RequestContext(request))
 

@@ -39,6 +39,7 @@ class Legislative(models.Model):
     """ Modelo para guardar las legislaturas de gobierno """
 
     code = models.IntegerField(_(u'Código'))
+    roman_code = models.CharField(_(u'Código romano'), max_length=10)
     start_date = models.DateField(_(u'Fecha inicial'))
     end_date = models.DateField(_(u'Fecha final'))
 
@@ -117,6 +118,7 @@ class House(models.Model):
 
     name = models.CharField(_(u'Nombre'), max_length=100)
     rol_name = models.CharField(_(u'Nombre del rol'), max_length=100)
+    is_public = models.BooleanField(_(u'Es Pública'), default=True)
 
     class Meta:
         verbose_name = _(u'Cámara')
@@ -136,7 +138,7 @@ class LegislativePolitician(models.Model):
     party = models.ForeignKey(Party, verbose_name=_(u'Partido'), blank=True, null=True)
     subparty = models.ForeignKey(SubParty, verbose_name=_(u'Lema'), blank=True, null=True)
     state = models.CharField(_(u'Departamento'), max_length=100, blank=True, null=True)
-    house = models.ForeignKey(House, verbose_name=_(u'Cámara'), related_name='houses', blank=True, null=True)
+    house = models.ForeignKey(House, verbose_name=_(u'Cámara'), related_name='ligislativepolitician_houses', blank=True, null=True)
 
     class Meta:
         verbose_name = _(u'Representacion Política')
