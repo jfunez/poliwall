@@ -103,6 +103,10 @@ class Politician(models.Model):
     def get_current_subparty(self):
         return self.get_subparty_for(date=None)
 
+    @property
+    def get_fullname(self):
+        return "%s %s" % (self.first_name, self.last_name)
+
     def save(self, *args, **kwargs):
         self.slug = unicode(self)
         return super(Politician, self).save(*args, **kwargs)

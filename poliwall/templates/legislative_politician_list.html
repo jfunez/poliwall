@@ -12,60 +12,47 @@
 {% block main_content %}
 	<br><br>
 
+	<div class="section-container tabs" data-section="tabs">
+		{% for house, legislative_politician_list in houses %}
+		<section>
+			<p class="title" data-section-title><a href="#">{{ house }}</a></p>
+			<div class="content" data-section-content>
 
+				<div class="row">
+					<div class="large-12 columns end timeline-wrapper">
+						<ul class="timeline">
+							{% for legislative_politician in legislative_politician_list %}
 
-<div class="section-container tabs" data-section="tabs">
-	{% for house, legislative_politician_list in houses %}
-	<section>
-		<p class="title" data-section-title><a href="#">{{ house }}</a></p>
-		<div class="content" data-section-content>
-
-			<div class="row">
-				<div class="large-12 columns end timeline-wrapper">
-					<ul class="timeline">
-						{% for legislative_politician in legislative_politician_list %}
-
-						    <li class="event">
-						        <input type="radio" name="tl-group" checked/>
-						        <label></label>
-						        <div class="thumb user" style="background-image: url('{{ MEDIA_URL }}{{ legislative_politician.politician.photo }}')">
-						        	<!-- span>{{ legislative_politician.politician }}</span -->
-						        </div>
-						        <div class="event-content-perspective">
-						            <div class="event-content">
-						                <div class="event-content-inner">
-						                    <h3>
-						                    	<a class="expand_politician_profile" href="#"><i class="icon-angle-right"></i> {{ legislative_politician.politician }}</a>
-						                    </h3>
-						                    <div>
-						                    	<ul>
-						                    		<li><i class="icon-envelope"></i> Email: <a href="mailto:{{ legislative_politician.politician.email }}">{{ legislative_politician.politician.email }}</a></li>
-						                    		{% if legislative_politician.politician.twitter_user %}
-						                    			<li>
-						                    				<i class="icon-twitter"></i> Twitter:
-						                    				<a href="http://twitter.com/{{ legislative_politician.politician.twitter_user }}">@{{ legislative_politician.politician.twitter_user }}</a>
-						                    			</li>
-						                    		{% endif %}
-						                    		<li><i class="icon-sitemap"></i> Partido: {{ legislative_politician.politician.get_current_party|default:"---" }}</li>
-						                    		<li><i class="icon-group"></i> Lema: {{ legislative_politician.politician.get_current_subparty|default:"---" }}</li>
-						                    		<li><i class="icon-desktop"></i> Perfil: <a href="{{ legislative_politician.politician.profile_url }}">parlamento.gub.uy</a></li>
-						                    	</ul>
-						                    	<br>
-						                    	<h6><a href="{% url 'legislative_politician_detail' legislative_politician.politician %}" class="small button round">{% trans "Ver más" %} <i class="icon-circle-arrow-right"></i></a> </h6>
-						                    </div>
-						                </div>
-						            </div>
-						        </div>
-						    </li>
-						{% endfor %}
-					</ul>
+							    <li class="event">
+							        <input type="radio" name="tl-group" checked/>
+							        <label></label>
+							        {% with politician=legislative_politician.politician %}
+							        	{% include "includes/legislative_politician_detail_thumb.html" %}
+									{% endwith %}
+							        <div class="event-content-perspective">
+							            <div class="event-content">
+							                <div class="event-content-inner">
+							                    <h3>
+							                    	<a class="expand_politician_profile" href="#"><i class="icon-angle-right"></i> {{ legislative_politician.politician }}</a>
+							                    </h3>
+							                    <div>
+							                    	{% include "includes/legislative_politician_detail_summary.html" %}
+							                    	<br>
+							                    	<h6><a href="{% url 'legislative_politician_detail' legislative_politician.politician %}" class="small button round">{% trans "Ver más" %} <i class="icon-circle-arrow-right"></i></a> </h6>
+							                    </div>
+							                </div>
+							            </div>
+							        </div>
+							    </li>
+							{% endfor %}
+						</ul>
+					</div>
 				</div>
-			</div>
 
-		</div>
-	</section>
-	{% endfor%}
-</div>
+			</div>
+		</section>
+		{% endfor%}
+	</div>
 {% endblock main_content %}
 
 {% block extra_js %}
