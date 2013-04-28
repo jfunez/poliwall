@@ -108,6 +108,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'djcelery',
     'sorl.thumbnail',
+    'mailer',
 )
 
 LOGGING = {
@@ -164,3 +165,13 @@ if 'djcelery' in INSTALLED_APPS:
     # importo las settings
     from djcelery_settings import *
     # sin try:except porque quiero que avise de error
+
+# EMAIL SETTINGS:
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+EMAIL_SUBJECT_PREFIX = '[poliwall]'
+# EMAIL LOCALHOST SMTP SERVER
+# python -m smtpd -n -c DebuggingServer localhost:1025
