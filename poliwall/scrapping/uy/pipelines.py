@@ -96,7 +96,10 @@ class DiemDjangoStoragePipeline(object):
                 politician.save()
                 obj.politician = politician
 
-            obj.party, created = Party.objects.get_or_create(name=item['party'].upper(), code=item['party'].upper())
+            try:
+                obj.party = Party.objects.get(code=item['party'].upper())
+            except Party.DoesNotExist:
+                obj.party = Party.objects.get_or_create(name=item['party'].upper(), code=item['party'].upper())
 
             try:
                 leg_pol = LegislativePolitician.objects.get(legislative=obj.legislative, politician=obj.politician,
@@ -133,10 +136,13 @@ class DiemDjangoStoragePipeline(object):
             obj.observations = item['observations']
 
             obj.save()
+            print u'Viático: %s' % obj.politician
         except Exception, e:
+            print item
             print e
             import pdb
             pdb.set_trace()
+
         return item
 
 
@@ -187,10 +193,11 @@ class PoliticianDjangoStoragePipeline(object):
             leg_pol.house = house
             leg_pol.state = item.get('state', '').title()
             leg_pol.save()
-            print politician
+            print u'Perfil: %s' % politician
         except Exception, e:
             print item
             print e
-            import pdb; pdb.set_trace()
+            import pdb
+            pdb.set_trace()
 
         return item

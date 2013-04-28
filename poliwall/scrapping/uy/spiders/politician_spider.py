@@ -84,64 +84,57 @@ class PoliticianSpider(BaseSpider):
     name = "politician"
     allowed_domains = ["parlamento.gub.uy"]
     start_urls = extra_urls.keys()
-    # start_urls = [
-    # 'http://www.parlamento.gub.uy/palacio3/legisladores/legislador.asp?id=4703062',
-    # 'http://www.parlamento.gub.uy/palacio3/legisladores/legislador.asp?id=4705217', ]
 
     def parse(self, response):
+
+        hxs = HtmlXPathSelector(response)
+        fullname = extra_urls[response.url]
+        last_name, first_name = fullname.strip().split(',')
+        item = Politician()
+        item['first_name'] = first_name.strip()
+        item['last_name'] = last_name.strip()
+        item['politician_id'] = response.url[-5:]
+        if item['politician_id'] == '00479':
+            item['role'] = u'Senador de la República'
+            item['party'] = u'Partido Frente Amplio'
+            item['state'] = u'MONTEVIDEO'
+            item['legislative_id'] = u'XLVII'
+        else:
+            datos = [x.strip() for x in hxs.select('//*[@id="TblIdLeg"]//tr[2]//font//text()').extract()]
+            role = ""
+            party = ""
+            state = ""
+            on_party = False
+            on_state = False
+            on_role = True
+            if 'PRESIDENTE' in datos[0]:
+                datos = datos[1:]
+            for data in datos[0].split():
+                if data == "PARTIDO":
+                    on_party = True
+                    on_role = False
+                if data == "departamento":
+                    on_party = False
+                    on_state = True
+                    continue
+                if on_role:
+                    role += data + ' '
+                    continue
+                if on_party:
+                    party += data + ' '
+                    continue
+                if on_state:
+                    if data != 'de':
+                        state = data
+            item['role'] = role.replace('por el Lema', '').replace('electo', '').strip()
+            item['party'] = party.replace(', ', '')
+            item['state'] = state.strip()
+            item['legislative_id'] = datos[1].split(':')[1].replace('a.)', '').strip()
         try:
+            item['email'] = datos[3].strip()
+        except:
+            pass
+        item['photo_url'] = 'http://www.parlamento.gub.uy%s' % hxs.select('//img/@src')[0].extract()
+        item['profile_url'] = response.url
 
-            hxs = HtmlXPathSelector(response)
-            fullname = extra_urls[response.url]
-            last_name, first_name = fullname.strip().split(',')
-            item = Politician()
-            item['first_name'] = first_name.strip()
-            item['last_name'] = last_name.strip()
-            item['politician_id'] = response.url[-5:]
-            if item['politician_id'] == '4700479':
-                item['role'] = u'Senador de la República'
-                item['party'] = u'Partido Frente Amplio'
-                item['state'] = u'MONTEVIDEO'
-                item['legislative_id'] = u'XLVII'
-            else:
-                datos = [x.strip() for x in hxs.select('//*[@id="TblIdLeg"]//tr[2]//font//text()').extract()]
-                role = ""
-                party = ""
-                state = ""
-                on_party = False
-                on_state = False
-                on_role = True
-                if 'PRESIDENTE' in datos[0]:
-                    datos = datos[1:]
-                for data in datos[0].split():
-                    if data == "PARTIDO":
-                        on_party = True
-                        on_role = False
-                    if data == "departamento":
-                        on_party = False
-                        on_state = True
-                        continue
-                    if on_role:
-                        role += data + ' '
-                        continue
-                    if on_party:
-                        party += data + ' '
-                        continue
-                    if on_state:
-                        if data != 'de':
-                            state = data
-                item['role'] = role.replace('por el Lema', '').replace('electo', '').strip()
-                item['party'] = party.replace(', ', '')
-                item['state'] = state.strip()
-                item['legislative_id'] = datos[1].split(':')[1].replace('a.)', '').strip()
-            try:
-                item['email'] = datos[3].strip()
-            except:
-                pass
-            item['photo_url'] = 'http://www.parlamento.gub.uy%s' % hxs.select('//img/@src')[0].extract()
-            item['profile_url'] = response.url
-
-
-        except Exception, e:
-            import pdb; pdb.set_trace()
         return item
