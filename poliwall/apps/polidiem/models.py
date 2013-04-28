@@ -33,7 +33,7 @@ class Diem(models.Model):
     # Report U$S
     report_refund = models.FloatField(_(u'Devuelve'), blank=True, null=True)
     report_date = models.DateField(_(u'Fecha'), blank=True, null=True)
-    report_rest = models.FloatField(_(u'Justifica en gastos'), blank=True, null=True)
+    report_rest = models.FloatField(_(u'Gastos'), blank=True, null=True)
     # Total trip
     total_trip = models.FloatField(_(u'Total del viaje'))
     # Observations
