@@ -161,7 +161,7 @@ class PoliticianDjangoStoragePipeline(object):
                 politician = Politician.objects.get(first_name__icontains=first_name, last_name__icontains=last_name)
             except Politician.DoesNotExist:
                 politician = Politician(first_name=first_name, last_name=last_name, email=item.get('email', ''),
-                                        profile_url=item['profile_url'])
+                                        profile_url=item['profile_url'], profile_id=item['profile_id'])
 
                 if item['photo_url']:
                     filename = item['photo_url'].split('/')[-1]
@@ -194,6 +194,25 @@ class PoliticianDjangoStoragePipeline(object):
             leg_pol.state = item.get('state', '').title()
             leg_pol.save()
             print u'Perfil: %s' % politician
+        except Exception, e:
+            print item
+            print e
+            import pdb
+            pdb.set_trace()
+
+        return item
+
+
+class PoliticianBiographyDjangoStoragePipeline(object):
+
+    def process_item(self, item, spider):
+        if not spider.name in ['politicianbiography', ]:
+            return item
+        try:
+            politician = Politician.objects.get(profile_id=item['profile_id'])
+            politician.biography = item['biography']
+            politician.save()
+            print u'Biography: %s' % politician
         except Exception, e:
             print item
             print e
