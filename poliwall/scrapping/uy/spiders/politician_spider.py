@@ -83,17 +83,18 @@ class DeputySpider(BaseSpider):
 class PoliticianSpider(BaseSpider):
     name = "politician"
     allowed_domains = ["parlamento.gub.uy"]
-    start_urls = extra_urls.keys()
+    start_urls = ['http://www.parlamento.gub.uy/palacio3/legisladores/legislador.asp?id=%s' % x for x in extra_urls.keys()]
 
     def parse(self, response):
-
         hxs = HtmlXPathSelector(response)
-        fullname = extra_urls[response.url]
+        fullid = response.url[-7:]
+        fullname = extra_urls[fullid]
         last_name, first_name = fullname.strip().split(',')
         item = Politician()
         item['first_name'] = first_name.strip()
         item['last_name'] = last_name.strip()
         item['politician_id'] = response.url[-5:]
+        item['profile_id'] = fullid
         if item['politician_id'] == '00479':
             item['role'] = u'Senador de la República'
             item['party'] = u'Partido Frente Amplio'
@@ -137,4 +138,21 @@ class PoliticianSpider(BaseSpider):
         item['photo_url'] = 'http://www.parlamento.gub.uy%s' % hxs.select('//img/@src')[0].extract()
         item['profile_url'] = response.url
 
+        return item
+
+
+class PoliticianBiographySpider(BaseSpider):
+    name = "politicianbiography"
+    allowed_domains = ["parlamento.gub.uy"]
+    start_urls = ['http://www.parlamento.gub.uy/palacio3/legisladores/biografia.asp?id=%s' % x for x in extra_urls.keys()]
+
+    def parse(self, response):
+        hxs = HtmlXPathSelector(response)
+        fullid = response.url[-7:]
+        fullname = extra_urls[fullid]
+        last_name, first_name = fullname.strip().split(',')
+        item = Politician()
+        data = hxs.select('//*[@id="Table5"]//p//text()').extract()
+        item['biography'] = '\n'.join([u'<p>%s</p>' % p.strip() for p in data if p.strip()])
+        item['profile_id'] = fullid
         return item

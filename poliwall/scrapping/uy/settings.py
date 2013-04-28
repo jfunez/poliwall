@@ -10,4 +10,5 @@ ITEM_PIPELINES = [
     # 'uy.pipelines.DjangoStoragePipeline',
     'uy.pipelines.DiemDjangoStoragePipeline',
     'uy.pipelines.PoliticianDjangoStoragePipeline',
+    'uy.pipelines.PoliticianBiographyDjangoStoragePipeline',
 ]
