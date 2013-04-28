@@ -12,7 +12,7 @@ urlpatterns = patterns(
     url(r'^$', 'poliwall.views.home', name='home'),
     # Gob. Nacional
     url(r'^gob-nacional/$', 'poliwall.views.gob_nacional', name='gob_nacional'),
-    url(r'^politico/(?P<slug>.+)/$', 'poliwall.views.legislative_politician_detail', name='legislative_politician_detail'),
+    url(r'^perfil/(?P<slug>.+)/$', 'poliwall.views.legislative_politician_detail', name='legislative_politician_detail'),
     url(r'^poder-legislativo/politicos/$', 'poliwall.views.legislative_politician_list', name='legislative_politician_list'),
     url(r'^poder-legislativo/politicos/(?P<legislative>\d+)$', 'poliwall.views.legislative_politician_list', name='legislative_politician_list_by_legislative'),
     url(r'^poder-legislativo/$', 'poliwall.views.poder_legislativo', name='poder_legislativo'),
