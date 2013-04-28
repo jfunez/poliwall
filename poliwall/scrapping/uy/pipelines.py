@@ -99,7 +99,7 @@ class DiemDjangoStoragePipeline(object):
             try:
                 obj.party = Party.objects.get(code=item['party'].upper())
             except Party.DoesNotExist:
-                obj.party = Party.objects.get_or_create(name=item['party'].upper(), code=item['party'].upper())
+                obj.party, created = Party.objects.get_or_create(name=item['party'].upper(), code=item['party'].upper())
 
             try:
                 leg_pol = LegislativePolitician.objects.get(legislative=obj.legislative, politician=obj.politician,
