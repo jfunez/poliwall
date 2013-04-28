@@ -1,0 +1,15 @@
+{% load i18n thumbnail %}
+<div class="thumb user" {% if politician.photo %} style="background-image: url('{{ MEDIA_URL }}{{ politician.photo }}')" {% endif %}>
+    {% if not politician.photo %}
+        {% if politician.sex == 'M' %}
+            {% thumbnail "img/dashboard/male.png" "130x150" crop="center" as im %}
+                <img src="{{ im.url }}" alt='{% trans politician.get_fullname %}'>
+            {% endthumbnail %}
+        {% else %}
+            {% thumbnail "img/dashboard/female.png" "130x150" crop="center" as im %}
+                <img src="{{ im.url }}" alt='{% trans politician.get_fullname %}'>
+            {% endthumbnail %}
+        {% endif %}
+    {% endif %}
+    <!-- span>{{ politician }}</span -->
+</div>

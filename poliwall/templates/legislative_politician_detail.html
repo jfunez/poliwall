@@ -12,97 +12,106 @@
 {% block main_content %}
 	<br><br>
 	<section>
-
 		<div class="row">
 			<div class="large-3 columns">
-				<img src="{{ MEDIA_URL }}{{ politician.photo }}" alt="{{ politician }}">
+				{% include "includes/legislative_politician_detail_thumb.html" %}
 			</div>
 			<div class="large-9 columns">
-
-				<ul>
-					<li><i class="icon-envelope"></i> {% trans "Email" %}: <a href="mailto:{{ politician.email }}">{{ politician.email }}</a></li>
-					{% if politician.twitter_user %}
-						<li>
-							<i class="icon-twitter"></i> {% trans "Twitter" %}:
-							<a href="http://twitter.com/{{ politician.twitter_user }}">@{{ politician.twitter_user }}</a>
-						</li>
-					{% endif %}
-					<li><i class="icon-sitemap"></i> {% trans "Partido" %}: {{ politician.get_current_party|default:"---" }}</li>
-					<li><i class="icon-group"></i> {% trans "Lema" %}: {{ politician.get_current_subparty|default:"---" }}</li>
-					<li><i class="icon-desktop"></i> {% trans "Perfil" %}: <a href="{{ politician.profile_url }}">parlamento.gub.uy</a></li>
-					<li><i class=""></i> {% trans "Departamento" %}: {{ state|default:"---" }}</li>
-					<li><i class=""></i> {% trans "Camara" %}: {{ house|default:"---" }}</li>
-				</ul>
-
+				{% include "includes/legislative_politician_detail_summary.html" %}
 			</div>
 		</div>
 	</section>
 	<section>
-		<h2>{% trans "Actividades" %}:</h2>
-		<ul>
-			{% for activity in politician.action_politicians.all %}
-				<li>
-					<p>
-						<table>
-							<tr>
-								<td><b>{% trans "Legislatura" %}</b>: {{ activity.legislative }}</td>
-								<td><b>{% trans "Sesion" %}</b>: {{ activity.session }}</td>
-							</tr>
-							<tr>
-								<td colspan="2"><b>{% trans "Texto" %}</b>: {{ activity.text }}</td>
-							</tr>
+
+		<div class="section-container tabs" data-section="tabs">
+
+
+			<section>
+				<p class="title" data-section-title><a href="#">{% trans "Biografía" %}:</a></p>
+				<div class="content" data-section-content>
+					{% if politician.biography %}
+						<p>
+							{{ politician.biography }}
+						</p>
+					{% else %}
+						<p>
+							{% trans "Sin biografía" %}
+						</p>
+					{% endif %}
+				</div>
+			</section>
+			<section>
+				<p class="title" data-section-title><a href="#">{% trans "Actividades" %}:</a></p>
+				<div class="content" data-section-content>
+					<ul>
+						{% for activity in politician.action_politicians.all %}
+							<li>
+								<p>
+									<table style="width:100%">
+										<tr>
+											<th>{% trans "Legislatura" %}: {{ activity.legislative }}</th>
+											<th>{% trans "Sesion" %}: {{ activity.session }}</th>
+										</tr>
+										<tr>
+											<td colspan="2"><b>{% trans "Texto" %}</b>: {{ activity.text }}</td>
+										</tr>
+									</table>
+								</p>
+							</li>
+						{% empty %}
+							<li>
+								<p>
+									{% trans "Sin actividad" %}
+								</p>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</section>
+			<section>
+				<p class="title" data-section-title><a href="#">{% trans "Viáticos" %}:</a></p>
+				<div class="content" data-section-content>
+					{% if politician.diem_politcians.all.0 %}
+						<table style="width:100%">
+							<thead>
+								<tr>
+									<th>{% trans "Evento" %}</th>
+									<th>{% trans "Días" %}</th>
+									<th>{% trans "Viáticos" %}</th>
+									<th>{% trans "Devuelve" %}</th>
+									<th>{% trans "Gastos" %}</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for diem in politician.diem_politcians.all %}
+								<tr>
+									<td>{{ diem.event }}</td>
+									<td>{{ diem.days }}</td>
+									<td>U$S {{ diem.diem|default:"0" }}</td>
+									<td>U$S {{ diem.report_refund|default:"0" }}</td>
+									<td>
+										{% if diem.diem > 0 %}
+											{% if diem.report_rest %}
+												U$S {{ diem.report_rest }}
+											{% else %}
+												<strong style="color: red">Sin justificar</strong>
+											{% endif %}
+										{% else %}
+											U$S 0
+										{% endif %}
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
 						</table>
-					</p>
-				</li>
-			{% empty %}
-				<li>
-					<p>
-						{% trans "Sin actividad" %}
-					</p>
-				</li>
-			{% endfor %}
-		</ul>
-	</section>
-	<section>
-		<h2>{% trans "Viajes" %}:</h2>
-		{% if politician.diem_politcians.all.0 %}
-			<table>
-				<thead>
-					<tr>
-						<th>{% trans "Evento" %}</th>
-						<th>{% trans "Días" %}</th>
-						<th>{% trans "Viáticos" %}</th>
-						<th>{% trans "Devuelve" %}</th>
-						<th>{% trans "Gastos" %}</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for diem in politician.diem_politcians.all %}
-					<tr>
-						<td>{{ diem.event }}</td>
-						<td>{{ diem.days }}</td>
-						<td>U$S {{ diem.diem|default:"0" }}</td>
-						<td>U$S {{ diem.report_refund|default:"0" }}</td>
-						<td>
-							{% if diem.diem > 0 %}
-								{% if diem.report_rest %}
-									U$S {{ diem.report_rest }}
-								{% else %}
-									<strong style="color: red">Sin justificar</strong>
-								{% endif %}
-							{% else %}
-								U$S 0
-							{% endif %}
-						</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		{% else %}
-			<p>
-				{% trans "Sin actividad" %}
-			</p>
-		{% endif %}
+					{% else %}
+						<p>
+							{% trans "Sin actividad" %}
+						</p>
+					{% endif %}
+				</div>
+			</section>
+		</div>
 	</section>
 	<br><br>
 {% endblock main_content %}
