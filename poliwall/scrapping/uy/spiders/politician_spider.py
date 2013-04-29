@@ -156,3 +156,35 @@ class PoliticianBiographySpider(BaseSpider):
         item['biography'] = '\n'.join([u'%s' % p.strip() for p in data if p.strip()])
         item['profile_id'] = fullid
         return item
+
+
+from scrapy.http import Request, FormRequest
+
+
+class PLinksSpider(BaseSpider):
+    name = "plinks"
+    allowed_domains = ["parlamento.gub.uy"]
+    start_urls = ['http://www.parlamento.gub.uy/palacio3/legisladores_der.asp', ]
+
+    def parse(self, response):
+        hxs = HtmlXPathSelector(response)
+        for url in hxs.select('//table//tr//td//a//@href').extract():
+            xurl = "http://www.parlamento.gub.uy/palacio3/%s" % url.replace('p_legisladores', 'legisladores_der')
+            yield Request(xurl, callback=self.parse_leg)
+
+    def parse_leg(self, response):
+        yield FormRequest.from_response(response,
+            formname='Form1',
+            formdata={'Deptos': 'TODOS',
+                    'ir.x': '14',
+                    'ir.y': '11',
+            }, callback=self.parse_plinks)
+
+    def parse_plinks(self, response):
+        hxs = HtmlXPathSelector(response)
+        keys = hxs.select('//select[2]//option//@value').extract()[2:]
+        values = hxs.select('//select[2]//option//text()').extract()[2:]
+        data = dict([(k.split("=")[1], v) for k, v in zip(keys, values)])
+        for k, v in data.items():
+            print v, "http://www.parlamento.gub.uy/palacio3/legisladores/legislador.asp?id=%s" % k
+
