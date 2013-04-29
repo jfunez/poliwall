@@ -2,7 +2,7 @@
 <ul>
 	{% if politician.email %}
 		<li>
-			<i class="icon-envelope"></i> {% trans "Email" %}: 
+			<i class="icon-envelope"></i> {% trans "Email" %}:
 			<a href="mailto:{{ politician.email }}">{{ politician.email }}</a>
 		</li>
 	{% endif %}
@@ -13,16 +13,16 @@
 		</li>
 	{% endif %}
 	<li>
-		<i class="icon-sitemap"></i> {% trans "Partido" %}: 
+		<i class="icon-sitemap"></i> {% trans "Partido" %}:
 		{{ politician.get_current_party|default:"---" }}
 	</li>
 	<li><i class="icon-group"></i> {% trans "Lema" %}: {{ politician.get_current_subparty|default:"---" }}</li>
 	{% if politician.profile_url %}
 		<li>
-			<i class="icon-desktop"></i> {% trans "Perfil" %}: 
+			<i class="icon-desktop"></i> {% trans "Perfil" %}:
 			<a href="{{ politician.profile_url }}">parlamento.gub.uy</a>
 		</li>
 	{% endif %}
 	<li><i class=""></i> {% trans "Departamento" %}: {{ state|default:"---" }}</li>
-	<li><i class=""></i> {% trans "Camara" %}: {{ house|default:"---" }}</li>
+	<li><i class=""></i> {% trans "Cámara" %}: {{ house|default:"---" }}</li>
 </ul>
