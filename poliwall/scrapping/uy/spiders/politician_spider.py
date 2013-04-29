@@ -152,7 +152,7 @@ class PoliticianBiographySpider(BaseSpider):
         fullname = extra_urls[fullid]
         last_name, first_name = fullname.strip().split(',')
         item = Politician()
-        data = hxs.select('//*[@id="Table5"]//p//text()').extract()
-        item['biography'] = '\n'.join([u'<p>%s</p>' % p.strip() for p in data if p.strip()])
+        data = hxs.select('//*[@id="Table5"]//p').extract()
+        item['biography'] = '\n'.join([u'%s' % p.strip() for p in data if p.strip()])
         item['profile_id'] = fullid
         return item
