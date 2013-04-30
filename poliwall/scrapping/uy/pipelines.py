@@ -114,8 +114,8 @@ class DiemDjangoStoragePipeline(object):
                                 if fix2 in politicians:
                                     obj.politician = fix2
                                 else:
-                                    import pdb
-                                    pdb.set_trace()
+                                    print "ERROR CON: %s" % politicians
+                                    return item
             else:
                 politician = Politician(first_name=first_name, last_name=last_name)
                 politician.save()
@@ -165,8 +165,6 @@ class DiemDjangoStoragePipeline(object):
         except Exception, e:
             print item
             print e
-            import pdb
-            pdb.set_trace()
 
         return item
 
@@ -223,8 +221,6 @@ class PoliticianDjangoStoragePipeline(object):
         except Exception, e:
             print item
             print e
-            import pdb
-            pdb.set_trace()
 
         return item
 
@@ -235,10 +231,11 @@ class PoliticianBiographyDjangoStoragePipeline(object):
         if not spider.name in ['politicianbiography', ]:
             return item
         try:
-            politician = Politician.objects.get(profile_id=item['profile_id'])
-            politician.biography = item['biography']
-            politician.save()
-            print u'Biography: %s' % politician
+            if item['biography']:
+                politician = Politician.objects.get(profile_id=item['profile_id'])
+                politician.biography = item['biography']
+                politician.save()
+                print u'Biography: %s' % politician
         except Exception, e:
             print item
             print e

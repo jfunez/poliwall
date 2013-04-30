@@ -53,7 +53,7 @@ def party_detail(request, full_name):
 @lockdown(superusers_only=True)
 def legislative_list(request):
     context = Context({
-        'legislative_list': Legislative.objects.all()
+        'legislative_list': Legislative.objects.all().order_by('-start_date')
     })
     return render_to_response('legislative_list.html', context, context_instance=RequestContext(request))
 
