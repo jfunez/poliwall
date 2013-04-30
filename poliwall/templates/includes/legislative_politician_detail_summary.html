@@ -1,5 +1,11 @@
 {% load i18n %}
 <ul>
+	{% if legislative %}
+	<li>
+		<i class="icon-envelope"></i> {% trans "Legislatura" %}:
+		<a href="{% url 'legislative_detail' legislative.roman_code %}">{{ legislative }}</a>
+	</li>
+	{% endif %}
 	{% if politician.email %}
 		<li>
 			<i class="icon-envelope"></i> {% trans "Email" %}:

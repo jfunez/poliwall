@@ -89,9 +89,34 @@ class DiemDjangoStoragePipeline(object):
             first_name = item['first_name'].title().strip()
             last_name = item['last_name'].title().strip()
 
-            try:
-                obj.politician = Politician.objects.get(first_name__icontains=first_name, last_name__icontains=last_name)
-            except Politician.DoesNotExist:
+            politicians = list(Politician.objects.filter(first_name__icontains=first_name, last_name__icontains=last_name))
+            if politicians:
+                if len(politicians) == 1:
+                    obj.politician = politicians[0]
+                else:
+                    politicians_id = LegislativePolitician.objects.all().filter(politician__in=politicians, party__code=item['party']).distinct().values_list('politician', flat=True)
+                    if len(politicians_id) == 1:
+                        obj.politician = Politician.objects.get(pk=politicians_id[0])
+                    else:
+                        rlist = []
+                        leg_polis = LegislativePolitician.objects.all().filter(politician__in=politicians)
+                        for lp in leg_polis:
+                            if item['party'] in ''.join([x[0] for x in lp.party.name.replace('-', ' ').split()[1:]]):
+                                rlist.append(lp)
+                        if len(rlist) == 1:
+                            obj.politician = rlist[0].politician
+                        else:
+                            fix1 = Politician.objects.get(profile_id='02920')
+                            if fix1 in politicians:
+                                obj.politician = fix1
+                            else:
+                                fix2 = Politician.objects.get(profile_id='00623')
+                                if fix2 in politicians:
+                                    obj.politician = fix2
+                                else:
+                                    import pdb
+                                    pdb.set_trace()
+            else:
                 politician = Politician(first_name=first_name, last_name=last_name)
                 politician.save()
                 obj.politician = politician
@@ -149,7 +174,7 @@ class DiemDjangoStoragePipeline(object):
 class PoliticianDjangoStoragePipeline(object):
 
     def process_item(self, item, spider):
-        if not spider.name in ['politician', ]:
+        if not spider.name in ['politician', 'plinks']:
             return item
         try:
             legislative = Legislative.objects.get(roman_code=item['legislative_id'])
@@ -158,10 +183,11 @@ class PoliticianDjangoStoragePipeline(object):
             last_name = item['last_name'].title().strip()
 
             try:
-                politician = Politician.objects.get(first_name__icontains=first_name, last_name__icontains=last_name)
+                politician = Politician.objects.get(
+                    first_name__icontains=first_name, last_name__icontains=last_name, profile_id=item['profile_id'][2:])
             except Politician.DoesNotExist:
                 politician = Politician(first_name=first_name, last_name=last_name, email=item.get('email', ''),
-                                        profile_url=item['profile_url'], profile_id=item['profile_id'])
+                                        profile_url=item['profile_url'], profile_id=item['profile_id'][2:])
 
                 if item['photo_url']:
                     filename = item['photo_url'].split('/')[-1]
@@ -181,7 +207,7 @@ class PoliticianDjangoStoragePipeline(object):
                 leg_pol = LegislativePolitician.objects.get(legislative=legislative, politician=politician,
                                                             party=party)
             except LegislativePolitician.DoesNotExist:
-                leg_pol = LegislativePolitician(date=datetime.now(), legislative=legislative, politician=politician,
+                leg_pol = LegislativePolitician(date=legislative.start_date, legislative=legislative, politician=politician,
                                                 party=party)
 
             try:
@@ -193,7 +219,7 @@ class PoliticianDjangoStoragePipeline(object):
             leg_pol.house = house
             leg_pol.state = item.get('state', '').title()
             leg_pol.save()
-            print u'Perfil: %s' % politician
+            print u'%s - Perfil #%s: %s' % (legislative.code, politician.pk, politician)
         except Exception, e:
             print item
             print e

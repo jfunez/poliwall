@@ -12,10 +12,13 @@ urlpatterns = patterns(
     url(r'^$', 'poliwall.views.home', name='home'),
     # Gob. Nacional
     url(r'^gob-nacional/$', 'poliwall.views.gob_nacional', name='gob_nacional'),
+    url(r'^partidos/$', 'poliwall.views.party_list', name='party_list'),
+    url(r'^partido/(?P<full_name>.+)/$', 'poliwall.views.party_detail', name='party_detail'),
+    url(r'^legislativo/$', 'poliwall.views.legislative_list', name='legislative_list'),
+    url(r'^legislativo/legislatura/(?P<legislative_code>\w+)/$', 'poliwall.views.legislative_detail', name='legislative_detail'),
+    url(r'^legislativo/legislatura/(?P<legislative_code>\w+)/politicos/$', 'poliwall.views.legislative_politician_list', name='legislative_politician_list'),
     url(r'^perfil/(?P<slug>.+)/$', 'poliwall.views.legislative_politician_detail', name='legislative_politician_detail'),
-    url(r'^poder-legislativo/politicos/$', 'poliwall.views.legislative_politician_list', name='legislative_politician_list'),
-    url(r'^poder-legislativo/politicos/(?P<legislative>\d+)$', 'poliwall.views.legislative_politician_list', name='legislative_politician_list_by_legislative'),
-    url(r'^poder-legislativo/$', 'poliwall.views.poder_legislativo', name='poder_legislativo'),
+
     url(r'^redactor/', include('redactor.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(v1_api.urls)),
