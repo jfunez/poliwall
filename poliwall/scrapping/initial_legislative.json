@@ -1,1 +1,62 @@
-[{"pk": 1, "model": "polidata.legislative", "fields": {"code": 47, "roman_code": "XLVII", "start_date": "2013-04-22", "end_date": "2013-04-22"}}]
+[
+    {
+        "pk": 1,
+        "model": "polidata.legislative",
+        "fields": {
+            "code": 42,
+            "roman_code": "XLII",
+            "start_date": "1985-02-14",
+            "end_date": "1990-02-14"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "polidata.legislative",
+        "fields": {
+            "code": 43,
+            "roman_code": "XLIII",
+            "start_date": "1990-02-14",
+            "end_date": "1995-02-14"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "polidata.legislative",
+        "fields": {
+            "code": 44,
+            "roman_code": "XLIV",
+            "start_date": "1995-02-14",
+            "end_date": "2000-02-14"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "polidata.legislative",
+        "fields": {
+            "code": 45,
+            "roman_code": "XLV",
+            "start_date": "2000-02-14",
+            "end_date": "2005-02-14"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "polidata.legislative",
+        "fields": {
+            "code": 46,
+            "roman_code": "XLVI",
+            "start_date": "2005-02-14",
+            "end_date": "2010-02-14"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "polidata.legislative",
+        "fields": {
+            "code": 47,
+            "roman_code": "XLVII",
+            "start_date": "2010-02-15",
+            "end_date": "2015-02-14"
+        }
+    }
+]

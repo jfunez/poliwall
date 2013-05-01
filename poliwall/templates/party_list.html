@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />
+{% endblock extra_head %}
+
+{% block header_content %}
+    <h1><a href="{% url 'party_list' %}" style="color:#FFF">{% trans "Partidos" %}</a></h1>
+{% endblock header_content %}
+
+{% block main_content %}
+
+{% for party in party_list %}
+
+        <div class="large-3 columns">
+            <a href="{% url 'party_detail' party.name %}">
+                <img src="{{ STATIC_URL }}img/politics.png" alt='{{ party }}' />
+                <h4>{{ party }}</h4>
+            </a>
+        </div>
+
+{% endfor %}
+
+{% endblock main_content %}

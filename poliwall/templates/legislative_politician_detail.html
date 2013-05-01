@@ -24,7 +24,33 @@
 	<section>
 
 		<div class="section-container tabs" data-section="tabs">
-
+			<section>
+				<p class="title" data-section-title><a href="#">{% trans "Legislaturas" %}:</a></p>
+				<div class="content" data-section-content>
+					<table style="width:100%">
+						<tr>
+							<th>{% trans "Legislatura" %}</th>
+							<th>{% trans "Cámara" %}</th>
+							<th>{% trans "Partido" %}</th>
+							<th>{% trans "Agrupación" %}</th>
+						</tr>
+						{% for legislativepolitician in politician.legislatives.all %}
+						<tr>
+							<td><a href="{% url 'legislative_detail' legislativepolitician.legislative.roman_code %}">{{ legislativepolitician.legislative }}</a></td>
+							<td>{{ legislativepolitician.house }}</td>
+							<td><a href="{% url 'party_detail' legislativepolitician.party.name %}">{{ legislativepolitician.party }}</a></td>
+							<td>{{ legislativepolitician.subparty|default:"n/d" }}</td>
+						</tr>
+						{% empty %}
+						<tr>
+								<td colspan="5">
+									{% trans "Error" %}
+								</td>
+							</tr>
+						{% endfor %}
+					</table>
+				</div>
+			</section>
 
 			<section>
 				<p class="title" data-section-title><a href="#">{% trans "Biografía" %}:</a></p>
