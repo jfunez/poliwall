@@ -12,54 +12,6 @@ from apps.polidata.models import Legislative, Politician, LegislativePolitician,
 # See: http://doc.scrapy.org/topics/item-pipeline.html
 
 
-class DjangoStoragePipeline(object):
-
-    def process_item(self, item, spider):
-        if not spider.name in ['senators', 'deputies']:
-            return item
-
-        legislative = Legislative.objects.latest('end_date')
-
-        first_name = item['first_name'].title().strip()
-        last_name = item['last_name'].title().strip()
-
-        try:
-            politician = Politician.objects.get(first_name=first_name, last_name=last_name)
-        except Politician.DoesNotExist:
-            politician = Politician(first_name=first_name, last_name=last_name, email=item.get('email', ''),
-                                    profile_url=item['profile_url'])
-
-            if item['photo_url']:
-                filename = item['photo_url'].split('/')[-1]
-
-                img_temp = NamedTemporaryFile(delete=True)
-                img_temp.write(urllib2.urlopen(item['photo_url']).read())
-                img_temp.flush()
-                politician.photo.save(filename, File(img_temp))
-
-            politician.save()
-
-        party_name = item['party'].title()
-        party_code = ''.join([list(word)[0] for word in party_name.split(' ')][1:])
-        party, created = Party.objects.get_or_create(name=party_name, code=party_code)
-
-        try:
-            leg_pol = LegislativePolitician.objects.get(legislative=legislative, politician=politician,
-                                                        party=party)
-        except LegislativePolitician.DoesNotExist:
-            leg_pol = LegislativePolitician(date=datetime.now(), legislative=legislative, politician=politician,
-                                            party=party)
-
-        if spider.name == 'senators':
-            leg_pol.house = House.objects.get(rol_name='Senador')
-        elif spider.name == 'deputies':
-            leg_pol.house = House.objects.get(rol_name='Diputado')
-            leg_pol.state = item['state'].title()
-
-        leg_pol.save()
-        return item
-
-
 def to_date(date):
     if not date:
         return None
@@ -179,7 +131,6 @@ class PoliticianDjangoStoragePipeline(object):
 
             first_name = item['first_name'].title().strip()
             last_name = item['last_name'].title().strip()
-
             try:
                 politician = Politician.objects.get(
                     first_name__icontains=first_name, last_name__icontains=last_name, profile_id=item['profile_id'][2:])
@@ -199,14 +150,12 @@ class PoliticianDjangoStoragePipeline(object):
 
             party_name = item['party'].title().strip()
             party_code = ''.join([list(word)[0] for word in party_name.split(' ') if word][1:])
-            party, created = Party.objects.get_or_create(name=party_name, code=party_code)
+            party, party_created = Party.objects.get_or_create(name=party_name, code=party_code)
 
             try:
-                leg_pol = LegislativePolitician.objects.get(legislative=legislative, politician=politician,
-                                                            party=party)
+                leg_pol = LegislativePolitician.objects.get(legislative=legislative, politician=politician, party=party)
             except LegislativePolitician.DoesNotExist:
-                leg_pol = LegislativePolitician(date=legislative.start_date, legislative=legislative, politician=politician,
-                                                party=party)
+                leg_pol = LegislativePolitician(date=legislative.start_date, legislative=legislative, politician=politician, party=party)
 
             try:
                 house = House.objects.get(rol_name__icontains=item['role'].split()[0])
