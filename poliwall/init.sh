@@ -1,5 +1,5 @@
 #!/bin/bash
-DB_NAME="poliwall4"
+DB_NAME="poliwall"
 SUPERUSER_NAME="admin"
 SUPERUSER_MAIL="admin@poliwall.com"
 pip install -r requirements.txt
