@@ -237,9 +237,9 @@ class PoliticianBiographyDjangoStoragePipeline(object):
                 politician.save()
                 print u'Biography: %s' % politician
         except Exception, e:
-            print item
-            print e
             import pdb
             pdb.set_trace()
+            print item
+            print e
 
         return item

@@ -1,5 +1,5 @@
 #!/bin/bash
-DB_NAME="poliwall3"
+DB_NAME="poliwall4"
 SUPERUSER_NAME="admin"
 SUPERUSER_MAIL="admin@poliwall.com"
 pip install -r requirements.txt
@@ -12,7 +12,7 @@ python manage.py loaddata scrapping/initial_legislative.json
 python manage.py createsuperuser --username=$SUPERUSER_NAME --email=$SUPERUSER_MAIL
 rm -rf media/polidata/politician/*
 cd scrapping
-scrapy crawl plinks --nolog
-scrapy crawl politicianbiography --nolog
+scrapy crawl plinks --logfile=plinks.error.log
+scrapy crawl politicianbiography --logfile=politicianbiography.error.log
 cd ..
 ./viaticos.sh

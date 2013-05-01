@@ -12,3 +12,5 @@ ITEM_PIPELINES = [
     'uy.pipelines.PoliticianDjangoStoragePipeline',
     'uy.pipelines.PoliticianBiographyDjangoStoragePipeline',
 ]
+
+DOWNLOAD_TIMEOUT = 60 * 2

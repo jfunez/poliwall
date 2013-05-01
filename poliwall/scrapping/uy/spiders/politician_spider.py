@@ -88,7 +88,8 @@ class PoliticianSpider(BaseSpider):
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
         fullid = response.url[-7:]
-        fullname = extra_urls[fullid]
+        datos = hxs.select('//*[@id="TblIdLeg"]//tr[1]//font//text()').extract()[0].strip()
+        fullname = u"%s, %s" % (datos.split()[0], ' '.join(datos.split()[1:]))
         last_name, first_name = fullname.strip().split(',')
         item = Politician()
         item['first_name'] = first_name.strip()
@@ -145,14 +146,12 @@ class PoliticianBiographySpider(BaseSpider):
     name = "politicianbiography"
     allowed_domains = ["parlamento.gub.uy"]
     start_urls = ['http://www.parlamento.gub.uy/palacio3/legisladores_der.asp', ]
-    profiles = {}
     poli_ids = []
 
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
         urls = hxs.select('//table//tr//td//a//@href').extract()
         urls.insert(0, u'p_legisladores.asp?Legislatura=47')
-        # urls = [u'p_legisladores.asp?Legislatura=47', ]
         for url in urls:
             xurl = "http://www.parlamento.gub.uy/palacio3/%s" % url.replace('p_legisladores', 'legisladores_der')
             yield Request(xurl, callback=self.parse_leg)
@@ -163,33 +162,30 @@ class PoliticianBiographySpider(BaseSpider):
             formdata={'Deptos': 'TODOS',
                     'ir.x': '14',
                     'ir.y': '11',
-            }, callback=self.parse_plinks)
+            }, callback=self.parse_politicianbiography)
 
-    def parse_plinks(self, response):
+    def parse_politicianbiography(self, response):
         hxs = HtmlXPathSelector(response)
         keys = hxs.select('//select[2]//option//@value').extract()[2:]
         values = hxs.select('//select[2]//option//text()').extract()[2:]
         newprofiles = dict([(unicode(k.split("=")[1]), v) for k, v in zip(keys, values)])
-        self.profiles.update(newprofiles)
         for k, v in newprofiles.items():
-            yield Request("http://www.parlamento.gub.uy/palacio3/legisladores/biografia.asp?id=%s" % k, callback=self.parse_politicianbiography)
+            politician_id = k[-7:]
+            if politician_id in self.poli_ids:
+                continue
+            self.poli_ids.append(politician_id)
+            yield Request("http://www.parlamento.gub.uy/palacio3/legisladores/biografia.asp?id=%s" % k, callback=self.parse_biography)
 
-    def parse_politicianbiography(self, response):
+    def parse_biography(self, response):
         hxs = HtmlXPathSelector(response)
         fullid = unicode(response.url[-7:])
-        fullname = self.profiles[unicode(fullid)]
-        last_name, first_name = fullname.strip().split(',')
         item = Politician()
-        item['first_name'] = first_name.strip()
-        item['last_name'] = last_name.strip()
-        item['politician_id'] = response.url[-5:]
-        if item['politician_id'] in self.poli_ids:
-            return None
-        self.poli_ids.append(item['politician_id'])
         fullid = response.url[-7:]
         item = Politician()
-        data = hxs.select('//*[@id="Table5"]//p').extract()
-        item['biography'] = '\n'.join([u'%s' % p.strip() for p in data if p.strip()])
+        data = hxs.select('//text()').extract()
+        item['biography'] = '\n'.join([u'<p>%s</p>' % x for x in [p.strip() for p in data if p.strip()][2:]])
+        if not item['biography']:
+            return None
         item['profile_id'] = unicode(fullid[2:])
         return item
 
@@ -208,7 +204,6 @@ class PLinksSpider(BaseSpider):
         hxs = HtmlXPathSelector(response)
         urls = hxs.select('//table//tr//td//a//@href').extract()
         urls.insert(0, u'p_legisladores.asp?Legislatura=47')
-        # urls = [u'p_legisladores.asp?Legislatura=47', ]
         for url in urls:
             xurl = "http://www.parlamento.gub.uy/palacio3/%s" % url.replace('p_legisladores', 'legisladores_der')
             yield Request(xurl, callback=self.parse_leg)
