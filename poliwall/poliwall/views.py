@@ -23,7 +23,7 @@ def api_home(request):
 def gob_nacional(request):
     context = Context({
     })
-    return render_to_response('gob_nacional.html', context, context_instance=RequestContext(request))
+    return render_to_response('national_gov.html', context, context_instance=RequestContext(request))
 
 
 @lockdown(superusers_only=True)
