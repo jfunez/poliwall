@@ -1,0 +1,8 @@
+{% extends "party_list.html" %}
+{% load i18n %}
+
+
+{% block main_content %}
+<h1>{{ party }}</h1>
+<p>Cantidad de políticos: {{ party.get_all_politicians|length }}</p>
+{% endblock main_content %}

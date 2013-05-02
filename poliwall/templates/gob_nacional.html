@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n thumbnail %}
 {% block extra_head %}
-	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />	
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />
 {% endblock extra_head %}
 
 {% block header_content %}
@@ -13,7 +13,7 @@
 	<div class="row">
 		<div class="large-4 columns">
 			<div class="dashboard_item">
-				<a href="{% url 'poder_legislativo' %}">
+				<a href="{% url 'legislative_list' %}">
 					{% thumbnail "img/dashboard/poder_legislativo.jpg" "400x400" crop="center" as im %}
 					    <img class="dashboard_item_icon" src="{{ im.url }}" alt='{% trans "Gobierno Nacional" %}'>
 					{% endthumbnail %}
@@ -21,10 +21,10 @@
 				</a>
 			</div>
 		</div>
-	    
+
 	    <div class="large-4 columns">
 	    	<div class="dashboard_item">
-		      	<a href="{% url 'poder_legislativo' %}">
+		      	<a href="{% url 'legislative_list' %}">
 		  			{% thumbnail "img/dashboard/poder_ejecutivo.jpg" "400x400" crop="center" as im %}
 					    <img class="dashboard_item_icon" src="{{ im.url }}" alt='{% trans "Poder Ejecutivo" %}'>
 					{% endthumbnail %}
@@ -32,10 +32,10 @@
 				</a>
 			</div>
 	    </div>
-	    
+
 	    <div class="large-4 columns">
 			<div class="dashboard_item">
-		      	<a href="{% url 'poder_legislativo' %}">
+		      	<a href="{% url 'legislative_list' %}">
 			      	{% thumbnail "img/dashboard/poder_judicial.jpg" "400x400" crop="center" as im %}
 					    <img class="dashboard_item_icon" src="{{ im.url }}" alt='{% trans "Poder Judicial" %}'>
 					{% endthumbnail %}

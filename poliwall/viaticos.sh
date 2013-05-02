@@ -17,4 +17,4 @@ PDF_URL_RESULT_HTML="http://www.pdfonline.com/convert-pdf-to-html/DocStorage/99e
 # python manage.py loaddata scrapping/initial_houses.json
 cd scrapping
 echo $PDF_URL_RESULT_HTML
-scrapy crawl diem -a start_url="$PDF_URL_RESULT_HTML"
+scrapy crawl diem -a start_url="$PDF_URL_RESULT_HTML" --nolog

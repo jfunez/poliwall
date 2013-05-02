@@ -18,6 +18,11 @@ class Party(models.Model):
     def __unicode__(self):
         return u'%s' % self.name
 
+    def get_all_politicians(self):
+        leg_polis = LegislativePolitician.objects.filter(party=self)
+        pol_ids = set(leg_polis.values_list('politician__id', flat=True))
+        return Politician.objects.filter(pk__in=pol_ids)
+
 
 class SubParty(models.Model):
 
@@ -48,7 +53,7 @@ class Legislative(models.Model):
         verbose_name_plural = _(u'Legislaturas')
 
     def __unicode__(self):
-        return u'%s (%s - %s)' % (self.code, self.start_date, self.end_date)
+        return u'%s (%s - %s)' % (self.roman_code, self.start_date, self.end_date)
 
 
 SEX_CHOICES = (
@@ -141,10 +146,11 @@ class LegislativePolitician(models.Model):
     date = models.DateField(_(u'Fecha'))
     legislative = models.ForeignKey(Legislative, verbose_name=_(u'Legislatura'), related_name='politicians')
     politician = models.ForeignKey(Politician, verbose_name=_(u'Político'), related_name='legislatives')
-    party = models.ForeignKey(Party, verbose_name=_(u'Partido'), blank=True, null=True)
+    party = models.ForeignKey(Party, verbose_name=_(u'Partido'), blank=True, null=True, related_name='legislatives')
     subparty = models.ForeignKey(SubParty, verbose_name=_(u'Lema'), blank=True, null=True)
     state = models.CharField(_(u'Departamento'), max_length=100, blank=True, null=True)
-    house = models.ForeignKey(House, verbose_name=_(u'Cámara'), related_name='ligislativepolitician_houses', blank=True, null=True)
+    house = models.ForeignKey(House, verbose_name=_(
+        u'Cámara'), related_name='ligislativepolitician_houses', blank=True, null=True)
 
     class Meta:
         verbose_name = _(u'Representacion Política')

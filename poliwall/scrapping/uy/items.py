@@ -65,3 +65,4 @@ class Diem(Item):
     report_rest = Field()
     total_trip = Field()
     observations = Field()
+    politician_id = Field()
