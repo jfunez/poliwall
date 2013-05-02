@@ -25,7 +25,7 @@
 
 		<div class="section-container tabs" data-section="tabs">
 			<section>
-				<p class="title" data-section-title><a href="#">{% trans "Legislaturas" %}:</a></p>
+				<p class="title" data-section-title><a href="#panel_legislaturas">{% trans "Legislaturas" %}:</a></p>
 				<div class="content" data-section-content>
 					<table style="width:100%">
 						<tr>
@@ -53,7 +53,7 @@
 			</section>
 
 			<section>
-				<p class="title" data-section-title><a href="#">{% trans "Biografía" %}:</a></p>
+				<p class="title" data-section-title><a href="#panel_biografia">{% trans "Biografía" %}:</a></p>
 				<div class="content" data-section-content>
 					{% if politician.biography %}
 						<p>
@@ -67,7 +67,7 @@
 				</div>
 			</section>
 			<section>
-				<p class="title" data-section-title><a href="#">{% trans "Actividades" %}:</a></p>
+				<p class="title" data-section-title><a href="#panel_actividades">{% trans "Actividades" %}:</a></p>
 				<div class="content" data-section-content>
 					<ul>
 						{% for activity in politician.action_politicians.all %}
@@ -95,7 +95,7 @@
 				</div>
 			</section>
 			<section>
-				<p class="title" data-section-title><a href="#">{% trans "Viáticos" %}:</a></p>
+				<p class="title" data-section-title><a href="#panel_viaticos">{% trans "Viáticos" %}:</a></p>
 				<div class="content" data-section-content>
 					{% if politician.diem_politcians.all.0 %}
 						<table style="width:100%">
