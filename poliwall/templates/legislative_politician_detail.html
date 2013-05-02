@@ -120,7 +120,7 @@
 											{% if diem.report_rest %}
 												U$S {{ diem.report_rest }}
 											{% else %}
-												<strong style="color: red">Sin justificar</strong>
+												<strong style="color: red">{% trans "Sin justificar" %}</strong>
 											{% endif %}
 										{% else %}
 											U$S 0
@@ -132,7 +132,7 @@
 						</table>
 					{% else %}
 						<p>
-							{% trans "Sin actividad" %}
+							{% trans "Sin viáticos" %}
 						</p>
 					{% endif %}
 				</div>
