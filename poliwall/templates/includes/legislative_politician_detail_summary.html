@@ -1,34 +1,41 @@
 {% load i18n %}
 <ul>
-	{% if legislative %}
-	<li>
-		<i class="icon-envelope"></i> {% trans "Legislatura" %}:
-		<a href="{% url 'legislative_detail' legislative.roman_code %}">{{ legislative }}</a>
-	</li>
+	{% if not legislative %}
+		<li>
+			<i class="icon-book"></i> {% trans "Legislaturas" %}: {{ politician.legislatives.all|length  }}
+		</li>
 	{% endif %}
+
 	{% if politician.email %}
 		<li>
 			<i class="icon-envelope"></i> {% trans "Email" %}:
 			<a href="mailto:{{ politician.email }}">{{ politician.email }}</a>
 		</li>
 	{% endif %}
+
 	{% if politician.twitter_user %}
 		<li>
 			<i class="icon-twitter"></i> {% trans "Twitter" %}:
 			<a href="http://twitter.com/{{ politician.twitter_user }}">@{{ politician.twitter_user }}</a>
 		</li>
 	{% endif %}
+
 	<li>
 		<i class="icon-sitemap"></i> {% trans "Partido" %}:
-		{{ politician.get_current_party|default:"---" }}
+		<a href="{% url 'party_detail' politician.get_current_party %}">{{ politician.get_current_party|default:"---" }}</a>
 	</li>
-	<li><i class="icon-group"></i> {% trans "Lema" %}: {{ politician.get_current_subparty|default:"---" }}</li>
+
+	<li>
+		<i class="icon-group"></i> {% trans "Lema" %}:
+		{{ politician.get_current_subparty|default:"---" }}</li>
+
 	{% if politician.profile_url %}
 		<li>
 			<i class="icon-desktop"></i> {% trans "Perfil" %}:
-			<a href="{{ politician.profile_url }}">parlamento.gub.uy</a>
+			<a href="{{ politician.profile_url }}" target="_blank">parlamento.gub.uy</a>
 		</li>
 	{% endif %}
-	<li><i class=""></i> {% trans "Departamento" %}: {{ state|default:"---" }}</li>
-	<li><i class=""></i> {% trans "Cámara" %}: {{ house|default:"---" }}</li>
+	{% if house %}
+		<li><i class="icon-home"></i> {% trans "Cámara" %}: {{ house|default:"---" }}</li>
+	{% endif %}
 </ul>

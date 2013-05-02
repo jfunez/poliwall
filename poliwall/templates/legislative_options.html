@@ -6,23 +6,30 @@
 		</a>
 	</p>
 	<div class="content" data-section-content>
+		<div class="row">
+			<div class="large-12 columns">
+				<a href="{% url 'legislative_detail' legislative.roman_code %}">
+					 {% trans "Legislatura" %} {{ legislative.roman_code }} <i class="icon-circle-arrow-right"></i>
+				</a>
+			</div>
+		</div>
 	  	<div class="row">
 			<div class="large-4 columns">
 			    <a href="{% url 'legislative_politician_list' legislative.roman_code %}">
 			        <img src="{{ STATIC_URL }}img/politics.png" alt='{% trans "Politicos" %}' />
-			        <h4>{% trans "Politicos" %}</h4>
+			        <h4>{% trans "Politicos" %} <i class="icon-circle-arrow-right"></i></h4>
 			    </a>
 			</div>
 			<div class="large-4 columns">
 			    <a href="#">
 			        <img src="{{ STATIC_URL }}img/money.png" alt='{% trans "Remuneraciones" %}' />
-			        <h4>{% trans "Remuneraciones" %}</h4>
+			        <h4>{% trans "Remuneraciones" %} <i class="icon-circle-arrow-right"></i></h4>
 			    </a>
 			</div>
 			<div class="large-4 columns">
 			  <a href="#">
 			        <img src="{{ STATIC_URL }}img/stats.png" alt='{% trans "Estadisticas" %}' />
-			        <h4>{% trans "Estadisticas" %}</h4>
+			        <h4>{% trans "Estadisticas" %} <i class="icon-circle-arrow-right"></i></h4>
 			    </a>
 			</div>
 	  	</div>
