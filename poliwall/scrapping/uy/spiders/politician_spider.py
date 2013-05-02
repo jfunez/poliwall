@@ -28,6 +28,7 @@ class SenatorSpider(BaseSpider):
         item['email'] = vicepresident.select('a/@href').extract()[1].split(':')[1].strip()
         item['photo_url'] = 'http://www.parlamento.gub.uy' + vicepresident.select('img/@src').extract()[0].strip()
         politician_id = item['photo_url'].split('Fot')[1].split('.')[0]
+        item['politician_id'] = politician_id
         item['profile_url'] = 'http://www.parlamento.gub.uy/palacio3/legisladores/legislador.asp?ID=%s%s' % (LEGISLATIVE, politician_id)
         items.append(item)
 
@@ -41,6 +42,7 @@ class SenatorSpider(BaseSpider):
             item['email'] = senator.select('a/@href').extract()[1].split(':')[1].strip()
             item['photo_url'] = 'http://www.parlamento.gub.uy' + senator.select('img/@src').extract()[0].strip()
             politician_id = item['photo_url'].split('Fot')[1].split('.')[0]
+            item['politician_id'] = politician_id
             item['profile_url'] = 'http://www.parlamento.gub.uy/palacio3/legisladores/legislador.asp?ID=%s%s' % (LEGISLATIVE, politician_id)
             items.append(item)
         return items
@@ -71,6 +73,7 @@ class DeputySpider(BaseSpider):
                 pass
             item['photo_url'] = 'http://www.parlamento.gub.uy' + deputy.select('img/@src').extract()[0].strip()
             politician_id = item['photo_url'].split('Fot')[1].split('.')[0]
+            item['politician_id'] = politician_id
             item['profile_url'] = 'http://www.parlamento.gub.uy/palacio3/legisladores/legislador.asp?ID=%s%s' % (LEGISLATIVE, politician_id)
             items.append(item)
         return items

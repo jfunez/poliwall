@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from polidata.models import Party, SubParty, Legislative, Politician, LegislativePolitician
+from polidata.models import Party, SubParty, Legislative, Politician, LegislativePolitician, \
+    House
 
 
 class PartyAdmin(admin.ModelAdmin):
@@ -21,6 +22,7 @@ class PoliticianAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name', 'sex', 'email', 'photo_thumb', 'original_profile_url')
     list_filter = ('sex',)
     list_editable = ('sex',)
+    search_fields = ('first_name', 'last_name')
 
     def original_profile_url(self, instance):
         return u'<a href="%s" target="_blank">Profile original</a>' % (instance.profile_url)
@@ -32,6 +34,11 @@ class LegislativePoliticianAdmin(admin.ModelAdmin):
     list_filter = ('legislative', 'party', 'subparty')
 
 
+class HouseAdmin(admin.ModelAdmin):
+    list_display = ('name', 'rol_name')
+
+
+admin.site.register(House, HouseAdmin)
 admin.site.register(Party, PartyAdmin)
 admin.site.register(SubParty, SubPartyAdmin)
 admin.site.register(Legislative, LegislativeAdmin)

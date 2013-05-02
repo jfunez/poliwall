@@ -25,3 +25,10 @@ class Senator(Item):
     photo_url = Field()
     profile_url = Field()
     politician_id = Field()
+
+
+class Action(Item):
+    date = Field()
+    text = Field()
+    politician_id = Field()
+    source_url = Field()
