@@ -3,17 +3,17 @@
 from scrapy.spider import BaseSpider
 from scrapy.selector import HtmlXPathSelector
 from uy.items import Action
-from apps.polidata.models import Politician
+from apps.polidata.models import LegislativePolitician
 
-base_url = "http://www.parlamento.gub.uy/forms2/fojaleg.asp?Legislaturas=47&Legislador=%s&LegislaturaCompleta=s"
+base_url = "http://www.parlamento.gub.uy/forms2/fojaleg.asp?Legislaturas=%d&Legislador=%s&LegislaturaCompleta=s"
 
 
 START_URLS = []
-for politician in Politician.objects.all():
-    try:
-        politician.actions.all().exists()
-    except AttributeError:
-        START_URLS.append(base_url % politician.politician_id)
+for legpol in LegislativePolitician.objects.all():
+    politician = legpol.politician
+    if not politician.actions.filter(legislative=legpol.legislative).exists():  # Has the politician actions for the current legislative iteration?
+        url = base_url % (legpol.legislative.code, politician.politician_id)
+        START_URLS.append(url)
 
 
 class ActionSpider(BaseSpider):
