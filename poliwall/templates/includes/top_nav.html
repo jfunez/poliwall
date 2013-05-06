@@ -15,17 +15,28 @@
             <li class="has-dropdown">
               <a href="#">{% trans "Gobierno" %}</a>
               <ul class="dropdown">
-                <li><a href="{% url 'gob_nacional' %}">{% trans "Gob. Nacional" %}</a></li>
+                <li class="has-dropdown">
+                  <a href="#">{% trans "Gobierno Nacional" %}</a>
+                  <ul class="dropdown">
+                    <li><a href="{% url 'legislative_list' %}">{% trans "Poder legislativo" %}</a></li>
+                    <li><a href="#">{% trans "Poder ejecutivo" %}</a></li>
+                    <li><a href="#">{% trans "Poder judicial" %}</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{% url 'gob_nacional' %}">{% trans "Gob. Nacional" %} &rarr;</a></li>
+                  </ul>
+                </li>
+                <!-- GOB NACIONAL 
                 <li class="divider"></li>
                 <li><a href="{% url 'gob_nacional' %}">{% trans "Gob. Departamental" %}</a></li>
                 <li class="divider"></li>
+                -->
                 <li><a href="{% url 'home' %}">{% trans "Ver todo" %} &rarr;</a></li>
               </ul>
             </li>
             <li class="divider"></li>
-            <li><a href="#">Main Item 2</a></li>
+            <li><a href="{% url 'party_list' %}">{% trans "Partidos" %}</a></li>
             <li class="divider"></li>
-            <li class="has-dropdown">
+            <!-- li class="has-dropdown">
               <a href="#">Main Item 3</a>
               <ul class="dropdown">
                 <li><a href="#">Dropdown Option</a></li>
@@ -34,7 +45,7 @@
                 <li class="divider"></li>
                 <li><a href="#">See all &rarr;</a></li>
               </ul>
-            </li>
+            </li -->
             {% if user.is_authenticated %}
                 <li class="divider"></li>
                 <li class="has-dropdown">
