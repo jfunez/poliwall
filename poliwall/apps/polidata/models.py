@@ -66,6 +66,7 @@ class Politician(models.Model):
 
     """ Modelo para guardar los datos personales de los políticos """
 
+    politician_id = models.IntegerField(u'Id interno', primary_key=True)
     first_name = models.CharField(_(u'Nombre'), max_length=100)
     last_name = models.CharField(_(u'Apellidos'), max_length=100)
     slug = models.SlugField(_(u'Slug'), blank=True, null=True)
@@ -76,7 +77,7 @@ class Politician(models.Model):
     twitter_user = models.CharField(_(u'Cuenta de Twitter'), max_length=100, blank=True)
     profile_id = models.CharField(_(u'Profile ID'), max_length=10, blank=True)
     biography = models.TextField(_(u'Biografía'), blank=True, null=True)
-    politician_id = models.CharField(u'Id interno', max_length=100, blank=True, null=True)
+
 
     class Meta:
         verbose_name = _(u'Político')

@@ -32,7 +32,6 @@ class DiemDjangoStoragePipeline(object):
     def process_item(self, item, spider):
         if spider.name != 'diem':
             return item
-
         from apps.polidiem.models import Diem
         obj = Diem()
         try:
@@ -46,9 +45,10 @@ class DiemDjangoStoragePipeline(object):
                 if len(politicians) == 1:
                     obj.politician = politicians[0]
                 else:
+
                     politicians_id = LegislativePolitician.objects.all().filter(politician__in=politicians, party__code=item['party']).distinct().values_list('politician', flat=True)
                     if len(politicians_id) == 1:
-                        obj.politician = Politician.objects.get(pk=politicians_id[0])
+                        obj.politician = Politician.objects.get(politicians_id=politicians_id[0])
                     else:
                         rlist = []
                         leg_polis = LegislativePolitician.objects.all().filter(politician__in=politicians)
@@ -69,6 +69,8 @@ class DiemDjangoStoragePipeline(object):
                                     print "ERROR CON: %s" % politicians
                                     return item
             else:
+                print "NO SE PUEDE ENCONTRAR LEGISLADOR CON NOMBRE [%s %s]" % (first_name, last_name)
+                return item
                 politician = Politician(first_name=first_name, last_name=last_name)
                 politician.save()
                 obj.politician = politician
@@ -132,11 +134,10 @@ class PoliticianDjangoStoragePipeline(object):
             first_name = item['first_name'].title().strip()
             last_name = item['last_name'].title().strip()
             try:
-                politician = Politician.objects.get(
-                    first_name__icontains=first_name, last_name__icontains=last_name, profile_id=item['profile_id'][2:])
+                politician = Politician.objects.get(politician_id=item['politician_id'])
             except Politician.DoesNotExist:
-                politician = Politician(first_name=first_name, last_name=last_name, email=item.get('email', ''),
-                                        profile_url=item['profile_url'], profile_id=item['profile_id'][2:])
+                politician = Politician(politician_id=item['politician_id'], first_name=first_name, last_name=last_name,
+                    email=item.get('email', ''), profile_url=item['profile_url'], profile_id=item['profile_id'][2:])
 
                 if item['photo_url']:
                     filename = item['photo_url'].split('/')[-1]

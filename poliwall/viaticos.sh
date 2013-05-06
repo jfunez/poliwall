@@ -4,7 +4,7 @@ export DJANGO_SETTINGS_MODULE=poliwall.settings
 export PDF_NAME='viaticos'
 export PDF_URL="http://www.parlamento.gub.uy/VerDocEspecial.asp?DocumentoId=114"
 PDF_SERVICE='http://www.pdfonline.com/convert-pdf-to-html/Default.aspx?op=upload&email='
-PDF_URL_RESULT_HTML="http://www.pdfonline.com/convert-pdf-to-html/DocStorage/99e22d67c2c848b9847d26d87c2c89a3/viaticos.htm"
+PDF_URL_RESULT_HTML="http://www.pdfonline.com/convert-pdf-to-html/DocStorage/737c5a8b70a04e0eb8f69083a52ded3e/viaticos.htm"
 # curl -o $PDF_NAME.pdf $PDF_URL
 # PDF_PATH="`pwd`/$PDF_NAME.pdf"
 # curl -o $PDF_NAME.tmp -# --form "Filedata=@$PDF_PATH" --form press=Upload --keepalive-time 40 $PDF_SERVICE
