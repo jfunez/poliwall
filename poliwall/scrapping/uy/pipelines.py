@@ -4,7 +4,7 @@ import urllib2
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 from apps.polidata.models import Legislative, Politician, LegislativePolitician, Party, House
-
+from apps.polisessions.models import Action, Session
 
 # Define your item pipelines here
 #
@@ -190,5 +190,31 @@ class PoliticianBiographyDjangoStoragePipeline(object):
             pdb.set_trace()
             print item
             print e
+
+
+class PoliticianActionDjangoStoragePipeline(object):
+
+    def process_item(self, item, spider):
+
+        if spider.name == 'actions':
+
+            legislative = Legislative.objects.get(id=int(item['legislative_id']))
+
+            politician = Politician.objects.get(politician_id=item['politician_id'])
+            legislative_politician = politician.legislatives.get(legislative__id=legislative.id)
+
+            day, month, year = item['date'].split('/')
+            session, created = Session.objects.get_or_create(legislative=legislative, house=legislative_politician.house,
+                                                             date=datetime(int(year), int(month), int(day)))
+            session.source_url = item['source_url']
+            session.save()
+
+            action = Action()
+            action.legislative = legislative
+            action.source_url = item['source_url']
+            action.politician = politician
+            action.text = item['text']
+            action.session = session
+            action.save()
 
         return item

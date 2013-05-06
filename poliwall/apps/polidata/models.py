@@ -76,6 +76,7 @@ class Politician(models.Model):
     twitter_user = models.CharField(_(u'Cuenta de Twitter'), max_length=100, blank=True)
     profile_id = models.CharField(_(u'Profile ID'), max_length=10, blank=True)
     biography = models.TextField(_(u'Biografía'), blank=True, null=True)
+    politician_id = models.CharField(u'Id interno', max_length=100, blank=True, null=True)
 
     class Meta:
         verbose_name = _(u'Político')
