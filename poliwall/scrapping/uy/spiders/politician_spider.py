@@ -90,9 +90,6 @@ class PoliticianProfileSpider(BasePoliticianSpider):
             item['role'] = role.replace('por el Lema', '').replace('electo', '').strip()
             item['party'] = party.replace(', ', '')
 
-            if item['politician_id'] == '05351':
-                import pdb; pdb.set_trace()
-
             item['state'] = ' '.join(state).strip()
             item['legislative_id'] = datos[1].split(':')[1].replace('a.)', '').strip()
         try:
