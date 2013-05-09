@@ -3,6 +3,7 @@
 {% block extra_head %}
 	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />
 	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/timeline.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/vtimeline.css" />
 {% endblock extra_head %}
 
 {% block header_content %}
@@ -90,23 +91,41 @@
 					</a>
 				</p>
 				<div class="content" data-section-content>
-					{% if politician.action_politicians.all %}
-						
-						<ul>
-							{% for activity in politician.action_politicians.all %}
+					{% if politician_recent_activity %}
+						<h4>{% trans "Actividad reciente en la actual legislatura" %} <i class="icon-angle-right"></i> {{ latest_legislature }} </h4>
+						<h6><a href="#">{% trans "Ver toda la actividad" %} <i class="icon-circle-arrow-right"></i></a> </h6>
+						<ul class="cbp_tmtimeline">
+							{% for activity in politician_recent_activity %}
 								<li>
-									<p>
-										<table style="width:100%">
-											<tr>
-												<th>{% trans "Legislatura" %}: {{ activity.legislative }}</th>
-												<th>{% trans "Sesion" %}: {{ activity.session }}</th>
-											</tr>
-											<tr>
-												<td colspan="2"><b>{% trans "Texto" %}</b>: {{ activity.text }}</td>
-											</tr>
-										</table>
-									</p>
-								</li>
+							        <time class="cbp_tmtime" datetime="{{ activity.session.date }}">
+							        	{% if activity.session.ordinal %}
+							        	 	<span>{% trans "ordinal" %}:{{ activity.session.ordinal }}</span>	
+							        	 {% endif %}
+							        	 <span>{{ activity.session.date|date:"Y/m/d" }}</span>
+							        </time>
+							        <div class="cbp_tmicon">
+							        	{% with action_type=activity.text|truncatewords:1|lower %}
+								        	{% if action_type == "interviene ..." %}
+								        		<i class="icon-comments-alt"></i>
+								        	{% elif action_type == "presenta ..." %}
+								        		<i class="icon-facetime-video"></i>
+								        	{% else %}
+								        		<i class="icon-comment-alt"></i>
+								        	{% endif %}
+							        	{% endwith %}
+							        </div>
+							        <div class="cbp_tmlabel">
+							            <h3>{{ activity.text|truncatewords:4 }}</h3>
+							            <p>{{ activity.text }}</p>
+							            <p>
+								            {% if activity.session.source_url %}
+								            	<a class="source_url" href="{{ activity.session.source_url }}" alt="Fuente"><i class="icon-link"></i> {% trans "Fuente" %}</a>
+								            {% else %}
+								            	<a class="source_url" href="#"><i class="icon-link"></i>  {% trans "Enlace a fuente no disponible" %}</a>
+								            {% endif %}
+							            </p>
+							        </div>
+							    </li>
 							{% empty %}
 								<li>
 									<p>
@@ -172,4 +191,5 @@
 		</div>
 	</section>
 	<br><br>
+
 {% endblock main_content %}
