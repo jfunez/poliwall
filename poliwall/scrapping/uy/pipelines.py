@@ -199,7 +199,7 @@ class PoliticianActionDjangoStoragePipeline(object):
 
         if spider.name == 'actions':
 
-            legislative = Legislative.objects.get(id=int(item['legislative_id']))
+            legislative = Legislative.objects.get(code=int(item['legislative_id']))
 
             politician = Politician.objects.get(politician_id=item['politician_id'])
             legislative_politician = politician.legislatives.get(legislative__id=legislative.id)
