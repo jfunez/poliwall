@@ -20,7 +20,7 @@ class Party(models.Model):
 
     def get_all_politicians(self):
         leg_polis = LegislativePolitician.objects.filter(party=self)
-        pol_ids = set(leg_polis.values_list('politician__id', flat=True))
+        pol_ids = set(leg_polis.values_list('politician__pk', flat=True))
         return Politician.objects.filter(pk__in=pol_ids)
 
 
@@ -77,7 +77,6 @@ class Politician(models.Model):
     twitter_user = models.CharField(_(u'Cuenta de Twitter'), max_length=100, blank=True)
     profile_id = models.CharField(_(u'Profile ID'), max_length=10, blank=True)
     biography = models.TextField(_(u'Biografía'), blank=True, null=True)
-
 
     class Meta:
         verbose_name = _(u'Político')
