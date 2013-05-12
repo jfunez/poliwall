@@ -16,3 +16,17 @@
     {% endfor %}
 </div>
 {% endblock main_content %}
+{% block extra_js %}
+<script type="text/javascript">
+	$(function () {
+		$('a','.legislature_opt_row ').hover(
+			function () {
+				$(this).find('.legislature_opt_row_item').addClass('animated pulse');
+			},
+			function () {
+				$(this).find('.legislature_opt_row_item').removeClass('animated pulse');
+			}
+		);
+	});
+</script>	
+{% endblock extra_js %}
