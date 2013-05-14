@@ -126,13 +126,17 @@ def legislative_politician_detail(request, slug):
 
 
 @lockdown(superusers_only=True)
-def session_list(request):
+def session_list(request, legislative_code=None):
     house_sessions = []
     for house in House.objects.filter(is_public=True):
-        sessions = Session.objects.filter(house=house)[0:20]
+        sessions = Session.objects.filter(house=house)
+        if legislative_code:
+            legislative = get_legislative_by_code(legislative_code)
+            sessions = sessions.filter(legislative=legislative)
+
         house_data = {
             'house_name': house.name,
-            'sessions': sessions,
+            'sessions': sessions[0:20],
         }
         house_sessions.append(house_data)
 

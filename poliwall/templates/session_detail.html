@@ -2,13 +2,6 @@
 
 <h3>{% trans "Sesión del " %} {{ session.date }} ({% trans "ordinal" %}: {{ session.ordinal|default:"---" }})</h3>
 <div>
-	<div class="row">
-		<div class="large-12 columns">
-			<a href="#">
-				 {% trans "Ver sesiones de la legislatura" %} {{ session.legislative.roman_code }} <i class="icon-circle-arrow-right"></i>
-			</a>
-		</div>
-	</div>
 
 	<div class="row">
 		<div class="large-12 columns">
@@ -39,6 +32,18 @@
 						<td>
 							<a class="button tiny round" href="{{ session.source_url }}">
 								<i class="icon-link"></i>
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<a href="{% url 'session_list_by_legis' session.legislative.roman_code %}">
+								{% trans "Ver sesiones de la legislatura" %} {{ session.legislative.roman_code }} <i class="icon-circle-arrow-right"></i>
+							</a>
+						</td>
+						<td colspan="4">
+							<a href="#">
+								{% trans "Ver actuaciones de esta sesion" %} {{ session.legislative.roman_code }} <i class="icon-circle-arrow-right"></i>
 							</a>
 						</td>
 					</tr>
