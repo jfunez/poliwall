@@ -22,6 +22,7 @@ class Session(models.Model):
     class Meta:
         verbose_name = _(u'Sesion')
         verbose_name_plural = _(u'Sesiones')
+        ordering = ['date', 'ordinal']
 
     def __unicode__(self):
         return u'Sesion %s Ordinal %s' % (self.date, self.ordinal)
@@ -40,6 +41,7 @@ class Action(models.Model):
     class Meta:
         verbose_name = _(u'Actuación')
         verbose_name_plural = _(u'Actuaciones')
+        ordering = ['session']
 
     def __unicode__(self):
         return u'[%s - %s] Sesion %s' % (self.politician, self.pk, self.session)
