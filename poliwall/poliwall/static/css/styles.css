@@ -5,6 +5,9 @@ body{
     font-style: normal;
     font-weight: normal;
 }
+.full_width {
+	width: 100%;
+}
 .top-bar-section .dropdown li a {
 	padding-top: 15px;
 }
