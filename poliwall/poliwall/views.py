@@ -23,7 +23,7 @@ def api_home(request):
 def gob_nacional(request):
     context = Context({
     })
-    return render_to_response('gob_nacional.html', context, context_instance=RequestContext(request))
+    return render_to_response('national_gov.html', context, context_instance=RequestContext(request))
 
 
 @lockdown(superusers_only=True)
@@ -44,8 +44,9 @@ def party_detail(request, full_name):
             'party_list': parties,
         })
         return render_to_response('party_list.html', context, context_instance=RequestContext(request))
+
     context = Context({
-        'party': parties[0]
+        'party': parties[0],
     })
     return render_to_response('party_detail.html', context, context_instance=RequestContext(request))
 
@@ -112,8 +113,12 @@ def legislative_politician_detail(request, slug):
         })
         return render_to_response('politician_list.html', context, context_instance=RequestContext(request))
     politician = politicians[0]
+    latest_legislature = Legislative.objects.latest('code')
+    politician_recent_activity = politician.actions.order_by('-session__date')[:10]
 
     context = Context({
         'politician': politician,
+        'latest_legislature': latest_legislature,
+        'politician_recent_activity': politician_recent_activity,
     })
     return render_to_response('legislative_politician_detail.html', context, context_instance=RequestContext(request))

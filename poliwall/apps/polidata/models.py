@@ -20,7 +20,7 @@ class Party(models.Model):
 
     def get_all_politicians(self):
         leg_polis = LegislativePolitician.objects.filter(party=self)
-        pol_ids = set(leg_polis.values_list('politician__id', flat=True))
+        pol_ids = set(leg_polis.values_list('politician__pk', flat=True))
         return Politician.objects.filter(pk__in=pol_ids)
 
 
@@ -66,6 +66,7 @@ class Politician(models.Model):
 
     """ Modelo para guardar los datos personales de los políticos """
 
+    politician_id = models.IntegerField(u'Id interno', primary_key=True)
     first_name = models.CharField(_(u'Nombre'), max_length=100)
     last_name = models.CharField(_(u'Apellidos'), max_length=100)
     slug = models.SlugField(_(u'Slug'), blank=True, null=True)
