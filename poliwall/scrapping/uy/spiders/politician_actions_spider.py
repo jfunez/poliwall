@@ -46,6 +46,11 @@ class ActionSpider(BaseSpider):
                 # string() extracts all the text
                 item['text'] = tds[2].select('string(.//div)').extract()[0]
 
+            if item['text'].startswith('Convocado'):
+                item['category'] = 'Convocado'
+            else:
+                item['category'] = item['text'].split('.')[0]
+
             item['source_url'] = response.url
             item['legislative_id'] = response.url.split('&')[0].split('=')[1]
             item['politician_id'] = response.url.split('&')[1].split('=')[1]

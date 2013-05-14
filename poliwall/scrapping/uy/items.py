@@ -52,3 +52,4 @@ class Action(Item):
     politician_id = Field()
     legislative_id = Field()
     source_url = Field()
+    category = Field()

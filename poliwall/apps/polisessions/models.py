@@ -28,6 +28,16 @@ class Session(models.Model):
         return u'Sesion %s Ordinal %s' % (self.date, self.ordinal)
 
 
+class ActionCategory(models.Model):
+    name = models.CharField(_(u'Nombre'), max_length=400)
+
+    class Meta:
+        verbose_name_plural = _(u'Action categories')
+
+    def __unicode__(self):
+        return self.name
+
+
 class Action(models.Model):
 
     """ Modelo para actuaciones las sesiones por político """
@@ -37,6 +47,7 @@ class Action(models.Model):
     source_url = models.TextField(_(u'Link de la fuente'))
     politician = models.ForeignKey(Politician, verbose_name=_(u'Político'), related_name='actions')
     text = models.TextField(_(u'Texto'))
+    category = models.ForeignKey(ActionCategory, blank=True, null=True)
 
     class Meta:
         verbose_name = _(u'Actuación')
