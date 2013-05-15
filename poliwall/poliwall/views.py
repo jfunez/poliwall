@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.http import Http404
 from lockdown.decorators import lockdown
 from polidata.models import Politician, Legislative, House, Party
-from polisessions.models import Session
+from polisessions.models import Session, Action
 
 
 @lockdown(superusers_only=True)
@@ -144,3 +144,17 @@ def session_list(request, legislative_code=None):
         'house_sessions': house_sessions,
     })
     return render_to_response('session_list.html', context, context_instance=RequestContext(request))
+
+
+@lockdown(superusers_only=True)
+def action_list(request, session_pk):
+    try:
+        session = Session.objects.get(pk=session_pk)
+        actions = Action.objects.filter(session__pk=session_pk)
+    except Exception:
+        raise Http404
+    context = Context({
+        'session': session,
+        'actions': actions,
+    })
+    return render_to_response('action_list.html', context, context_instance=RequestContext(request))

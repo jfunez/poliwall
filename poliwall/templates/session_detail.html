@@ -42,8 +42,8 @@
 							</a>
 						</td>
 						<td colspan="4">
-							<a href="#">
-								{% trans "Ver actuaciones de esta sesion" %} {{ session.legislative.roman_code }} <i class="icon-circle-arrow-right"></i>
+							<a href="{% url 'action_list' session.pk %}">
+								{% trans "Ver actuaciones de esta sesion" %} <i class="icon-circle-arrow-right"></i>
 							</a>
 						</td>
 					</tr>

@@ -25,6 +25,7 @@ urlpatterns = patterns(
     url(r'^sesiones/$', 'poliwall.views.session_list', name='session_list'),
     url(r'^sesiones/legislatura/(?P<legislative_code>\w+)/$', 'poliwall.views.session_list', name='session_list_by_legis'),
 
+    url(r'^actuaciones/sesion/(?P<session_pk>\w+)/$', 'poliwall.views.action_list', name='action_list'),
     # Backend Tools
     url(r'^redactor/', include('redactor.urls')),
     url(r'^admin/', include(admin.site.urls)),
