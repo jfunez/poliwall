@@ -36,8 +36,8 @@ class PoliticianProfileSpider(BasePoliticianSpider):
 
     def parse_politicianprofile(self, response):
         hxs = HtmlXPathSelector(response)
-        keys = hxs.select('//select[1]//option//@value').extract()[33:]
-        values = hxs.select('//select[1]//option//text()').extract()[33:]
+        keys = hxs.select("//select[@name='Legs']//option//@value").extract()[2:]
+        values = hxs.select("//select[@name='Legs']//option//text()").extract()[2:]
         newprofiles = dict([(unicode(k.split("=")[1]), v) for k, v in zip(keys, values)])
         self.profiles.update(newprofiles)
         for k, v in newprofiles.items():

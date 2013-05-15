@@ -4,7 +4,7 @@ import urllib2
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 from apps.polidata.models import Legislative, Politician, LegislativePolitician, Party, House
-from apps.polisessions.models import Action, Session
+from apps.polisessions.models import ActionCategory, Action, Session
 
 # Define your item pipelines here
 #
@@ -136,8 +136,9 @@ class PoliticianDjangoStoragePipeline(object):
             try:
                 politician = Politician.objects.get(politician_id=item['politician_id'])
             except Politician.DoesNotExist:
-                politician = Politician(politician_id=item['politician_id'], first_name=first_name, last_name=last_name,
-                    email=item.get('email', ''), profile_url=item['profile_url'], profile_id=item['profile_id'][2:])
+                politician = Politician(
+                            politician_id=item['politician_id'], first_name=first_name, last_name=last_name,
+                            email=item.get('email', ''), profile_url=item['profile_url'], profile_id=item['profile_id'][2:])
 
                 if item['photo_url']:
                     filename = item['photo_url'].split('/')[-1]
@@ -210,12 +211,15 @@ class PoliticianActionDjangoStoragePipeline(object):
             session.source_url = item['source_url']
             session.save()
 
+            category, created = ActionCategory.objects.get_or_create(name=item['category'])
+
             action = Action()
             action.legislative = legislative
             action.source_url = item['source_url']
             action.politician = politician
             action.text = item['text']
             action.session = session
+            action.category = category
             action.save()
 
         return item
