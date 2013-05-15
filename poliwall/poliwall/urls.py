@@ -9,16 +9,24 @@ from poliwall_api import v1_api
 
 urlpatterns = patterns(
     '',
+    # Initial pages
     url(r'^$', 'poliwall.views.home', name='home'),
-    # Gob. Nacional
     url(r'^gob-nacional/$', 'poliwall.views.gob_nacional', name='gob_nacional'),
+    # Party
     url(r'^partidos/$', 'poliwall.views.party_list', name='party_list'),
     url(r'^partido/(?P<full_name>.+)/$', 'poliwall.views.party_detail', name='party_detail'),
+    # Legislative
     url(r'^legislativo/$', 'poliwall.views.legislative_list', name='legislative_list'),
     url(r'^legislativo/legislatura/(?P<legislative_code>\w+)/$', 'poliwall.views.legislative_detail', name='legislative_detail'),
     url(r'^legislativo/legislatura/(?P<legislative_code>\w+)/politicos/$', 'poliwall.views.legislative_politician_list', name='legislative_politician_list'),
+    # Profile
     url(r'^perfil/(?P<slug>.+)/$', 'poliwall.views.legislative_politician_detail', name='legislative_politician_detail'),
+    # Sessions
+    url(r'^sesiones/$', 'poliwall.views.session_list', name='session_list'),
+    url(r'^sesiones/legislatura/(?P<legislative_code>\w+)/$', 'poliwall.views.session_list', name='session_list_by_legis'),
 
+    url(r'^actuaciones/sesion/(?P<session_pk>\w+)/$', 'poliwall.views.action_list', name='action_list'),
+    # Backend Tools
     url(r'^redactor/', include('redactor.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(v1_api.urls)),

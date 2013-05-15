@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block extra_css %}
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+{% endblock extra_css %}
+{% block extra_js %}
+	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			{% for house in house_sessions %}
+				$( "#accordion_{{ forloop.counter }}" ).accordion({
+					heightStyle: "fill",
+
+				});
+
+			{% endfor %}
+		});
+	</script>
+{% endblock extra_js %}
+{% block header_content %}
+    <h1>{% trans "Sesiones" %}</h1>
+{% endblock header_content %}
+
+{% block main_content %}
+<br>
+<h4>{% trans "Elija una sesión para ver el detalle" %}:</h4>
+<br>
+
+
+<div class="section-container tabs" data-section="tabs">
+	{% for house in house_sessions %}
+		<section>
+			<p class="title" data-section-title>
+				<a href="#panel_camara_{{ forloop.counter }}">
+					<i class="icon-book"></i> {% trans "Cámara" %}: {{ house.house_name }}
+				</a>
+			</p>
+			<div class="content" data-section-content>
+
+				{% with house.sessions as session_list %}
+					{% if session_list %}
+										
+					<div id="accordion_{{ forloop.counter }}">
+
+						{% for session in session_list %}
+					            {% include "session_detail.html" %}
+					    {% endfor %}
+
+					</div>
+					{% else %}
+						<p>No hay sesiones para esta Camara </p>
+					{% endif %}				
+
+				{% endwith %}
+			</div>
+		</section>
+	{% endfor %}
+</div>
+
+{% endblock main_content %}

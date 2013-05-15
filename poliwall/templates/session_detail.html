@@ -1,0 +1,54 @@
+{% load i18n %}
+
+<h3>{% trans "Sesión del " %} {{ session.date }} ({% trans "ordinal" %}: {{ session.ordinal|default:"---" }})</h3>
+<div>
+
+	<div class="row">
+		<div class="large-12 columns">
+			<table class="full_width">
+			 	<thead>
+					<tr>
+						<th>{% trans "Legislatura" %}</th>
+						<th>{% trans "Cámara" %}</th>
+						<th>{% trans "Fecha" %}</th>
+						<th>{% trans "Número" %}</th>
+						<th>{% trans "Ordinal" %}</th>
+						<th>{% trans "Presidente" %}</th>
+						<th>{% trans "Fuente" %}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<a href="{% url 'legislative_detail' session.legislative.roman_code %}">
+								{{ session.legislative.roman_code }}
+							</a>
+						</td>
+						<td>{{ session.house }}</td>
+						<td>{{ session.date }}</td>
+						<td>{{ session.number|default:"---" }}</td>
+						<td>{{ session.ordinal|default:"---" }}</td>
+						<td>{{ session.president|default:"---" }}</td>
+						<td>
+							<a class="button tiny round" href="{{ session.source_url }}">
+								<i class="icon-link"></i>
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<a href="{% url 'session_list_by_legis' session.legislative.roman_code %}">
+								{% trans "Ver sesiones de la legislatura" %} {{ session.legislative.roman_code }} <i class="icon-circle-arrow-right"></i>
+							</a>
+						</td>
+						<td colspan="4">
+							<a href="{% url 'action_list' session.pk %}">
+								{% trans "Ver actuaciones de esta sesion" %} <i class="icon-circle-arrow-right"></i>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
