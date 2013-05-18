@@ -1,54 +1,53 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block extra_css %}
-	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-{% endblock extra_css %}
-{% block extra_js %}
-	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-	<script type="text/javascript">
-		$(function() {
-			{% for house in house_sessions %}
-				$( "#accordion_{{ forloop.counter }}" ).accordion({
-					heightStyle: "fill",
-
-				});
-
-			{% endfor %}
-		});
-	</script>
-{% endblock extra_js %}
 {% block header_content %}
     <h1>{% trans "Sesiones" %}</h1>
 {% endblock header_content %}
 
 {% block main_content %}
 <br>
+<form>
+  <fieldset>
+    <legend><a id="filter_action_1" href="#"><i class="icon icon-search"></i> {% trans "Filtros" %}: </a></legend>
+    <div id="filter_area_1" class="row">
+      <div class="large-12 columns">
+		<label>{% trans "Por legislatura" %}:</label>
+		<ul class="button-group">
+			{% for leg_code in legislatives_code_set %}
+		  		<li><a href="{% url 'session_list_by_legis' leg_code %}" class="small button">{{ leg_code }}</a></li>
+			{% endfor %}
+		</ul>
+	  	<label>{% trans "Por año" %}:</label>
+		<ul class="button-group">
+			{% for leg_year in legislative_year_set %}
+		  		<li><a href="?year={{ leg_year }}" class="small button">{{ leg_year }}</a></li>
+			{% endfor %}
+		</ul>
+      </div>
+    </div>
+  </fieldset>
+</form>
 <h4>{% trans "Elija una sesión para ver el detalle" %}:</h4>
-<br>
-
-
 <div class="section-container tabs" data-section="tabs">
 	{% for house in house_sessions %}
 		<section>
 			<p class="title" data-section-title>
 				<a href="#panel_camara_{{ forloop.counter }}">
-					<i class="icon-book"></i> {% trans "Cámara" %}: {{ house.house_name }}
+					<i class="icon-home"></i> {% trans "Cámara" %}: {{ house.house_name }}
 				</a>
 			</p>
-			<div class="content" data-section-content>
+			<div class="content" data-slug="tab-{{ forloop.counter }}">
 
 				{% with house.sessions as session_list %}
 					{% if session_list %}
 										
-					<div id="accordion_{{ forloop.counter }}">
-
+					<div class="section-container accordion" data-section="accordion">
 						{% for session in session_list %}
 					            {% include "session_detail.html" %}
 					    {% endfor %}
-
 					</div>
 					{% else %}
-						<p>No hay sesiones para esta Camara </p>
+						<p><i class="icon icon-info-sign"></i> {% trans "No hay sesiones para esta Camara" %}</p>
 					{% endif %}				
 
 				{% endwith %}
@@ -58,3 +57,12 @@
 </div>
 
 {% endblock main_content %}
+{% block extra_js %}
+	<script type="text/javascript">
+		$(function () {
+			$('#filter_action_1').click(function(){
+				$('#filter_area_1').toggle()
+			});
+		});
+	</script>
+{% endblock extra_js %}
