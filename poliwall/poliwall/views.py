@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import date
 from django.template import Context, RequestContext
 from django.shortcuts import render_to_response
 from django.http import Http404
@@ -128,8 +129,23 @@ def legislative_politician_detail(request, slug):
 @lockdown(superusers_only=True)
 def session_list(request, legislative_code=None):
     house_sessions = []
+    legislatives_code_set = set()
+    legislative_year_set = set()
+    legislatives = Legislative.objects.all()
+    for legis in legislatives:
+        legislatives_code_set.add(legis.roman_code)
+        for year in xrange(legis.start_date.year, legis.end_date.year):
+            legislative_year_set.add(year)
+
+    year_filter = request.GET.get('year', None)
+    try:
+        year_filter = int(year_filter)
+    except Exception:
+        year_filter = None
     for house in House.objects.filter(is_public=True):
         sessions = Session.objects.filter(house=house)
+        if year_filter:
+            sessions = sessions.filter(date__year=year_filter)
         if legislative_code:
             legislative = get_legislative_by_code(legislative_code)
             sessions = sessions.filter(legislative=legislative)
@@ -142,6 +158,8 @@ def session_list(request, legislative_code=None):
 
     context = Context({
         'house_sessions': house_sessions,
+        'legislatives_code_set': legislatives_code_set,
+        'legislative_year_set': legislative_year_set
     })
     return render_to_response('session_list.html', context, context_instance=RequestContext(request))
 
