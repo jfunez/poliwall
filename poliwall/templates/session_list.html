@@ -1,22 +1,5 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block extra_css %}
-	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-{% endblock extra_css %}
-{% block extra_js %}
-	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-	<script type="text/javascript">
-		$(function() {
-			{% for house in house_sessions %}
-				$( "#accordion_{{ forloop.counter }}" ).accordion({
-					heightStyle: "fill",
-
-				});
-
-			{% endfor %}
-		});
-	</script>
-{% endblock extra_js %}
 {% block header_content %}
     <h1>{% trans "Sesiones" %}</h1>
 {% endblock header_content %}
@@ -35,20 +18,18 @@
 					<i class="icon-book"></i> {% trans "Cámara" %}: {{ house.house_name }}
 				</a>
 			</p>
-			<div class="content" data-section-content>
+			<div class="content" data-slug="tab-{{ forloop.counter }}">
 
 				{% with house.sessions as session_list %}
 					{% if session_list %}
 										
-					<div id="accordion_{{ forloop.counter }}">
-
+					<div class="section-container accordion" data-section="accordion">
 						{% for session in session_list %}
 					            {% include "session_detail.html" %}
 					    {% endfor %}
-
 					</div>
 					{% else %}
-						<p>No hay sesiones para esta Camara </p>
+						<p><i class="icon icon-info-sign"></i> {% trans "No hay sesiones para esta Camara" %}</p>
 					{% endif %}				
 
 				{% endwith %}
