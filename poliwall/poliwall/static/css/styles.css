@@ -16,7 +16,7 @@ body{
 	color: #ffffff;
 }
 #header h1 {
-	font-family: "Open Sans", "Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif; 
+	font-family: "Open Sans", "Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;
 	color: #ffffff;
 }
 .dashboard_item_icon { box-shadow: 0 0 20px #000; }
@@ -34,3 +34,14 @@ body{
 	text-align: center;
 }
 .icon-partially-muted { color: #D5D5D5;}
+
+/* PARTY */
+.party_item {
+    height: 300px;
+}
+.logo_party {
+    height: 150px;
+}
+.logo_party img {
+    border: 1px solid #d3d3d3;
+}
