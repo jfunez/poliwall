@@ -10,6 +10,7 @@ class Party(models.Model):
 
     name = models.CharField(_(u'Nombre'), max_length=100)
     code = models.CharField(_(u'Código'), max_length=10, blank=True, null=True)
+    logo = models.ImageField(_(u'Logo'), upload_to='polidata/party/logos/', blank=True, null=True)
 
     class Meta:
         verbose_name = _(u'Partido')
@@ -30,6 +31,7 @@ class SubParty(models.Model):
 
     party = models.ForeignKey(Party)
     name = models.CharField(_(u'Nombre'), max_length=100)
+    logo = models.ImageField(_(u'Logo'), upload_to='polidata/party/logos/', blank=True, null=True)
 
     class Meta:
         verbose_name = _(u'Lema')

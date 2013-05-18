@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n thumbnail %}
 {% block extra_head %}
     <link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />
 {% endblock extra_head %}
@@ -10,15 +10,20 @@
 
 {% block main_content %}
 
-{% for party in party_list %}
-
-        <div class="large-3 columns">
-            <a href="{% url 'party_detail' party.name %}">
-                <img src="{{ STATIC_URL }}img/politics.png" alt='{{ party }}' />
+<div class="row" style="margin-top: 20px;">
+    {% for party in party_list %}
+            <div class="large-3 columns party_item ">
+                <div class="logo_party">
+                    <a href="{% url 'party_detail' party.name %}">
+                        {% thumbnail party.logo "150" crop="top" as img %}
+                        <img src='{{ img.url }}' alt='{{ party }}' />
+                        {% endthumbnail %}
+                    </a>
+                </div>
                 <h4>{{ party }}</h4>
-            </a>
-        </div>
+            </div>
 
-{% endfor %}
+    {% endfor %}
+</div>
 
 {% endblock main_content %}
