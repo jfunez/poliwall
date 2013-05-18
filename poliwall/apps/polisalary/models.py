@@ -18,3 +18,6 @@ class PoliticianSalary(models.Model):
     class Meta:
         verbose_name = _(u'Salario')
         verbose_name_plural = _(u'Salarios')
+
+    def __unicode__(self):
+        return "%s (%s)" % (self.politician, self.amount)
