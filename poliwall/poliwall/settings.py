@@ -105,6 +105,7 @@ INSTALLED_APPS = (
     'polidata',
     'polisessions',
     'polidiem',
+    'polisalary',
     'django_extensions',
     'djcelery',
     'sorl.thumbnail',

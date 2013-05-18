@@ -1,0 +1,28 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+     <a href="../../../">{% trans "Home" %}</a> &rsaquo;
+     <a href="../../">{{ app_label|capfirst }}</a> &rsaquo;
+     <a href="../">{{ opts.verbose_name_plural|capfirst }}</a> &rsaquo;
+     {% trans "Ingresar salario" %}
+</div>
+{% endblock %}
+
+{% block content %}
+  <form action="." method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">{% trans "Ingresar" %}</button>
+    <button class="btn">{% trans "Cancelar" %}</button>
+  </form>
+{% if has_results %}
+<h1>{% trans "Resultados del ingreso" %}</h1>
+<h2>{% trans "Se ingresaron nuevos salarios para los siguientes políticos:" %}</h2>
+<ul>
+{% for politician in politician_updated  %}
+  <li>{{ politician }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
