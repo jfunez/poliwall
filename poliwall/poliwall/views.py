@@ -41,11 +41,12 @@ def party_detail(request, full_name):
     parties = Party.objects.filter(name__icontains=full_name)
     if not parties.exists():
         raise Http404
-    if parties.count() > 1:
-        context = Context({
-            'party_list': parties,
-        })
-        return render_to_response('party_list.html', context, context_instance=RequestContext(request))
+    if not parties.filter(name=full_name).exists():
+        if parties.count() > 1:
+            context = Context({
+                'party_list': parties,
+            })
+            return render_to_response('party_list.html', context, context_instance=RequestContext(request))
 
     context = Context({
         'party': parties[0],
@@ -79,7 +80,7 @@ def legislative_detail(request, legislative_code):
         raise Http404
 
     context = Context({
-        'legislative_list': [legislative]
+        'legislative_list': [legislative],
     })
     return render_to_response('legislative_list.html', context, context_instance=RequestContext(request))
 
@@ -210,6 +211,6 @@ def legislative_statistics_report(request, legislative_code, report_slug):
 
     report = FilteredReport(request=request)
 
-    return report.render(request, extra_context={})
+    return report.render(request, extra_context={'legislative': legislative})
 
 

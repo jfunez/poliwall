@@ -34,7 +34,7 @@ urlpatterns = patterns(
     url(r'^redactor/', include('redactor.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(v1_api.urls)),
-    url(r'^reportes/', include('model_report.urls')),
+    # url(r'^reportes/', include('model_report.urls')),
 )
 
 
