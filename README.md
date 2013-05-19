@@ -15,5 +15,11 @@ licencias compatibles con la AGPL v3.
 El texto completo de la licencia se encuentra en el archivo LICENCE.txt
 
 
-Stay tunned
--------------
+
+Instalación:
+------------
+Pude ver la documentacion actualizada en [la wiki del proyecto](https://github.com/jfunez/poliwall/wiki/ "Instalación").
+
+Requisitos:
+-----------
+Pude ver la documentacion actualizada en [la wiki del proyecto](https://github.com/jfunez/poliwall/wiki/Requerimientos "Requerimientos").
