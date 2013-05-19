@@ -13,6 +13,7 @@ urlpatterns = patterns(
     '',
     # Initial pages
     url(r'^$', 'poliwall.views.home', name='home'),
+    url(r'^acerca_de_polidatosuy/$', 'poliwall.views.about', name='about'),
     url(r'^gob-nacional/$', 'poliwall.views.gob_nacional', name='gob_nacional'),
     # Party
     url(r'^partidos/$', 'poliwall.views.party_list', name='party_list'),

@@ -16,6 +16,13 @@ def home(request):
     return render_to_response('home.html', context, context_instance=RequestContext(request))
 
 
+@lockdown(superusers_only=True)
+def about(request):
+    context = Context({
+    })
+    return render_to_response('about.html', context, context_instance=RequestContext(request))
+
+
 def api_home(request):
     context = Context({
     })

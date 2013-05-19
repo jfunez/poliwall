@@ -52,38 +52,20 @@
 			</section>
 		</div>
 	</div>
-
 	<div class="row">
-		<div class="large-4 columns">
-			<aside>
-			<div class="dashboard_item">
-				<a href="{% url 'legislative_list' %}">
-					{% thumbnail "img/dashboard/poder_legislativo.jpg" "400x400" crop="center" as im %}
-					    <img class="dashboard_item_icon" src="{{ im.url }}" alt='{% trans "Gobierno Nacional" %}'>
-					{% endthumbnail %}
-				</a>
-			</div>
-			</aside>
-		</div>
+		<div class="large-12 columns">
+			<section>
+				<header>¿Qué son los datos abierto gubernamentales?:</header>
+				<article>
+					<p>Datos Abiertos Gubernamentales y el Proyecto OD4D </p>
+					<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/ndiVbSQe5Aw" frameborder="0" allowfullscreen></iframe>
 
-	    <div class="large-8 columns">
-	    	<section>
-	    		<header>
-		    		<h4>{% trans "Poder Legislativo" %}</h4>
-		    	</header>
-		    	<article>
-	    		<p>
-					Con el objetivo de facilitar datos politicos del gobierno uruguayo, tanto actuales como historicos 
-					de forma amigable para el ciudadano, basandonos en los pilares del 
-					<a href="http://opengovernmentdata.org/">open government data</a> para una mayor transparencia, hemos
-					seleccionado al Parlamento uruguayo para iniciar este proyecto, tanto por el volumen de datos, 
-					la concentracion de politicos y la importancia de su ejercicio en la democracia. <br>
-					Posteriormente facilitaremos datos de otro institución gubernamental para listar aquí.
-					<h5><a href="{% url 'legislative_list' %}">haga click aquí</a> para acceder a los datos del parlamento</h5>
-				</p>
 				</article>
+				<footer>
+					<a href="http://www.od4d.org/category/datos-abiertos-2/que-son/">Open Data For Developmente</a>
+				</footer>
 			</section>
-	    </div>
+		</div>
 	</div>
 	<br><br>
 	<div class="row">
