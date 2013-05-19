@@ -4,7 +4,7 @@ South
 psycopg2
 sorl-thumbnail
 django-wysiwyg-redactor
-bootstrap-admin
+-e git+git://github.com/douglasmiranda/django-admin-bootstrap.git#egg=bootstrap_admin
 django-tastypie
 django-lockdown==dev
 django-extensions
