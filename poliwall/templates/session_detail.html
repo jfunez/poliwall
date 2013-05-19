@@ -47,7 +47,7 @@
 								</a>
 							</td>
 							<td colspan="4">
-								<a href="{% url 'action_list' session.pk %}">
+								<a href="{% url 'action_list_of_session' session.legislative.roman_code session.pk %}">
 									{% trans "Ver actuaciones de esta sesion" %} <i class="icon-circle-arrow-right"></i>
 								</a>
 							</td>

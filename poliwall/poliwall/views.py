@@ -166,7 +166,7 @@ def session_list(request, legislative_code=None):
 
 
 @lockdown(superusers_only=True)
-def action_list(request, session_pk):
+def action_list(request, legislative_code, session_pk):
     try:
         session = Session.objects.get(pk=session_pk)
         actions = Action.objects.filter(session__pk=session_pk)
