@@ -110,6 +110,7 @@ INSTALLED_APPS = (
     'djcelery',
     'sorl.thumbnail',
     'mailer',
+    'model_report',
 )
 
 LOGGING = {

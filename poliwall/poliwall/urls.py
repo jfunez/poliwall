@@ -3,6 +3,8 @@ from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
+from model_report import report
+report.autodiscover()
 
 from poliwall_api import v1_api
 
@@ -19,6 +21,8 @@ urlpatterns = patterns(
     url(r'^legislativo/$', 'poliwall.views.legislative_list', name='legislative_list'),
     url(r'^legislativo/legislatura/(?P<legislative_code>\w+)/$', 'poliwall.views.legislative_detail', name='legislative_detail'),
     url(r'^legislativo/legislatura/(?P<legislative_code>\w+)/politicos/$', 'poliwall.views.legislative_politician_list', name='legislative_politician_list'),
+    url(r'^legislativo/legislatura/(?P<legislative_code>\w+)/estadisticas/$', 'poliwall.views.legislative_statistics', name='legislative_statistics'),
+    url(r'^legislativo/legislatura/(?P<legislative_code>\w+)/estadisticas/(?P<report_slug>\w+)/$', 'poliwall.views.legislative_statistics_report', name='legislative_statistics_report'),
     # Profile
     url(r'^perfil/(?P<slug>.+)/$', 'poliwall.views.legislative_politician_detail', name='legislative_politician_detail'),
     # Sessions
@@ -30,6 +34,7 @@ urlpatterns = patterns(
     url(r'^redactor/', include('redactor.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(v1_api.urls)),
+    url(r'^reportes/', include('model_report.urls')),
 )
 
 
