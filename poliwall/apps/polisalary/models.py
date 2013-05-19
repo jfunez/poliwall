@@ -2,13 +2,13 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from polidata.models import Politician
+from polidata.models import Politician, Legislative
 
 
 class PoliticianSalary(models.Model):
 
     """ Modelo para guardar los sueldos de los políticos """
-
+    legislative = models.ForeignKey(Legislative, verbose_name=_(u'Legislatura'), related_name='salary_legislatives')
     politician = models.ForeignKey(Politician, verbose_name=_(
         u'Político'), related_name='salaries')
     start_date = models.DateField(_(u'Desde'))
