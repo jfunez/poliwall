@@ -18,7 +18,7 @@ El texto completo de la licencia se encuentra en el archivo LICENCE.txt
 
 Instalación:
 ------------
-Pude ver la documentacion actualizada en [la wiki del proyecto](https://github.com/jfunez/poliwall/wiki/ "Instalación").
+Pude ver la documentacion actualizada en [la wiki del proyecto](https://github.com/jfunez/poliwall/wiki/Instalacion "Instalación").
 
 Requisitos:
 -----------
