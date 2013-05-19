@@ -25,6 +25,14 @@
 		<a href="{% url 'party_detail' politician.get_current_party %}">{{ politician.get_current_party|default:"---" }}</a>
 	</li>
 
+  {% if politician.get_last_legislative and politician.get_last_salary %}
+  <li>
+    <i class="icon-money"></i> {% trans "Remuneración" %}:
+    <a href="{% url 'salary_detail_by_legis' politician.get_last_legislative politician.get_fullname %}">$ {{ politician.get_last_salary }}</a>
+
+  </li>
+  {% endif %}
+
 	<li>
 		<i class="icon-group"></i> {% trans "Lema" %}:
 		{{ politician.get_current_subparty|default:"---" }}</li>

@@ -125,6 +125,14 @@ class Politician(models.Model):
         return '<img src="%s%s"/>' % (settings.MEDIA_URL, self.photo)
     photo_thumb.allow_tags = True
 
+    @property
+    def get_last_salary(self):
+        return self.salaries.all().get(end_date=None).amount
+
+    @property
+    def get_last_legislative(self):
+        return self.salaries.all().get(end_date=None).legislative.roman_code
+
 
 class House(models.Model):
 
