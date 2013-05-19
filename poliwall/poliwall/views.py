@@ -6,6 +6,7 @@ from django.http import Http404
 from lockdown.decorators import lockdown
 from polidata.models import Politician, Legislative, House, Party
 from polisessions.models import Session, Action
+from polisalary.models import PoliticianSalary
 
 
 @lockdown(superusers_only=True)
@@ -165,7 +166,7 @@ def session_list(request, legislative_code=None):
 
 
 @lockdown(superusers_only=True)
-def action_list(request, session_pk):
+def action_list(request, legislative_code, session_pk):
     try:
         session = Session.objects.get(pk=session_pk)
         actions = Action.objects.filter(session__pk=session_pk)
@@ -176,3 +177,41 @@ def action_list(request, session_pk):
         'actions': actions,
     })
     return render_to_response('action_list.html', context, context_instance=RequestContext(request))
+
+
+@lockdown(superusers_only=True)
+def legislative_salary_list(request, legislative_code):
+    legislative = get_legislative_by_code(legislative_code)
+    if not legislative:
+        raise Http404
+    salaries = PoliticianSalary.objects.filter(legislative=legislative).order_by('politician__last_name', 'politician__first_name')
+
+    context = Context({
+        'salaries': salaries,
+        'legislative_code': legislative_code,
+    })
+    return render_to_response('salary_list.html', context, context_instance=RequestContext(request))
+
+
+@lockdown(superusers_only=True)
+def legislative_salary_detail(request, legislative_code, politician_slug):
+    legislative = get_legislative_by_code(legislative_code)
+    if not legislative:
+        raise Http404
+
+    politicians = Politician.objects.filter(slug__icontains=politician_slug)
+    if not politicians.exists():
+        raise Http404
+
+    salaries = dict()
+    for politician in politicians:
+        salaries[politician.pk] = PoliticianSalary.objects.filter(
+                                    legislative=legislative, politician__pk=politician.pk).order_by(
+                                    'politician__last_name', 'politician__first_name', 'start_date')
+    context = Context({
+        'politicians': politicians,
+        'salaries': salaries,
+        'politician_slug': politician_slug,
+        'legislative_code': legislative_code,
+    })
+    return render_to_response('salary_detail.html', context, context_instance=RequestContext(request))

@@ -21,11 +21,14 @@ urlpatterns = patterns(
     url(r'^legislativo/legislatura/(?P<legislative_code>\w+)/politicos/$', 'poliwall.views.legislative_politician_list', name='legislative_politician_list'),
     # Profile
     url(r'^perfil/(?P<slug>.+)/$', 'poliwall.views.legislative_politician_detail', name='legislative_politician_detail'),
+    # Actions
+    url(r'^legislativo/legislatura/(?P<legislative_code>\w+)/sesiones/(?P<session_pk>\w+)/actuaciones/$', 'poliwall.views.action_list', name='action_list_of_session'),
     # Sessions
-    url(r'^sesiones/$', 'poliwall.views.session_list', name='session_list'),
-    url(r'^sesiones/legislatura/(?P<legislative_code>\w+)/$', 'poliwall.views.session_list', name='session_list_by_legis'),
-
-    url(r'^actuaciones/sesion/(?P<session_pk>\w+)/$', 'poliwall.views.action_list', name='action_list'),
+    url(r'^legislativo/sesiones/$', 'poliwall.views.session_list', name='session_list'),
+    url(r'^legislativo/legislatura/(?P<legislative_code>\w+)/sesiones/$', 'poliwall.views.session_list', name='session_list_by_legis'),
+    # Salary
+    url(r'^legislativo/legislatura/(?P<legislative_code>\w+)/remuneraciones/$', 'poliwall.views.legislative_salary_list', name='salary_list_by_legis'),
+    url(r'^legislativo/legislatura/(?P<legislative_code>\w+)/politicos/(?P<politician_slug>.+)/remuneraciones/$', 'poliwall.views.legislative_salary_detail', name='salary_detail_by_legis'),
     # Backend Tools
     url(r'^redactor/', include('redactor.urls')),
     url(r'^admin/', include(admin.site.urls)),

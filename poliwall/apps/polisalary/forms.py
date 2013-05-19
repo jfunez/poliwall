@@ -18,13 +18,14 @@ class SetSalaryForm(forms.Form):
     def save(self, *args, **kwargs):
         # {'date': datetime.date(2012, 6, 1), 'house': u'1', 'amount': 1.0}
         data = self.cleaned_data
-        qs = LegislativePolitician.objects.exclude(legislative__start_date__gt=data['date'])
-        qs = qs.filter(legislative__end_date__gte=data['date'], house=data['house'])
+        legislatures = Legislative.objects.exclude(start_date__gt=data['date']).filter(end_date__gte=data['date']).values_list('pk', flat=True)
+        qs = LegislativePolitician.objects.filter(legislative__in=legislatures, house=data['house'])
         politician_ids = qs.values_list('politician', flat=True)
         end_count = PoliticianSalary.objects.filter(end_date=None, politician__in=politician_ids).update(end_date=data['date'])
         new_salaries = []
         for pid in politician_ids:
-            new_salaries.append(PoliticianSalary(amount=data['amount'], start_date=data['date'], politician_id=pid))
+            for leg in legislatures:
+                new_salaries.append(PoliticianSalary(legislative_id=leg, amount=data['amount'], start_date=data['date'], politician_id=pid))
         new_count = PoliticianSalary.objects.bulk_create(new_salaries)
 
         return {

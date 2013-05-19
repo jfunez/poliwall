@@ -11,8 +11,8 @@ from polisalary.forms import SetSalaryForm
 
 
 class PoliticianSalaryAdmin(admin.ModelAdmin):
-    list_display = ('politician', 'start_date', 'end_date', 'amount')
-    list_filter = ('start_date',)
+    list_display = ('legislative', 'politician', 'start_date', 'end_date', 'amount')
+    list_filter = ('legislative', 'start_date',)
     search_fields = ('politician__first_name', 'politician__last_name')
 
     def get_urls(self):
