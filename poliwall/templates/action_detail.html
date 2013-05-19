@@ -1,0 +1,63 @@
+{% load i18n %}
+<section {% if forloop.first %} class="active" {% endif %}>
+	<p class="title" data-section-title>
+		<a href="#panel{{ forloop.counter }}">
+			{% trans "Actuación" %} {{ action.session.date }} 
+			{% trans "de" %} {{ action.politician }}
+		</a>
+	</p>
+	<div class="content" data-section-content>
+		<div class="row">
+			<div class="large-12 columns">
+				<table class="full_width">
+					<thead>
+						<tr>
+							<th><i class="icon-book"></i> {% trans "Legislatura" %}:</th>	
+							<th><i class="icon-bullseye"></i> {% trans "Sesión" %}:</th>	
+							<th><i class="icon-user"></i> {% trans "Político" %}:</th>	
+							<th><i class="icon-link"></i> {% trans "Fuente" %}:</th>	
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<a href="{% url 'legislative_detail' action.legislative.roman_code %}">
+									{{ action.legislative.roman_code }} 
+									<i class="icon-circle-arrow-right"></i>
+								</a>
+							</td>
+							<td>
+								<a href="">
+									{{ action.session.date }} 
+									{{ action.session.ordinal|default:"" }} 
+									{{ action.session.number|default:"" }} 
+									<i class="icon-circle-arrow-right"></i>
+								</a>
+							</td>
+							<td>
+								<a href="{% url 'legislative_politician_detail' action.politician %}">
+									{{ action.politician }} 
+									<i class="icon-circle-arrow-right"></i>
+								</a>
+							</td>
+							<td>
+								<a class="button tiny round" href="{{ action.source_url }}">
+									<i class="icon-link"></i>
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="4">
+								<p>
+									<i class="icon-quote-left icon-3x pull-left icon-partially-muted"></i>
+									{{ action.text }}
+									<i class="icon-quote-right icon-3x pull-right icon-partially-muted"></i>
+								</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>

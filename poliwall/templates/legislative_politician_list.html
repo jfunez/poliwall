@@ -14,42 +14,40 @@
 
 	<div class="section-container tabs" data-section="tabs">
 		{% for house, legislative_politician_list in houses %}
-		<section>
-			<p class="title" data-section-title><a href="#">{{ house }}</a></p>
-			<div class="content" data-section-content>
-
-				<div class="row">
-					<div class="large-12 columns end timeline-wrapper">
-						<ul class="timeline">
-							{% for legislative_politician in legislative_politician_list %}
-								{% with politician=legislative_politician.politician %}
-							    <li class="event">
-							        <input type="radio" name="tl-group" checked/>
-							        <label></label>
-							        {% include "includes/legislative_politician_detail_thumb.html" %}
-							        <div class="event-content-perspective">
-							            <div class="event-content">
-							                <div class="event-content-inner">
-							                    <h3>
-							                    	<a class="expand_politician_profile" href="#"><i class="icon-angle-right"></i> {{ politician }}</a>
-							                    </h3>
-							                    <div>
-							                    	{% include "includes/legislative_politician_detail_summary.html" %}
-							                    	<br>
-							                    	<h6><a href="{% url 'legislative_politician_detail' politician %}" class="small button round">{% trans "Ver más" %} <i class="icon-circle-arrow-right"></i></a> </h6>
-							                    </div>
-							                </div>
-							            </div>
-							        </div>
-							    </li>
-							    {% endwith %}
-							{% endfor %}
-						</ul>
+			<section>
+				<p class="title" data-section-title><a href="#panel_{{ forloop.counter }}">{{ house }}</a></p>
+				<div class="content" data-section-content>
+					<div class="row">
+						<div class="large-12 columns end timeline-wrapper">
+							<ul class="timeline">
+								{% for legislative_politician in legislative_politician_list %}
+									{% with politician=legislative_politician.politician %}
+								    <li class="event">
+								        <input type="radio" name="tl-group" checked/>
+								        <label></label>
+								        {% include "includes/legislative_politician_detail_thumb.html" %}
+								        <div class="event-content-perspective">
+								            <div class="event-content">
+								                <div class="event-content-inner">
+								                    <h3>
+								                    	<a class="expand_politician_profile" href="#"><i class="icon-angle-right"></i> {{ politician }}</a>
+								                    </h3>
+								                    <div>
+								                    	{% include "includes/legislative_politician_detail_summary.html" %}
+								                    	<br>
+								                    	<h6><a href="{% url 'legislative_politician_detail' politician %}" class="small button round">{% trans "Ver más" %} <i class="icon-circle-arrow-right"></i></a> </h6>
+								                    </div>
+								                </div>
+								            </div>
+								        </div>
+								    </li>
+								    {% endwith %}
+								{% endfor %}
+							</ul>
+						</div>
 					</div>
 				</div>
-
-			</div>
-		</section>
+			</section>
 		{% endfor%}
 	</div>
 {% endblock main_content %}
@@ -73,8 +71,6 @@
 					down_arrow.removeClass('icon-angle-down').addClass('icon-angle-right');
 				}
 			}
-
-			//console.log('done! this:', this);
 		});
 	</script>
 {% endblock extra_js %}

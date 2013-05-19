@@ -5,6 +5,9 @@ body{
     font-style: normal;
     font-weight: normal;
 }
+.full_width {
+	width: 100%;
+}
 .top-bar-section .dropdown li a {
 	padding-top: 15px;
 }
@@ -13,7 +16,32 @@ body{
 	color: #ffffff;
 }
 #header h1 {
-	font-family: "Open Sans", "Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif; 
+	font-family: "Open Sans", "Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;
 	color: #ffffff;
 }
 .dashboard_item_icon { box-shadow: 0 0 20px #000; }
+
+/*  LEGISLATIVE OPTIONS */
+.legislature_opt_row {
+	margin-top: 20px;
+}
+.legislature_opt_row_item_icon {
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+.legislature_opt_row_item_title {
+	text-align: center;
+}
+.icon-partially-muted { color: #D5D5D5;}
+
+/* PARTY */
+.party_item {
+    height: 300px;
+}
+.logo_party {
+    height: 150px;
+}
+.logo_party img {
+    border: 1px solid #d3d3d3;
+}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block header_content %}
+    <h1>
+    	{% trans "Remuneraciones" %}
+    	{% if legislative_code %}
+    		<i class="icon icon-double-angle-right"></i>  {{ legislative_code }}
+    	{% endif %}
+    </h1>
+{% endblock header_content %}
+{% block main_content %}
+<br>
+<br>
+{% if salaries %}
+	<table class="full_width">
+		<thead>
+			<tr>
+				<th><i class="icon-user"></i> {% trans "Politico" %}:</th>
+				<th><i class="icon-book"></i> {% trans "Legislatura" %}:</th>
+				<th><i class="icon-calendar"></i> {% trans "Periodo" %}:</th>
+				<th><i class="icon-money"></i> {% trans "Monto" %}:</th>
+				<th><i class="icon-plus-sign"></i> {% trans "Mas info" %}:</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for salary in salaries %}
+			<tr>
+				<td>
+					<a href="{% url 'legislative_politician_detail' salary.politician.slug %}">
+						{{ salary.politician.last_name }}, {{ salary.politician.first_name }}
+					</a>
+				</td>
+				<td>
+					<a href="{% url 'legislative_detail' salary.legislative.roman_code %}">
+						{{ salary.legislative }}
+					</a>
+				</td>
+				<td>{{ salary.start_date }} ... {{ salary.end_date|default:" " }}</td>
+				<td>{{ salary.amount }}</td>
+				<td>
+					<a class="button tiny round" href="{% url 'salary_detail_by_legis' salary.legislative.roman_code salary.politician.slug %}">
+						<i class="icon icon-arrow-right"></i>
+					</a>
+				</td>
+			</tr>				
+		{% endfor %}
+		</tbody>
+	</table>
+{% else %}
+	<p>{% trans "No hay registros de remuneraciones para esta legislatura." %}</p>
+{% endif %}
+{% endblock main_content %}

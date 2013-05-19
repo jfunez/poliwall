@@ -36,8 +36,8 @@ class PoliticianProfileSpider(BasePoliticianSpider):
 
     def parse_politicianprofile(self, response):
         hxs = HtmlXPathSelector(response)
-        keys = hxs.select('//select[2]//option//@value').extract()[2:]
-        values = hxs.select('//select[2]//option//text()').extract()[2:]
+        keys = hxs.select("//select[@name='Legs']//option//@value").extract()[2:]
+        values = hxs.select("//select[@name='Legs']//option//text()").extract()[2:]
         newprofiles = dict([(unicode(k.split("=")[1]), v) for k, v in zip(keys, values)])
         self.profiles.update(newprofiles)
         for k, v in newprofiles.items():
@@ -62,7 +62,7 @@ class PoliticianProfileSpider(BasePoliticianSpider):
             datos = [x.strip() for x in hxs.select('//*[@id="TblIdLeg"]//tr[2]//font//text()').extract()]
             role = ""
             party = ""
-            state = ""
+            state = []
             on_party = False
             on_state = False
             on_role = True
@@ -83,11 +83,14 @@ class PoliticianProfileSpider(BasePoliticianSpider):
                     party += data + ' '
                     continue
                 if on_state:
-                    if data != 'de':
-                        state = data
+                    if data not in ('departamento', 'de'):
+                        state.append(data)
+                        continue
+
             item['role'] = role.replace('por el Lema', '').replace('electo', '').strip()
             item['party'] = party.replace(', ', '')
-            item['state'] = state.strip()
+
+            item['state'] = ' '.join(state).strip()
             item['legislative_id'] = datos[1].split(':')[1].replace('a.)', '').strip()
         try:
             item['email'] = datos[3].strip()

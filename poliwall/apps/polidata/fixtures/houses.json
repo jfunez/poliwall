@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "polidata.house", "fields": {"name": "C\u00e1mara de senadores", "rol_name": "Senador"}}, {"pk": 2, "model": "polidata.house", "fields": {"name": "C\u00e1mara de diputados", "rol_name": "Diputado"}}]

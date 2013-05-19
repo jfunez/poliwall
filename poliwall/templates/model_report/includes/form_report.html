@@ -1,0 +1,24 @@
+{% if form_groupby or form_filter or form_config %}
+<div class="form_filter custom">
+    <form method="GET" action="{{ request.path }}">
+      <div class="large-4 small-1 columns">
+        {% include "model_report/includes/form_groupby.html" %}
+      </div>
+      <div class="large-4 small-1 columns">
+      {% include "model_report/includes/form_filter.html" %}
+      </div>
+      <div class="large-4 small-1 columns">
+      {% include "model_report/includes/form_config.html" %}
+    </div>
+      <p class="actions">
+        <button type="submit" class="button query">{{ submit_label|default:_("Get results") }}</button>
+        {% if report_rows %}
+        {% for export in report.exports %}
+        <button type="submit" class="button success {{ export }}" name="export" value="{{ export }}">{{ export|title }}</button>
+        {% endfor %}
+        <button type="button" class="button alert print" onclick="javascript:window.print()">{{ submit_label|default:_("Print") }}</button>
+        {% endif %}
+    </p>
+    </form>
+</div>
+{% endif %}

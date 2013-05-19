@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block header_content %}
+    <h1>{% trans "Sesión" %}: {{ session.date }}</h1>
+    <h5>
+    	{% trans "Ordinal" %}: {{ session.ordinal|default:"---" }} &bull;
+    	{% trans "Numero" %}: {{ session.number|default:"---" }} 
+    </h5>
+{% endblock header_content %}
+
+{% block main_content %}
+<br><br>
+<div class="section-container accordion" data-section="accordion" data-options="">
+    {% for action in actions %}
+            {% include "action_detail.html" %}
+    {% endfor %}
+</div>
+{% endblock main_content %}

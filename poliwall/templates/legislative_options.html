@@ -1,0 +1,71 @@
+{% load i18n %}
+<section {% if forloop.first %} class="active" {% endif %}>
+	<p class="title" data-section-title>
+		<a href="#panel{{ forloop.counter }}">
+			{% trans "Legislatura" %} {{ legislative }}
+		</a>
+	</p>
+	<div class="content" data-section-content>
+		<div class="row">
+			<div class="large-12 columns">
+				<a href="{% url 'legislative_detail' legislative.roman_code %}">
+					 {% trans "Legislatura" %} {{ legislative.roman_code }} <i class="icon-circle-arrow-right"></i>
+				</a>
+			</div>
+		</div>
+	  	<div class="row legislature_opt_row">
+			<div class="large-3 columns">
+			    <a href="{% url 'legislative_politician_list' legislative.roman_code %}">
+			        <div class="legislature_opt_row_item">
+			        	<div class="legislature_opt_row_item_icon">
+			        		<i class="icon-group icon-2x icon-border"></i>
+			        	</div>
+			        	<div class="legislature_opt_row_item_title">
+				        	{% trans "Politicos" %}
+				        	<i class="icon-circle-arrow-right"></i>
+			        	</div>
+			        </div>
+			    </a>
+			</div>
+			<div class="large-3 columns">
+			    <a href="{% url 'session_list_by_legis' legislative.roman_code %}">
+			    	<div class="legislature_opt_row_item">
+			    		<div class="legislature_opt_row_item_icon">
+			    			<i class="icon-calendar icon-2x icon-border"></i>
+			    		</div>
+			    		<div class="legislature_opt_row_item_title">
+				        	{% trans "Sesiones" %}
+				        	<i class="icon-circle-arrow-right"></i>
+				        </div>
+			        </div>
+			    </a>
+			</div>
+			<div class="large-3 columns">
+			    <a href="{% url 'salary_list_by_legis' legislative.roman_code %}">
+			    	<div class="legislature_opt_row_item">
+			    		<div class="legislature_opt_row_item_icon">
+				    		<i class="icon-money icon-2x icon-border"></i><br>
+			    		</div>
+			    		<div class="legislature_opt_row_item_title">
+				        	{% trans "Remuneraciones" %}
+				        	<i class="icon-circle-arrow-right"></i>
+				        </div>
+			        </div>
+			    </a>
+			</div>
+			<div class="large-3 columns">
+			  	<a href="{% url 'legislative_statistics' legislative.roman_code %}">
+			  		<div class="legislature_opt_row_item">
+			  			<div class="legislature_opt_row_item_icon">
+			    			<i class="icon-bar-chart icon-2x icon-border"></i><br>
+			    		</div>
+			    		<div class="legislature_opt_row_item_title">
+					        {% trans "Estadisticas" %}
+					        <i class="icon-circle-arrow-right"></i>
+				        </div>
+			  		</div>
+			    </a>
+			</div>
+	  	</div>
+	</div>
+</section>

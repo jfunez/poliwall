@@ -1,21 +1,113 @@
 {% extends "base.html" %}
 {% load i18n thumbnail %}
-{% block extra_head %}
-	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />	
-{% endblock extra_head %}
 {% block main_content %}
 	<br><br>
 	<div class="row">
-		<div class="large-6 columns">
-			<div class="dashboard_item">
-				<a href="{% url 'gob_nacional' %}">
+		<div class="large-12 columns">
+			<section>
+				<header>
+					<h3>PoliDatos UY <small>Datos Politicos de Uruguay</small></h3>
+				</header>
+				<article>
+				<p>
+					<i class="icon-quote-left icon-3x pull-left icon-partially-muted"></i>
+					Acceder a la información que posee y produce el Estado es un derecho de todos, 
+					según lo establece la <a href="http://www.parlamento.gub.uy/leyes/AccesoTextoLey.asp?Ley=18381">Ley N° 18.381</a> 
+					de Derecho de Acceso a la Información Pública. 
+					Esta información debe estar al alcance de todas las personas para fortalecer una cultura de transparencia
+					 y de rendición de cuentas.
+					<i class="icon-quote-right icon-3x pull-right icon-partially-muted"></i>
+				</p>
+				<footer>
+					<p class="pull-right">
+						<strong><a href="http://www.uaip.gub.uy/inicio/institucional/Tu+derecho/">UIAP</a></strong>
+					</p>
+					<br>
+					<br>
+				</footer>
 
-					{% thumbnail "img/dashboard/flag_uruguay.png" "600x400" crop="center" as im %}
-					    <img class="dashboard_item_icon" src="{{ im.url }}" name="content-target" alt='{% trans "Gobierno Nacional" %}'>
-					{% endthumbnail %}
-					<h4>{% trans "Gobierno Nacional" %}</h4>
-				</a>
-			</div>
+				<p>
+					Con esta premisa querermos a facilitarle al ciudadano una herramienta más para tener al momento de juzgar a politicos 
+					y sus acciones, y porque no, descubrir nuevos talentos, de forma amigable.
+				</p>
+				</article>
+			</section>
 		</div>
 	</div>
+	<div class="row">
+		<div class="large-12 columns">
+			<section>
+				<header>
+					<h4>Para más información visite:</h4>
+				</header>
+				<article>
+				<p>
+					<ul>
+						<li>Nuestra página <a href="{% url 'about' %}">acerca de este proyecto</a></li>
+						<li>Sitio web oficial de la <a href="http://www.uaip.gub.uy/inicio/institucional/Tu+derecho/">Unidad de Acceso a la Información Pública</a></li>
+						<li>El texto completo de la <a href="http://www.parlamento.gub.uy/leyes/AccesoTextoLey.asp?Ley=18381">Ley N° 18.381</a></li>
+					</ul>
+				</p>
+				</article>
+			</section>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="large-4 columns">
+			<aside>
+			<div class="dashboard_item">
+				<a href="{% url 'legislative_list' %}">
+					{% thumbnail "img/dashboard/poder_legislativo.jpg" "400x400" crop="center" as im %}
+					    <img class="dashboard_item_icon" src="{{ im.url }}" alt='{% trans "Gobierno Nacional" %}'>
+					{% endthumbnail %}
+				</a>
+			</div>
+			</aside>
+		</div>
+
+	    <div class="large-8 columns">
+	    	<section>
+	    		<header>
+		    		<h4>{% trans "Poder Legislativo" %}</h4>
+		    	</header>
+		    	<article>
+	    		<p>
+					Con el objetivo de facilitar datos politicos del gobierno uruguayo, tanto actuales como historicos 
+					de forma amigable para el ciudadano, basandonos en los pilares del 
+					<a href="http://opengovernmentdata.org/">open government data</a> para una mayor transparencia, hemos
+					seleccionado al Parlamento uruguayo para iniciar este proyecto, tanto por el volumen de datos, 
+					la concentracion de politicos y la importancia de su ejercicio en la democracia. <br>
+					Posteriormente facilitaremos datos de otro institución gubernamental para listar aquí.
+					<h5><a href="{% url 'legislative_list' %}">haga click aquí</a> para acceder a los datos del parlamento</h5>
+				</p>
+				</article>
+			</section>
+	    </div>
+	</div>
+	<br><br>
+	<div class="row">
+		<div class="large-12 columns">
+			<section>
+				<header>
+					<h4>Contacto:</h4>
+				</header>
+				<article>
+				<div class="large-8 columns">
+					Entre en contacto con nosotros por mail o redes sociales:<br>
+					Comentarios, sugerencias, criticas, dudas, son todas bienvenidas...
+	            </div>
+				<div class="large-4 columns">
+	              <ul class="inline-list right">
+	                <li><a href="mailto:polidatos@gmail.com"><i class="icon-envelope icon-2x"></i></a></li>
+	                <li><a href="https://twitter.com/PolidatosUY"><i class="icon-twitter icon-2x"></i></a></li>
+	                <li><a href="https://www.facebook.com/PolidatosUy"><i class="icon-facebook-sign icon-2x"></i></a></li>
+	                <li><a href="https://github.com/jfunez/poliwall"><i class="icon-github icon-2x"></i></a></li>
+	              </ul>
+	            </div>
+				</article>
+			</section>
+		</div>
+	</div>
+	<br><br>
 {% endblock main_content %}

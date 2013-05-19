@@ -10,6 +10,7 @@ class Party(models.Model):
 
     name = models.CharField(_(u'Nombre'), max_length=100)
     code = models.CharField(_(u'Código'), max_length=10, blank=True, null=True)
+    logo = models.ImageField(_(u'Logo'), upload_to='polidata/party/logos/', blank=True, null=True)
 
     class Meta:
         verbose_name = _(u'Partido')
@@ -20,7 +21,7 @@ class Party(models.Model):
 
     def get_all_politicians(self):
         leg_polis = LegislativePolitician.objects.filter(party=self)
-        pol_ids = set(leg_polis.values_list('politician__id', flat=True))
+        pol_ids = set(leg_polis.values_list('politician__pk', flat=True))
         return Politician.objects.filter(pk__in=pol_ids)
 
 
@@ -30,6 +31,7 @@ class SubParty(models.Model):
 
     party = models.ForeignKey(Party)
     name = models.CharField(_(u'Nombre'), max_length=100)
+    logo = models.ImageField(_(u'Logo'), upload_to='polidata/party/logos/', blank=True, null=True)
 
     class Meta:
         verbose_name = _(u'Lema')
@@ -66,6 +68,7 @@ class Politician(models.Model):
 
     """ Modelo para guardar los datos personales de los políticos """
 
+    politician_id = models.IntegerField(u'Id interno', primary_key=True)
     first_name = models.CharField(_(u'Nombre'), max_length=100)
     last_name = models.CharField(_(u'Apellidos'), max_length=100)
     slug = models.SlugField(_(u'Slug'), blank=True, null=True)
@@ -121,6 +124,14 @@ class Politician(models.Model):
     def photo_thumb(self):
         return '<img src="%s%s"/>' % (settings.MEDIA_URL, self.photo)
     photo_thumb.allow_tags = True
+
+    @property
+    def get_last_salary(self):
+        return self.salaries.all().get(end_date=None).amount
+
+    @property
+    def get_last_legislative(self):
+        return self.salaries.all().get(end_date=None).legislative.roman_code
 
 
 class House(models.Model):

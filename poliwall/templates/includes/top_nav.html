@@ -4,28 +4,32 @@
     <nav class="top-bar">
         <ul class="title-area">
             <!-- Title Area -->
-            <li class="name"><h1><a href="{% url 'home' %}">PoliWall</a></h1></li>
+            <li class="name"><h1><a href="{% url 'home' %}">PoliDatosUy</a></h1></li>
             <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
         </ul>
  
         <section class="top-bar-section">
           <!-- Right Nav Section -->
           <ul class="right">
-            <li class="divider"></li>
-            <li class="has-dropdown">
-              <a href="#">{% trans "Gobierno" %}</a>
-              <ul class="dropdown">
-                <li><a href="{% url 'gob_nacional' %}">{% trans "Gob. Nacional" %}</a></li>
-                <li class="divider"></li>
-                <li><a href="{% url 'gob_nacional' %}">{% trans "Gob. Departamental" %}</a></li>
-                <li class="divider"></li>
-                <li><a href="{% url 'home' %}">{% trans "Ver todo" %} &rarr;</a></li>
-              </ul>
+            <li>
+              <a href="{% url 'legislative_list' %}">
+                <i class="icon icon-book"></i> {% trans "Poder legislativo" %}
+              </a>
             </li>
             <li class="divider"></li>
-            <li><a href="#">Main Item 2</a></li>
+            <li>
+              <a href="{% url 'session_list' %}">
+                <i class="icon icon-bullseye"></i> {% trans "Sesiones" %}
+              </a>
+            </li>
             <li class="divider"></li>
-            <li class="has-dropdown">
+            <li>
+              <a href="{% url 'party_list' %}">
+                <i class="icon icon-sitemap"></i> {% trans "Partidos" %}
+              </a>
+            </li>
+            <li class="divider"></li>
+            <!-- li class="has-dropdown">
               <a href="#">Main Item 3</a>
               <ul class="dropdown">
                 <li><a href="#">Dropdown Option</a></li>
@@ -34,7 +38,7 @@
                 <li class="divider"></li>
                 <li><a href="#">See all &rarr;</a></li>
               </ul>
-            </li>
+            </li -->
             {% if user.is_authenticated %}
                 <li class="divider"></li>
                 <li class="has-dropdown">

@@ -3,6 +3,7 @@
 {% block extra_head %}
 	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />
 	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/timeline.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/vtimeline.css" />
 {% endblock extra_head %}
 
 {% block header_content %}
@@ -21,39 +22,52 @@
 			</div>
 		</div>
 	</section>
+	<hr>
 	<section>
 
 		<div class="section-container tabs" data-section="tabs">
 			<section>
-				<p class="title" data-section-title><a href="#">{% trans "Legislaturas" %}:</a></p>
+				<p class="title" data-section-title>
+					<a href="#panel_legislaturas">
+						<i class="icon-book"></i> {% trans "Legislaturas" %}:
+					</a>
+				</p>
 				<div class="content" data-section-content>
 					<table style="width:100%">
-						<tr>
-							<th>{% trans "Legislatura" %}</th>
-							<th>{% trans "Cámara" %}</th>
-							<th>{% trans "Partido" %}</th>
-							<th>{% trans "Agrupación" %}</th>
-						</tr>
-						{% for legislativepolitician in politician.legislatives.all %}
-						<tr>
-							<td><a href="{% url 'legislative_detail' legislativepolitician.legislative.roman_code %}">{{ legislativepolitician.legislative }}</a></td>
-							<td>{{ legislativepolitician.house }}</td>
-							<td><a href="{% url 'party_detail' legislativepolitician.party.name %}">{{ legislativepolitician.party }}</a></td>
-							<td>{{ legislativepolitician.subparty|default:"n/d" }}</td>
-						</tr>
-						{% empty %}
-						<tr>
-								<td colspan="5">
-									{% trans "Error" %}
-								</td>
+						<thead>
+							<tr>
+								<th><i class="icon-book"></i> {% trans "Legislatura" %}</th>
+								<th><i class="icon-home"></i> {% trans "Cámara" %}</th>
+								<th><i class="icon-sitemap"></i> {% trans "Partido" %}</th>
+								<th><i class="icon-group"></i> {% trans "Lema" %}</th>
 							</tr>
-						{% endfor %}
+						</thead>
+						<tbody>
+							{% for legislativepolitician in politician.legislatives.all %}
+								<tr>
+									<td><a href="{% url 'legislative_detail' legislativepolitician.legislative.roman_code %}">{{ legislativepolitician.legislative }}</a></td>
+									<td>{{ legislativepolitician.house }}</td>
+									<td><a href="{% url 'party_detail' legislativepolitician.party.name %}">{{ legislativepolitician.party }}</a></td>
+									<td>{{ legislativepolitician.subparty|default:"n/d" }}</td>
+								</tr>
+							{% empty %}
+								<tr>
+									<td colspan="5">
+										<i class="icon-info-sign"></i>{% trans "Error" %}
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
 					</table>
 				</div>
 			</section>
 
 			<section>
-				<p class="title" data-section-title><a href="#">{% trans "Biografía" %}:</a></p>
+				<p class="title" data-section-title>
+					<a href="#panel_biografia">
+						<i class="icon-user"></i> {% trans "Biografía" %}:
+					</a>
+				</p>
 				<div class="content" data-section-content>
 					{% if politician.biography %}
 						<p>
@@ -61,41 +75,78 @@
 						</p>
 					{% else %}
 						<p>
-							{% trans "Sin biografía" %}
+							<i class="icon-info-sign"></i>{% trans "Sin biografía" %}
+						</p>
+					{% endif %}
+					<span class="radius secondary label">
+						{% trans "Fuente" %}: <a href="{{ politician.profile_url }}">www.parlamento.gub.uy</a>
+					</span>
+				</div>
+			</section>
+			
+			<section>
+				<p class="title" data-section-title>
+					<a href="#panel_actividades">
+						<i class="icon-calendar"></i>  {% trans "Actividades" %}:
+					</a>
+				</p>
+				<div class="content" data-section-content>
+					{% if politician_recent_activity %}
+						<h4>{% trans "Actividad reciente en la actual legislatura" %} <i class="icon-angle-right"></i> {{ latest_legislature }} </h4>
+						<h6><a href="#">{% trans "Ver toda la actividad" %} <i class="icon-circle-arrow-right"></i></a> </h6>
+						<ul class="cbp_tmtimeline">
+							{% for activity in politician_recent_activity %}
+								<li>
+							        <time class="cbp_tmtime" datetime="{{ activity.session.date }}">
+							        	{% if activity.session.ordinal %}
+							        	 	<span>{% trans "ordinal" %}:{{ activity.session.ordinal }}</span>	
+							        	 {% endif %}
+							        	 <span>{{ activity.session.date|date:"Y/m/d" }}</span>
+							        </time>
+							        <div class="cbp_tmicon">
+							        	{% with action_type=activity.text|truncatewords:1|lower %}
+								        	{% if action_type == "interviene ..." %}
+								        		<i class="icon-comments-alt"></i>
+								        	{% elif action_type == "presenta ..." %}
+								        		<i class="icon-facetime-video"></i>
+								        	{% else %}
+								        		<i class="icon-comment-alt"></i>
+								        	{% endif %}
+							        	{% endwith %}
+							        </div>
+							        <div class="cbp_tmlabel">
+							            <h3>{{ activity.text|truncatewords:4 }}</h3>
+							            <p>{{ activity.text }}</p>
+							            <p>
+								            {% if activity.session.source_url %}
+								            	<a class="source_url" href="{{ activity.session.source_url }}" alt="Fuente"><i class="icon-link"></i> {% trans "Fuente" %}</a>
+								            {% else %}
+								            	<a class="source_url" href="#"><i class="icon-link"></i>  {% trans "Enlace a fuente no disponible" %}</a>
+								            {% endif %}
+							            </p>
+							        </div>
+							    </li>
+							{% empty %}
+								<li>
+									<p>
+										{% trans "Sin actividad" %}
+									</p>
+								</li>
+							{% endfor %}
+						</ul>
+					{% else %}
+						<p>
+							{% trans "Sin actividad" %}
 						</p>
 					{% endif %}
 				</div>
 			</section>
 			<section>
-				<p class="title" data-section-title><a href="#">{% trans "Actividades" %}:</a></p>
-				<div class="content" data-section-content>
-					<ul>
-						{% for activity in politician.action_politicians.all %}
-							<li>
-								<p>
-									<table style="width:100%">
-										<tr>
-											<th>{% trans "Legislatura" %}: {{ activity.legislative }}</th>
-											<th>{% trans "Sesion" %}: {{ activity.session }}</th>
-										</tr>
-										<tr>
-											<td colspan="2"><b>{% trans "Texto" %}</b>: {{ activity.text }}</td>
-										</tr>
-									</table>
-								</p>
-							</li>
-						{% empty %}
-							<li>
-								<p>
-									{% trans "Sin actividad" %}
-								</p>
-							</li>
-						{% endfor %}
-					</ul>
-				</div>
-			</section>
-			<section>
-				<p class="title" data-section-title><a href="#">{% trans "Viáticos" %}:</a></p>
+				<p class="title" data-section-title>
+					<a href="#panel_viaticos">
+						<i class="icon-money"></i> {% trans "Viáticos" %}:
+					</a>
+				</p>
 				<div class="content" data-section-content>
 					{% if politician.diem_politcians.all.0 %}
 						<table style="width:100%">
@@ -120,7 +171,7 @@
 											{% if diem.report_rest %}
 												U$S {{ diem.report_rest }}
 											{% else %}
-												<strong style="color: red">Sin justificar</strong>
+												<strong style="color: red">{% trans "Sin justificar" %}</strong>
 											{% endif %}
 										{% else %}
 											U$S 0
@@ -132,7 +183,7 @@
 						</table>
 					{% else %}
 						<p>
-							{% trans "Sin actividad" %}
+							{% trans "Sin viáticos" %}
 						</p>
 					{% endif %}
 				</div>
@@ -140,4 +191,5 @@
 		</div>
 	</section>
 	<br><br>
+
 {% endblock main_content %}
