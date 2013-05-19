@@ -11,3 +11,9 @@ django-extensions
 django-celery
 Scrapy
 django-mailer
+django-model-report
+pisa
+reportlab
+html5lib
+BeautifulSoup
+xlwt==0.7.4

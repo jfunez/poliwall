@@ -215,3 +215,39 @@ def legislative_salary_detail(request, legislative_code, politician_slug):
         'legislative_code': legislative_code,
     })
     return render_to_response('salary_detail.html', context, context_instance=RequestContext(request))
+
+
+@lockdown(superusers_only=True)
+def legislative_statistics(request, legislative_code):
+    legislative = get_legislative_by_code(legislative_code)
+    if not legislative:
+        raise Http404
+    context = Context({
+        'legislative_list': [legislative,]
+    })
+    return render_to_response('legislative_statistics.html', context, context_instance=RequestContext(request))
+
+
+@lockdown(superusers_only=True)
+def legislative_statistics_report(request, legislative_code, report_slug):
+    legislative = get_legislative_by_code(legislative_code)
+    if not legislative:
+        raise Http404
+    from model_report.report import reports
+    report_class = reports.get_report(report_slug)
+    if not report_class:
+        raise Http404
+
+    class FilteredReport(report_class):
+
+        def get_legislative(self):
+            return legislative
+
+        def filter_query(self, qs):
+            qs = qs.filter(legislative=legislative)
+            return qs
+
+    report = FilteredReport(request=request)
+
+    return report.render(request, extra_context={})
+

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{{ STATIC_URL|default:'/static/' }}css/animate.min.css" />
+{% endblock extra_head %}
+
+{% block header_content %}
+    <h1>{% trans "Poder Legislativo" %}</h1>
+{% endblock header_content %}
+
+{% block main_content %}
+<br><br>
+<div class="section-container accordion" data-section="accordion" data-options="">
+    {% for legislative in legislative_list %}
+            {% include "legislative_statistics_options.html" %}
+    {% endfor %}
+</div>
+{% endblock main_content %}
+{% block extra_js %}
+<script type="text/javascript">
+  $(function () {
+    $('a','.legislature_opt_row ').hover(
+      function () {
+        $(this).find('.legislature_opt_row_item').addClass('animated pulse');
+      },
+      function () {
+        $(this).find('.legislature_opt_row_item').removeClass('animated pulse');
+      }
+    );
+  });
+</script>
+{% endblock extra_js %}
