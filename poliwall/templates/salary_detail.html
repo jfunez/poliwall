@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block header_content %}
+	<h1>
+    	{% trans "Remuneraciones" %}
+    	{% if legislative_code %}
+    		<i class="icon icon-double-angle-right"></i>  {{ legislative_code }}
+    	{% endif %}
+    	{% if politician_slug %}
+    		<i class="icon icon-double-angle-right"></i>  {{ politician_slug }}
+    	{% endif %}
+    </h1>
+{% endblock header_content %}
+{% block main_content %}
+<br>
+<br>
+{% if salaries %}
+	<ul>
+	{% for politician in politicians %}
+		<li>
+			<h5>
+				<a href="{% url 'legislative_politician_detail' politician.slug %}">
+					<i class="icon icon-user"></i> {{ politician }}
+				</a>
+			</h5>
+			<ul>
+			{% for politician_pk, politician_salary in salaries.iteritems %}
+				{% if politician_pk == politician.pk %}
+					{% if politician_salary %}
+						<table class=="full_width">
+							<thead>
+								<tr>
+									<th><i class="icon-money"></i> {% trans "Monto" %}:</th>
+									<th><i class="icon-calendar"></i> {% trans "Desde" %}:</th>
+									<th><i class="icon-calendar"></i> {% trans "Hasta" %}:</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for p_salary in politician_salary %}
+									<tr>
+										<td>{{ p_salary.amount }}</td>
+										<td>{{ p_salary.start_date }}</td>
+										<td>{{ p_salary.end_date|default:"---" }}</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					{% else %}
+						<li>
+							<p>{% trans "No hay registros de remuneraciones para " %} {{ politician }}</p>
+						</li>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+			</ul>
+			<hr>
+		</li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<p>{% trans "No hay registros de remuneraciones para esta legislatura." %}</p>
+{% endif %}
+{% endblock main_content %}
