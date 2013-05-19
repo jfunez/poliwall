@@ -161,7 +161,7 @@ def session_list(request, legislative_code=None):
 
         house_data = {
             'house_name': house.name,
-            'sessions': sessions[0:20],
+            'sessions': sessions,
         }
         house_sessions.append(house_data)
 
