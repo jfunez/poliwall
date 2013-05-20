@@ -21,12 +21,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'poliwal_prod',
-        'USER': 'dbuser',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': '%s/poliwal_prod.db' % PROJECT_PATH,
+        # 'USER': 'dbuser',
+        # 'PASSWORD': '',
+        # 'HOST': '',
+        # 'PORT': '',
     }
 }
 
