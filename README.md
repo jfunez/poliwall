@@ -23,3 +23,6 @@ Pude ver la documentacion actualizada en [la wiki del proyecto](https://github.c
 Requisitos:
 -----------
 Pude ver la documentacion actualizada en [la wiki del proyecto](https://github.com/jfunez/poliwall/wiki/Requerimientos "Requerimientos").
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jfunez/poliwall/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
